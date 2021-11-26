@@ -26,9 +26,9 @@ author        Pete R. Jemian <jemian@anl.gov>
    :caption: Contents:
    :glob:
 
+   install
    apsbss
    apsbss_ioc
-   install
    source/index
    changes
    license
