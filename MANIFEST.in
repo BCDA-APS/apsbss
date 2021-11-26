@@ -1,0 +1,9 @@
+include README.md
+include CHANGES*
+include LICENSE.txt
+include versioneer.py
+include apsbss/_version.py
+include apsbss/apsbss.adl
+include apsbss/apsbss.db
+include apsbss/apsbss.ui
+include apsbss/apsbss_ioc.sh

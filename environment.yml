@@ -1,0 +1,19 @@
+name: apsbssdoc
+channels:
+  - defaults
+  - conda-forge
+  - aps-anl-tag
+dependencies:
+  - python >=3.7,<3.8
+  - aps-dm-api
+  - bluesky >=1.6.7
+  - ophyd >=1.6.1
+  - pip
+  - pyRestTable
+  - sphinx
+  - sphinx-rtd-theme
+  - pip:
+    - ipython-genutils==0.2.0
+    # - prompt-toolkit==1.0.15
+    - super-state-machine
+    - versioneer
