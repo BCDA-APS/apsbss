@@ -1,0 +1,195 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>apsbss &#8212; apsbss 1.5.4rc2+12.g1f4997c documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="apsbss" href="apsbss.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apsbss.html" title="apsbss"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">apsbss 1.5.4rc2+12.g1f4997c documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apsbss</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="apsbss">
+<h1>apsbss<a class="headerlink" href="#apsbss" title="Permalink to this headline">¶</a></h1>
+<p>Read-only interface to information from APS Proposal and ESAF (experiment safety
+approval form) databases.</p>
+<section id="package-information">
+<h2>Package Information<a class="headerlink" href="#package-information" title="Permalink to this headline">¶</a></h2>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 22%" />
+<col style="width: 78%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p>version</p></td>
+<td><p>1.5.4rc2+12.g1f4997c</p></td>
+</tr>
+<tr class="row-even"><td><p>published</p></td>
+<td><p>2021-11-26 20:00</p></td>
+</tr>
+<tr class="row-odd"><td><p>copyright</p></td>
+<td><p>2017-2022, UChicago Argonne, LLC</p></td>
+</tr>
+<tr class="row-even"><td><p>license</p></td>
+<td><p>ANL OPEN SOURCE LICENSE (see LICENSE.txt file)</p></td>
+</tr>
+<tr class="row-odd"><td><p>author</p></td>
+<td><p>Pete R. Jemian &lt;<a class="reference external" href="mailto:jemian&#37;&#52;&#48;anl&#46;gov">jemian<span>&#64;</span>anl<span>&#46;</span>gov</a>&gt;</p></td>
+</tr>
+</tbody>
+</table>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="apsbss.html">apsbss</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#initialize-pvs-for-beam-line-and-apc-run-cycle">Initialize PVs for beam line and APC run cycle</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#what-proposal-and-esaf-id-numbers-to-use">What Proposal and ESAF ID numbers to use?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#view-proposal-information">View Proposal Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#get-esaf-information">Get ESAF Information</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#update-epics-pvs-with-proposal-and-esaf">Update EPICS PVs with Proposal and ESAF</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#clear-the-epics-pvs">Clear the EPICS PVs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#report-information-in-the-epics-pvs">Report information in the EPICS PVs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#example-apsbss-command-line">Example - <code class="docutils literal notranslate"><span class="pre">apsbss</span></code> command line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#displays-for-medm-caqtdm">Displays for MEDM &amp; caQtDM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#ioc-management">IOC Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#reading-yaml-in-python">Reading YAML in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#downloads">Downloads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss.html#source-code-documentation">Source code documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="apsbss_ioc.html">apsbss: IOC Startup and Management</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="apsbss_ioc.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="apsbss_ioc.html#start-epics-ioc">Start EPICS IOC</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install.html#id1">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install.html#required-libraries">Required Libraries</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="source/index.html">APS Proposal and ESAF Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="source/_apsbss.html">apsbss: Command line application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/_apsbss%20makedb.html">apsbss: Create EPICS database</a></li>
+<li class="toctree-l2"><a class="reference internal" href="source/_apsbss_ophyd.html">apsbss: Ophyd Device</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changes.html">Change History</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changes.html#id1">1.5.4</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="license.html">License</a></li>
+</ul>
+</div>
+<section id="indices-and-tables">
+<h3>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">apsbss</a><ul>
+<li><a class="reference internal" href="#package-information">Package Information</a><ul>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="apsbss.html"
+                        title="next chapter">apsbss</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apsbss.html" title="apsbss"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">apsbss 1.5.4rc2+12.g1f4997c documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apsbss</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright .
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,178 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Installation &#8212; apsbss 1.5.4rc2+12.g1f4997c documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="APS Proposal and ESAF Support" href="source/index.html" />
+    <link rel="prev" title="apsbss: IOC Startup and Management" href="apsbss_ioc.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="source/index.html" title="APS Proposal and ESAF Support"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="apsbss_ioc.html" title="apsbss: IOC Startup and Management"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">apsbss 1.5.4rc2+12.g1f4997c documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Installation</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="installation">
+<span id="install"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<section id="id1">
+<h2>Installation<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">apsbss</span></code> package is available for installation
+by <code class="docutils literal notranslate"><span class="pre">conda</span></code>, <code class="docutils literal notranslate"><span class="pre">pip</span></code>, or from source.</p>
+<section id="conda">
+<h3>conda<a class="headerlink" href="#conda" title="Permalink to this headline">¶</a></h3>
+<p>If you are using Anaconda Python and have <code class="docutils literal notranslate"><span class="pre">conda</span></code> installed, install with this
+command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ conda install -c aps-anl-tag apsbss
+</pre></div>
+</div>
+</section>
+<section id="pip">
+<h3>pip<a class="headerlink" href="#pip" title="Permalink to this headline">¶</a></h3>
+<p>Released versions of <em>apsbss</em> are available on <a class="reference external" href="https://pypi.python.org/pypi/apsbss">PyPI</a>.</p>
+<p>If you have <code class="docutils literal notranslate"><span class="pre">pip</span></code> installed, then you can install:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ pip install apsbss
+</pre></div>
+</div>
+</section>
+<section id="source">
+<h3>source<a class="headerlink" href="#source" title="Permalink to this headline">¶</a></h3>
+<p>The latest development versions of apsbss can be downloaded from the
+GitHub repository listed above:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone http://github.com/BCDA-APS/apsbss.git
+</pre></div>
+</div>
+<p>To install in the standard Python location:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd apsbss
+$ python setup.py install
+</pre></div>
+</div>
+<p>To install in user’s home directory:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py install --user
+</pre></div>
+</div>
+<p>To install in an alternate location:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python setup.py install --prefix=/path/to/installation/dir
+</pre></div>
+</div>
+</section>
+</section>
+<section id="required-libraries">
+<h2>Required Libraries<a class="headerlink" href="#required-libraries" title="Permalink to this headline">¶</a></h2>
+<p>The repository’s <code class="docutils literal notranslate"><span class="pre">environment.yml</span></code> file lists the additional packages
+required by <code class="docutils literal notranslate"><span class="pre">apsbss</span></code>.  Most packages are available as conda packages
+from <a class="reference external" href="https://anaconda.org">https://anaconda.org</a>.  The others are available on
+<a class="reference external" href="https://PyPI.python.org">https://PyPI.python.org</a>.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Installation</a><ul>
+<li><a class="reference internal" href="#id1">Installation</a><ul>
+<li><a class="reference internal" href="#conda">conda</a></li>
+<li><a class="reference internal" href="#pip">pip</a></li>
+<li><a class="reference internal" href="#source">source</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#required-libraries">Required Libraries</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="apsbss_ioc.html"
+                        title="previous chapter">apsbss: IOC Startup and Management</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="source/index.html"
+                        title="next chapter">APS Proposal and ESAF Support</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/install.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="source/index.html" title="APS Proposal and ESAF Support"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="apsbss_ioc.html" title="apsbss: IOC Startup and Management"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">apsbss 1.5.4rc2+12.g1f4997c documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Installation</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright .
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

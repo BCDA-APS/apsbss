@@ -1,0 +1,292 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>apsbss.apsbss_makedb &#8212; apsbss 1.5.4rc2+12.g1f4997c documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/bizstyle.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">apsbss 1.5.4rc2+12.g1f4997c documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apsbss.apsbss_makedb</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for apsbss.apsbss_makedb</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Create the EPICS database</span>
+
+<span class="sd">This is just a service program to make the ``.db`` file.</span>
+
+<span class="sd">.. autosummary::</span>
+
+<span class="sd">    ~main</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+<span class="c1"># :author:    Pete R. Jemian</span>
+<span class="c1"># :email:     jemian@anl.gov</span>
+<span class="c1"># :copyright: (c) 2017-2021, UChicago Argonne, LLC</span>
+<span class="c1">#</span>
+<span class="c1"># Distributed under the terms of the Creative Commons Attribution 4.0 International Public License.</span>
+<span class="c1">#</span>
+<span class="c1"># The full license is in the file LICENSE.txt, distributed with this software.</span>
+<span class="c1"># -----------------------------------------------------------------------------</span>
+
+<span class="c1"># name	RTYP	length</span>
+
+<span class="n">raw_data</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">status	stringout</span>
+<span class="s2">ioc_host	stringout</span>
+<span class="s2">ioc_user	stringout</span>
+<span class="s2">esaf:cycle	stringout</span>
+<span class="s2">esaf:description	waveform	4096</span>
+<span class="s2">esaf:endDate	stringout</span>
+<span class="s2">esaf:id	stringout</span>
+<span class="s2">esaf:raw	waveform	8192</span>
+<span class="s2">esaf:status	stringout</span>
+<span class="s2">esaf:sector	stringout</span>
+<span class="s2">esaf:startDate	stringout</span>
+<span class="s2">esaf:title	waveform	1024</span>
+<span class="s2">esaf:userBadges	waveform	1024</span>
+<span class="s2">esaf:users	waveform	1024</span>
+<span class="s2">esaf:users_in_pvs	longout</span>
+<span class="s2">esaf:users_total	longout</span>
+<span class="s2">esaf:user1:badgeNumber	stringout</span>
+<span class="s2">esaf:user1:email	stringout</span>
+<span class="s2">esaf:user1:firstName	stringout</span>
+<span class="s2">esaf:user1:lastName	stringout</span>
+<span class="s2">esaf:user2:badgeNumber	stringout</span>
+<span class="s2">esaf:user2:email	stringout</span>
+<span class="s2">esaf:user2:firstName	stringout</span>
+<span class="s2">esaf:user2:lastName	stringout</span>
+<span class="s2">esaf:user3:badgeNumber	stringout</span>
+<span class="s2">esaf:user3:email	stringout</span>
+<span class="s2">esaf:user3:firstName	stringout</span>
+<span class="s2">esaf:user3:lastName	stringout</span>
+<span class="s2">esaf:user4:badgeNumber	stringout</span>
+<span class="s2">esaf:user4:email	stringout</span>
+<span class="s2">esaf:user4:firstName	stringout</span>
+<span class="s2">esaf:user4:lastName	stringout</span>
+<span class="s2">esaf:user5:badgeNumber	stringout</span>
+<span class="s2">esaf:user5:email	stringout</span>
+<span class="s2">esaf:user5:firstName	stringout</span>
+<span class="s2">esaf:user5:lastName	stringout</span>
+<span class="s2">esaf:user6:badgeNumber	stringout</span>
+<span class="s2">esaf:user6:email	stringout</span>
+<span class="s2">esaf:user6:firstName	stringout</span>
+<span class="s2">esaf:user6:lastName	stringout</span>
+<span class="s2">esaf:user7:badgeNumber	stringout</span>
+<span class="s2">esaf:user7:email	stringout</span>
+<span class="s2">esaf:user7:firstName	stringout</span>
+<span class="s2">esaf:user7:lastName	stringout</span>
+<span class="s2">esaf:user8:badgeNumber	stringout</span>
+<span class="s2">esaf:user8:email	stringout</span>
+<span class="s2">esaf:user8:firstName	stringout</span>
+<span class="s2">esaf:user8:lastName	stringout</span>
+<span class="s2">esaf:user9:badgeNumber	stringout</span>
+<span class="s2">esaf:user9:email	stringout</span>
+<span class="s2">esaf:user9:firstName	stringout</span>
+<span class="s2">esaf:user9:lastName	stringout</span>
+<span class="s2">proposal:beamline	stringout</span>
+<span class="s2">proposal:endDate	stringout</span>
+<span class="s2">proposal:mailInFlag	bo</span>
+<span class="s2">proposal:id	stringout</span>
+<span class="s2">proposal:proprietaryFlag	bo</span>
+<span class="s2">proposal:raw	waveform	8192</span>
+<span class="s2">proposal:startDate	stringout</span>
+<span class="s2">proposal:submittedDate	stringout</span>
+<span class="s2">proposal:title	waveform	1024</span>
+<span class="s2">proposal:userBadges	waveform	1024</span>
+<span class="s2">proposal:users	waveform	1024</span>
+<span class="s2">proposal:users_in_pvs	longout</span>
+<span class="s2">proposal:users_total	longout</span>
+<span class="s2">proposal:user1:badgeNumber	stringout</span>
+<span class="s2">proposal:user1:email	stringout</span>
+<span class="s2">proposal:user1:firstName	stringout</span>
+<span class="s2">proposal:user1:institution	waveform	1024</span>
+<span class="s2">proposal:user1:instId	stringout</span>
+<span class="s2">proposal:user1:lastName	stringout</span>
+<span class="s2">proposal:user1:piFlag	bo</span>
+<span class="s2">proposal:user1:userId	stringout</span>
+<span class="s2">proposal:user2:badgeNumber	stringout</span>
+<span class="s2">proposal:user2:email	stringout</span>
+<span class="s2">proposal:user2:firstName	stringout</span>
+<span class="s2">proposal:user2:institution	waveform	1024</span>
+<span class="s2">proposal:user2:instId	stringout</span>
+<span class="s2">proposal:user2:lastName	stringout</span>
+<span class="s2">proposal:user2:piFlag	bo</span>
+<span class="s2">proposal:user2:userId	stringout</span>
+<span class="s2">proposal:user3:badgeNumber	stringout</span>
+<span class="s2">proposal:user3:email	stringout</span>
+<span class="s2">proposal:user3:firstName	stringout</span>
+<span class="s2">proposal:user3:institution	waveform	1024</span>
+<span class="s2">proposal:user3:instId	stringout</span>
+<span class="s2">proposal:user3:lastName	stringout</span>
+<span class="s2">proposal:user3:piFlag	bo</span>
+<span class="s2">proposal:user3:userId	stringout</span>
+<span class="s2">proposal:user4:badgeNumber	stringout</span>
+<span class="s2">proposal:user4:email	stringout</span>
+<span class="s2">proposal:user4:firstName	stringout</span>
+<span class="s2">proposal:user4:institution	waveform	1024</span>
+<span class="s2">proposal:user4:instId	stringout</span>
+<span class="s2">proposal:user4:lastName	stringout</span>
+<span class="s2">proposal:user4:piFlag	bo</span>
+<span class="s2">proposal:user4:userId	stringout</span>
+<span class="s2">proposal:user5:badgeNumber	stringout</span>
+<span class="s2">proposal:user5:email	stringout</span>
+<span class="s2">proposal:user5:firstName	stringout</span>
+<span class="s2">proposal:user5:institution	waveform	1024</span>
+<span class="s2">proposal:user5:instId	stringout</span>
+<span class="s2">proposal:user5:lastName	stringout</span>
+<span class="s2">proposal:user5:piFlag	bo</span>
+<span class="s2">proposal:user5:userId	stringout</span>
+<span class="s2">proposal:user6:badgeNumber	stringout</span>
+<span class="s2">proposal:user6:email	stringout</span>
+<span class="s2">proposal:user6:firstName	stringout</span>
+<span class="s2">proposal:user6:institution	waveform	1024</span>
+<span class="s2">proposal:user6:instId	stringout</span>
+<span class="s2">proposal:user6:lastName	stringout</span>
+<span class="s2">proposal:user6:piFlag	bo</span>
+<span class="s2">proposal:user6:userId	stringout</span>
+<span class="s2">proposal:user7:badgeNumber	stringout</span>
+<span class="s2">proposal:user7:email	stringout</span>
+<span class="s2">proposal:user7:firstName	stringout</span>
+<span class="s2">proposal:user7:institution	waveform	1024</span>
+<span class="s2">proposal:user7:instId	stringout</span>
+<span class="s2">proposal:user7:lastName	stringout</span>
+<span class="s2">proposal:user7:piFlag	bo</span>
+<span class="s2">proposal:user7:userId	stringout</span>
+<span class="s2">proposal:user8:badgeNumber	stringout</span>
+<span class="s2">proposal:user8:email	stringout</span>
+<span class="s2">proposal:user8:firstName	stringout</span>
+<span class="s2">proposal:user8:institution	waveform	1024</span>
+<span class="s2">proposal:user8:instId	stringout</span>
+<span class="s2">proposal:user8:lastName	stringout</span>
+<span class="s2">proposal:user8:piFlag	bo</span>
+<span class="s2">proposal:user8:userId	stringout</span>
+<span class="s2">proposal:user9:badgeNumber	stringout</span>
+<span class="s2">proposal:user9:email	stringout</span>
+<span class="s2">proposal:user9:firstName	stringout</span>
+<span class="s2">proposal:user9:institution	waveform	1024</span>
+<span class="s2">proposal:user9:instId	stringout</span>
+<span class="s2">proposal:user9:lastName	stringout</span>
+<span class="s2">proposal:user9:piFlag	bo</span>
+<span class="s2">proposal:user9:userId	stringout</span>
+<span class="s2">&quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="main"><a class="viewcode-back" href="../../source/_apsbss%20makedb.html#apsbss.apsbss_makedb.main">[docs]</a><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Make an EPICS ``.db`` file from the PVs listed above.&quot;&quot;&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span><span class="se">\</span>
+<span class="s2">    #</span>
+<span class="s2">    # file: apsbss.db</span>
+<span class="s2">    # EPICS database for information from APS ESAF &amp; Proposal databases</span>
+<span class="s2">    #</span>
+<span class="s2">    # BSS: Beamtime Scheduling System</span>
+<span class="s2">    #</span>
+<span class="s2">    # note: this file autogenerated by make_database.py</span>
+<span class="s2">    #    ./apsbss_makedb.py  | tee apsbss.db</span>
+<span class="s2">    #</span>
+<span class="s2">    # Start the EPICS IOC with a command (from EPICS base):</span>
+<span class="s2">    #    softIoc -m P=ioc:bss: -d apsbss.db</span>
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">header</span><span class="o">.</span><span class="n">splitlines</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+    <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">raw_data</span><span class="p">:</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">row</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+        <span class="n">pvname</span><span class="p">,</span> <span class="n">rtyp</span> <span class="o">=</span> <span class="n">parts</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span>
+        <span class="n">head</span> <span class="o">=</span> <span class="n">f</span><span class="s1">&#39;record(</span><span class="si">{rtyp}</span><span class="s1">, &quot;$(P)</span><span class="si">{pvname}</span><span class="s1">&quot;)&#39;</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">rtyp</span> <span class="o">==</span> <span class="s2">&quot;waveform&quot;</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">parts</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;field(FTVL, &quot;CHAR&quot;)&#39;</span><span class="p">)</span>
+            <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f</span><span class="s2">&quot;field(NELM, </span><span class="si">{parts[2]}</span><span class="s2">)&quot;</span><span class="p">)</span>
+            <span class="c1"># fields.append(&#39;field(VAL, 0)&#39;)</span>
+        <span class="k">elif</span> <span class="n">rtyp</span> <span class="o">==</span> <span class="s2">&quot;bo&quot;</span><span class="p">:</span>
+            <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;field(ZNAM, &quot;OFF&quot;)&#39;</span><span class="p">)</span>
+            <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;field(ONAM, &quot;ON&quot;)&#39;</span><span class="p">)</span>
+            <span class="n">fields</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;field(VAL, 0)&quot;</span><span class="p">)</span>
+        <span class="n">record</span> <span class="o">=</span> <span class="n">head</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fields</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">field_specs</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">f</span><span class="s2">&quot;    </span><span class="si">{field}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">field</span> <span class="ow">in</span> <span class="n">fields</span><span class="p">])</span>
+            <span class="n">record</span> <span class="o">+=</span> <span class="s2">&quot; {</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">f</span><span class="s2">&quot;</span><span class="si">{field_specs}</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">}&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="n">record</span><span class="p">)</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">apsbss 1.5.4rc2+12.g1f4997c documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apsbss.apsbss_makedb</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright .
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>

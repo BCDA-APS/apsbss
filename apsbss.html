@@ -1,0 +1,658 @@
+
+
+<!doctype html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>apsbss &#8212; apsbss 1.5.4rc2+12.g1f4997c documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
+    
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/bizstyle.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="apsbss: IOC Startup and Management" href="apsbss_ioc.html" />
+    <link rel="prev" title="apsbss" href="index.html" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <!--[if lt IE 9]>
+    <script src="_static/css3-mediaqueries.js"></script>
+    <![endif]-->
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apsbss_ioc.html" title="apsbss: IOC Startup and Management"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="apsbss"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">apsbss 1.5.4rc2+12.g1f4997c documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apsbss</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="apsbss">
+<span id="apsbss-application"></span><span id="index-0"></span><h1>apsbss<a class="headerlink" href="#apsbss" title="Permalink to this headline">¶</a></h1>
+<p>Provide information from APS Proposal and ESAF (experiment safety approval
+form) databases as PVs at each beam line so that this information
+(metadata) may be added to new data files.  The <code class="docutils literal notranslate"><span class="pre">aps-dm-api</span></code>
+(<code class="docutils literal notranslate"><span class="pre">dm</span></code> for short) package <a class="footnote-reference brackets" href="#id2" id="id1">1</a>
+is used to access the APS databases as read-only.</p>
+<p><em>No information is written back to the APS
+databases from this software.</em></p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">dm</span></code>: <a class="reference external" href="https://anaconda.org/search?q=aps-dm-api">https://anaconda.org/search?q=aps-dm-api</a></p>
+</dd>
+</dl>
+<aside class="sidebar">
+<p class="sidebar-title">PVs for experiment metadata</p>
+<p>This information retreived from the APS databases is stored in PVs
+on the beam line subnet.  These PVs are available to <em>any</em> EPICS
+client as metadata (SPEC, area detector, Bluesky, GUI screens, logging, other).
+This design allows the local instrument team to override
+any values read from the APS databases, if that is needed.</p>
+</aside>
+<p>Given:</p>
+<ul class="simple">
+<li><p>a beam line name (such as <code class="docutils literal notranslate"><span class="pre">9-ID-B,C</span></code>)</p></li>
+<li><p>APS run cycle name (such as <code class="docutils literal notranslate"><span class="pre">2019-2</span></code>) to locate a specific proposal ID</p></li>
+<li><p>proposal ID number (such as <code class="docutils literal notranslate"><span class="pre">66083</span></code>)</p></li>
+<li><p>ESAF ID number (such as <code class="docutils literal notranslate"><span class="pre">226319</span></code>)</p></li>
+</ul>
+<p>The typical information obtained includes:</p>
+<ul class="simple">
+<li><p>ESAF &amp; proposal titles</p></li>
+<li><p>user names</p></li>
+<li><p>user institutional affiliations</p></li>
+<li><p>user emails</p></li>
+<li><p>applicable dates, reported in ISO8601 time format</p></li>
+<li><p>is proposal propietary?</p></li>
+<li><p>is experiment mail-in?</p></li>
+</ul>
+<p>These PVs are loaded on demand by the local instrument team at the beam line.
+See the <a class="reference internal" href="apsbss_ioc.html#apsbss-ioc"><span class="std std-ref">apsbss: IOC Startup and Management</span></a> section for details about
+managing the EPICS PVs.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>We’ll demonstrate <code class="docutils literal notranslate"><span class="pre">apsbss</span></code> with information for APS beam
+line 9-ID, using PV prefix <code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code>.</p>
+<ol class="arabic simple">
+<li><p>Create the PVs in an EPICS IOC (see section <a class="reference internal" href="apsbss_ioc.html#apsbss-ioc"><span class="std std-ref">apsbss: IOC Startup and Management</span></a>)</p></li>
+<li><p>Initialize PVs with beam line name and APS run cycle number</p></li>
+<li><p>Set PVs with the Proposal and ESAF ID numbers</p></li>
+<li><p>Retrieve (&amp; update PVs) information from APS databases</p></li>
+</ol>
+<p><strong>Enter beam line and APS run (cycle) info</strong></p>
+<figure class="align-default" id="id3">
+<a class="reference internal image-reference" href="_images/ui_initialized.png"><img alt="_images/ui_initialized.png" src="_images/ui_initialized.png" style="width: 95%;" /></a>
+<figcaption>
+<p><span class="caption-text">Image of <code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code> screen GUI in caQtDM showing PV prefix
+(<code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code>), APS run cycle <code class="docutils literal notranslate"><span class="pre">2019-2</span></code> and beam line <code class="docutils literal notranslate"><span class="pre">9-ID-B,C</span></code>.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
+<div class="legend">
+<ul class="simple">
+<li><p>beam line name PV: <code class="docutils literal notranslate"><span class="pre">9id:bss:proposal:beamline</span></code></p></li>
+<li><p>APS run cycle PV: <code class="docutils literal notranslate"><span class="pre">9id:bss:esaf:cycle</span></code></p></li>
+</ul>
+</div>
+</figcaption>
+</figure>
+<p><strong>Enter Proposal and ESAF ID numbers</strong></p>
+<p>Note we had to use the APS run cycle of <cite>2019-2</cite>
+to match what is in the proposal’s information.</p>
+<figure class="align-default" id="id4">
+<a class="reference internal image-reference" href="_images/ui_id_entered.png"><img alt="_images/ui_id_entered.png" src="_images/ui_id_entered.png" style="width: 95%;" /></a>
+<figcaption>
+<p><span class="caption-text">Image of <code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code> screen GUI in caQtDM with Proposal
+and ESAF ID numbers added.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
+<div class="legend">
+<ul class="simple">
+<li><p>proposal ID number PV: <code class="docutils literal notranslate"><span class="pre">9id:bss:proposal:id</span></code></p></li>
+<li><p>ESAF ID number PV: <code class="docutils literal notranslate"><span class="pre">9id:bss:esaf:id</span></code></p></li>
+</ul>
+</div>
+</figcaption>
+</figure>
+<p><strong>Update PVs from APS databases</strong></p>
+<p>In the GUI, press the button labeled <code class="docutils literal notranslate"><span class="pre">get</span> <span class="pre">Proposal</span> <span class="pre">and</span> <span class="pre">ESAF</span> <span class="pre">info</span></code>.
+This button executes the command line: <code class="docutils literal notranslate"><span class="pre">apsbss</span> <span class="pre">update</span> <span class="pre">9id:bss:</span></code></p>
+<p>Here’s a view of the GUI after running the update.  The
+information shown in the GUI is only part of the PVs,
+presented in a compact format. A full report of the
+information received, including PV names, is available for
+<a class="reference download internal" download="" href="_downloads/468f3778f39e56d262f4b42c224eaf9b/apsbss_report.txt"><code class="xref download docutils literal notranslate"><span class="pre">download</span></code></a>.</p>
+<figure class="align-default" id="id5">
+<a class="reference internal image-reference" href="_images/ui_updated.png"><img alt="_images/ui_updated.png" src="_images/ui_updated.png" style="width: 95%;" /></a>
+<figcaption>
+<p><span class="caption-text">Image of <code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code> screen GUI in caQtDM showing Proposal
+and ESAF information.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>To clear the PVs, in the GUI, press the button labeled <code class="docutils literal notranslate"><span class="pre">clear</span> <span class="pre">PVs</span></code>.
+This button executes the command line: <code class="docutils literal notranslate"><span class="pre">apsbss</span> <span class="pre">clear</span> <span class="pre">9id:bss:</span></code></p>
+</section>
+<section id="initialize-pvs-for-beam-line-and-apc-run-cycle">
+<h2>Initialize PVs for beam line and APC run cycle<a class="headerlink" href="#initialize-pvs-for-beam-line-and-apc-run-cycle" title="Permalink to this headline">¶</a></h2>
+<p>After creating the PVs in an IOC, the next step is to
+initialize them with the beam line name and the APS
+run cycle name.  Both of these must match exactly
+with values known in the data management (<code class="docutils literal notranslate"><span class="pre">dm</span></code>) system.</p>
+<p>For any of these commands, you must know the EPICS
+PV prefix to be used.  The examples above are for
+beam line 9-ID.  The PV prefix in these examples
+is <code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code>.</p>
+<section id="what-beam-line-name-to-use">
+<h3>What beam line name to use?<a class="headerlink" href="#what-beam-line-name-to-use" title="Permalink to this headline">¶</a></h3>
+<p>To learn the beam line names accepted by the system, use this command
+(showing names defined on 2020-07-10):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss beamlines
+1-BM-B,C       8-ID-I         15-ID-B,C,D    23-BM-B
+1-ID-B,C,E     9-BM-B,C       16-BM-B        23-ID-B
+2-BM-A,B       9-ID-B,C       16-BM-D        23-ID-D
+2-ID-D         10-BM-A,B      16-ID-B        24-ID-C
+2-ID-E         10-ID-B        16-ID-D        24-ID-E
+3-ID-B,C,D     11-BM-B        17-BM-B        26-ID-C
+4-ID-C         11-ID-B        17-ID-B        27-ID-B
+4-ID-D         11-ID-C        18-ID-D        29-ID-C,D
+5-BM-C         11-ID-D        19-BM-D        30-ID-B,C
+5-BM-D         12-BM-B        19-ID-D        31-ID-D
+5-ID-B,C,D     12-ID-B        20-BM-B        32-ID-B,C
+6-BM-A,B       12-ID-C,D      20-ID-B,C      33-BM-C
+6-ID-B,C       13-BM-C        21-ID-D        33-ID-D,E
+6-ID-D         13-BM-D        21-ID-E        34-ID-C
+7-BM-B         13-ID-C,D      21-ID-F        34-ID-E
+7-ID-B,C,D     13-ID-E        21-ID-G        35-ID-B,C,D,E
+8-BM-B         14-BM-C        22-BM-D
+8-ID-E         14-ID-B        22-ID-D
+</pre></div>
+</div>
+<p>For either station at 9-ID, use <code class="docutils literal notranslate"><span class="pre">9-ID-B,C</span></code>.</p>
+</section>
+<section id="what-aps-run-cycle-to-use">
+<h3>What APS run cycle to use?<a class="headerlink" href="#what-aps-run-cycle-to-use" title="Permalink to this headline">¶</a></h3>
+<p>To learn the APS run cycle names accepted by the system, use this command
+(showing APS run cycle names as defined on 2020-07-10):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss cycles
+2008-3    2011-2    2014-1    2016-3    2019-2
+2009-1    2011-3    2014-2    2017-1    2019-3
+2009-2    2012-1    2014-3    2017-2    2020-1
+2009-3    2012-2    2015-1    2017-3    2020-2
+2010-1    2012-3    2015-2    2018-1
+2010-2    2013-1    2015-3    2018-2
+2010-3    2013-2    2016-1    2018-3
+2011-1    2013-3    2016-2    2019-1
+</pre></div>
+</div>
+<p>Pick the cycle of interest.  Here, we pick <code class="docutils literal notranslate"><span class="pre">2020-2</span></code>.</p>
+<p>To print the full report (including start and end of each cycle):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss cycles --full
+====== =================== ===================
+cycle  start               end
+====== =================== ===================
+2020-2 2020-06-09 07:00:00 2020-10-01 07:00:00
+2020-1 2020-01-28 08:00:00 2020-06-09 07:00:00
+2019-3 2019-09-24 07:00:00 2020-01-28 08:00:00
+2019-2 2019-05-21 07:00:00 2019-09-24 07:00:00
+2019-1 2019-01-22 08:00:00 2019-05-21 07:00:00
+2018-3 2018-09-25 07:00:00 2019-01-22 08:00:00
+2018-2 2018-05-22 07:00:00 2018-09-25 07:00:00
+2018-1 2018-01-23 08:00:00 2018-05-22 07:00:00
+2017-3 2017-09-26 07:00:00 2018-01-23 08:00:00
+2017-2 2017-05-23 07:00:00 2017-09-26 07:00:00
+2017-1 2017-01-24 08:00:00 2017-05-23 07:00:00
+2016-3 2016-09-27 07:00:00 2017-01-24 08:00:00
+2016-2 2016-05-24 07:00:00 2016-09-27 07:00:00
+2016-1 2016-01-26 08:00:00 2016-05-24 07:00:00
+2015-3 2015-09-29 07:00:00 2016-01-26 08:00:00
+2015-2 2015-05-26 07:00:00 2015-09-29 07:00:00
+2015-1 2015-01-27 08:00:00 2015-05-26 07:00:00
+2014-3 2014-09-25 07:00:00 2015-01-27 08:00:00
+2014-2 2014-05-20 07:00:00 2014-09-25 07:00:00
+2014-1 2014-01-21 08:00:00 2014-05-20 07:00:00
+2013-3 2013-09-24 07:00:00 2014-01-21 08:00:00
+2013-2 2013-05-22 07:00:00 2013-09-24 07:00:00
+2013-1 2013-01-22 08:00:00 2013-05-22 07:00:00
+2012-3 2012-09-25 07:00:00 2013-01-22 08:00:00
+2012-2 2012-05-23 07:00:00 2012-09-25 07:00:00
+2012-1 2012-01-24 08:00:00 2012-05-23 07:00:00
+2011-3 2011-09-27 07:00:00 2012-01-24 08:00:00
+2011-2 2011-05-25 07:00:00 2011-09-27 07:00:00
+2011-1 2011-01-25 08:00:00 2011-05-25 07:00:00
+2010-3 2010-09-27 23:00:00 2011-01-25 08:00:00
+2010-2 2010-05-26 07:00:00 2010-09-28 07:00:00
+2010-1 2010-01-26 08:00:00 2010-05-26 07:00:00
+2009-3 2009-09-29 07:00:00 2010-01-26 08:00:00
+2009-2 2009-05-20 07:00:00 2009-09-29 07:00:00
+2009-1 2009-01-21 08:00:00 2009-05-20 07:00:00
+2008-3 2008-09-24 07:00:00 2009-01-21 08:00:00
+====== =================== ===================
+</pre></div>
+</div>
+</section>
+<section id="write-the-beam-line-name-and-cycle-to-the-pvs">
+<h3>Write the beam line name and cycle to the PVs<a class="headerlink" href="#write-the-beam-line-name-and-cycle-to-the-pvs" title="Permalink to this headline">¶</a></h3>
+<p>To configure <code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code> PVs for beam line
+<code class="docutils literal notranslate"><span class="pre">9-ID-B,C</span></code> and cycle <code class="docutils literal notranslate"><span class="pre">2020-2</span></code>,
+use this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss setup 9id:bss: 9-ID-B,C 2020-2
+connected in 0.143s
+setup EPICS 9id:bss: 9-ID-B,C cycle=2020-2 sector=9
+</pre></div>
+</div>
+<p>Or you could enter them into the appropriate boxes on the GUI.</p>
+</section>
+</section>
+<section id="what-proposal-and-esaf-id-numbers-to-use">
+<h2>What Proposal and ESAF ID numbers to use?<a class="headerlink" href="#what-proposal-and-esaf-id-numbers-to-use" title="Permalink to this headline">¶</a></h2>
+<p>Proposals are usually valid for two years.  To learn what
+proposals are valid for your beam line, use this command
+with your own beam line’s name.  The report will provide
+two tables, one for Proposals and the other for ESAFs,
+both with entries in the current APS run cycle:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss list 9-ID-B,C
+Proposal(s):  beam line 9-ID-B,C,  cycle(s) now
+
+===== ====== =================== =================== ==================== ========================================
+id    cycle  start               end                 user(s)              title
+===== ====== =================== =================== ==================== ========================================
+70118 2020-3 2020-12-05 08:00:00 2020-12-05 16:00:00 Beaucage,Gogia,Ku... In situ structural modification and d...
+63765 2020-3 2020-11-19 08:00:00 2020-11-23 08:00:00 Swantek,Powell,Ka... USAXS Measurements of Fuel Injection ...
+71000 2020-3 2020-11-15 08:00:00 2020-11-16 08:00:00 Shapiro,Sattar,O&#39;... Quantification of subcellular iron lo...
+65742 2020-3 2020-11-11 08:00:00 2020-11-15 08:00:00 Miller,Victor,Smith  Using Lanthanide Binding Tags to Moni...
+70080 2020-3 2020-11-06 08:00:00 2020-11-09 08:00:00 Shapiro,Sattar,O&#39;... Quantification of subcellular iron lo...
+45287 2020-3 2020-11-03 08:00:00 2020-11-06 08:00:00 Hong,O&#39;Halloran,C... Quantitative Mapping of subcellular t...
+68468 2020-3 2020-10-29 07:00:00 2020-11-02 07:00:00 Devabathini,Bury,... Sub Micron-XRF imaging of SVZ, Hippoc...
+71437 2020-3 2020-10-20 07:00:00 2020-10-26 07:00:00 Paunesku             Tissue microarrays for Bionanoprobe use
+72088 2020-3 2020-10-09 07:00:00 2020-10-19 07:00:00 Chen,Deng,Maxey       setup and test vacuum flight tube at...
+71891 2020-3 2020-10-05 07:00:00 2020-10-09 07:00:00 Ralle,Chen           Copper Distribution in Cyrptococcus N...
+===== ====== =================== =================== ==================== ========================================
+
+ESAF(s):  sector 9,  cycle(s) now
+
+====== ======== ========== ========== ==================== ========================================
+id     status   start      end        user(s)              title
+====== ======== ========== ========== ==================== ========================================
+233214 Pending  2020-12-05 2020-12-05 Rishi,Camara,Okol... In situ structural modification and d...
+233897 Pending  2020-12-03 2020-12-07 Li,Arai              Effect of (bi)carbonate on the transf...
+232646 Approved 2020-11-19 2020-11-25 Sforzo,Tekawade,P... USAXS Measurements of Prototype Stand...
+233888 Pending  2020-11-17 2020-11-20 Balasubramanian,D... Studies of calcium local structure in...
+234023 Approved 2020-11-16 2020-12-17 Ilavsky,Krzysko,K... USAXS comissioning and mail-in experi...
+234093 Approved 2020-11-15 2020-11-16 Chen                 Quantitative Mapping of subcellular t...
+233213 Approved 2020-11-12 2020-11-13 Bryson,Wu,Sterbinsky XANES and EXAFS analysis of novel Ni-...
+233148 Approved 2020-11-11 2020-11-12 Miller,LiBretto,Wu   Miller-Purdue_CuChitosan_Oct2020
+233644 Approved 2020-11-11 2020-11-16 Victor,Ambi,Mille... Using Lanthanide Binding Tags to Moni...
+232832 Approved 2020-11-07 2020-11-09 Dong,Wang,Wu         Exploring bi-atom catalysts for therm...
+233566 Approved 2020-11-06 2020-11-09 Sattar,Shapiro       Quantification of subcellular iron lo...
+230906 Approved 2020-11-03 2020-11-07 Finfrock,Grosvenor   A Partner User Proposal to Continue t...
+233318 Approved 2020-11-03 2020-11-09 Chen                 Quantitative Mapping of subcellular t...
+233058 Approved 2020-10-31 2020-11-02 Wu                   TW 2020-3: Battery and/or Catalysis E...
+233217 Approved 2020-10-27 2020-10-31 Devabathini,Chen,... Sub Micron-XRF imaging of SVZ, Hippoc...
+232672 Approved 2020-10-27 2020-10-31 Sham,Motta Meira,... XAFS of semiconducting and metallic n...
+232345 Approved 2020-10-20 2020-10-26 Smith,Islam          Tracking aquatic redox conditions and...
+232905 Approved 2020-10-20 2020-10-23 Chen                 Tissue microarrays for Bionanoprobe use
+232020 Approved 2020-10-13 2020-10-19 Siebecker,Schmidt... Potassium speciation in cotton-produc...
+232231 Approved 2020-10-06 2020-10-12 Hettiarachchi,Gal... Use of Different Organic Polymers in ...
+232126 Approved 2020-10-05 2020-11-15 Chen,Deng,Maxey      setup and test vacuum flight tube at ...
+232154 Approved 2020-10-05 2020-10-09 Chen,Ralle           Copper Distribution in Cyrptococcus N...
+230928 Approved 2020-10-01 2020-12-18 Chen,Deng,Luo,Yao... Bionanoprobe commissioning
+230845 Approved 2020-10-01 2020-12-17 Sterbinsky,Heald,... 9BM Beamline Commissioning 2020-3
+231809 Approved 2020-10-01 2020-12-17 Ilavsky,Maxey,Kuz... Commission 9ID, USAXS
+231811 Approved 2020-10-01 2020-12-31 Ilavsky,chen,Maxe... Commission 9ID and USAXS
+====== ======== ========== ========== ==================== ========================================
+</pre></div>
+</div>
+</section>
+<section id="view-proposal-information">
+<h2>View Proposal Information<a class="headerlink" href="#view-proposal-information" title="Permalink to this headline">¶</a></h2>
+<p>To view information about a specific proposal, you
+must be able to provide the proposal’s ID number and
+the APS run cycle name.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss proposal 64629 2019-2 9-ID-B,C
+duration: 36000
+endTime: &#39;2019-06-25 17:00:00&#39;
+experimenters:
+- badge: &#39;86312&#39;
+  email: ilavsky@aps.anl.gov
+  firstName: Jan
+  id: 424292
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Ilavsky
+- badge: &#39;85283&#39;
+  email: okasinski@aps.anl.gov
+  firstName: John
+  id: 424308
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Okasinski
+  piFlag: Y
+id: 64629
+mailInFlag: N
+proprietaryFlag: N
+startTime: &#39;2019-06-25 07:00:00&#39;
+submittedDate: &#39;2019-03-01 18:35:02&#39;
+title: 2019 National School on Neutron &amp; X-ray Scattering Beamline Practicals - CMS
+totalShiftsRequested: 12
+</pre></div>
+</div>
+<p>The report is formatted in <em>YAML</em> (<a class="reference external" href="https://yaml.org">https://yaml.org</a>)
+which is easy to read and easily converted into a Python
+data structure using <code class="docutils literal notranslate"><span class="pre">yaml.load(report_text)</span></code>.
+See section <a class="reference internal" href="#reading-yaml"><span class="std std-ref">Reading YAML in Python</span></a>.</p>
+</section>
+<section id="get-esaf-information">
+<h2>Get ESAF Information<a class="headerlink" href="#get-esaf-information" title="Permalink to this headline">¶</a></h2>
+<p>To view information about a specific ESAF, you
+must be able to provide the ESAF ID number.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss esaf 226319
+description: We will commission beamline and  USAXS instrument. We will perform experiments
+  with safe beamline standards and test samples (all located at beamline and used
+  for this purpose routinely) to evaluate performance of beamline and instrument.
+  We will perform hardware and software development as needed.
+esafId: 226319
+esafStatus: Approved
+esafTitle: Commission 9ID and USAXS
+experimentEndDate: &#39;2020-09-28 08:00:00&#39;
+experimentStartDate: &#39;2020-05-26 08:00:00&#39;
+experimentUsers:
+- badge: &#39;86312&#39;
+  badgeNumber: &#39;86312&#39;
+  email: ilavsky@aps.anl.gov
+  firstName: Jan
+  lastName: Ilavsky
+- badge: &#39;53748&#39;
+  badgeNumber: &#39;53748&#39;
+  email: emaxey@aps.anl.gov
+  firstName: Evan
+  lastName: Maxey
+- badge: &#39;64065&#39;
+  badgeNumber: &#39;64065&#39;
+  email: kuzmenko@aps.anl.gov
+  firstName: Ivan
+  lastName: Kuzmenko
+sector: 09
+</pre></div>
+</div>
+<p>The report is formatted in <em>YAML</em> (<a class="reference external" href="https://yaml.org">https://yaml.org</a>)
+which is easy to read and easily converted into a Python
+data structure using <code class="docutils literal notranslate"><span class="pre">yaml.load(report_text)</span></code>.
+See section <a class="reference internal" href="#reading-yaml"><span class="std std-ref">Reading YAML in Python</span></a>.</p>
+</section>
+<section id="update-epics-pvs-with-proposal-and-esaf">
+<h2>Update EPICS PVs with Proposal and ESAF<a class="headerlink" href="#update-epics-pvs-with-proposal-and-esaf" title="Permalink to this headline">¶</a></h2>
+<p>To update the PVs with Proposal and Information from the APS
+database, first enter the proposal and ESAF ID numbers into
+the GUI (or set the <code class="docutils literal notranslate"><span class="pre">9id:bss:proposal:id</span></code>, and respectively).
+Note that for this ESAF ID, we had to change the cycle to <cite>2019-2</cite>.</p>
+<p>Then, use this command to retrieve the information and update
+the PVs:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss update 9id:bss:
+update EPICS 9id:bss:
+connected in 0.105s
+</pre></div>
+</div>
+<p>If there is a problem with the update process, it should be
+reported in the <cite>status</cite> PV (such as <cite>9id:bss:status</cite>).</p>
+<figure class="align-default" id="id6">
+<a class="reference internal image-reference" href="_images/ui_error_status.png"><img alt="_images/ui_error_status.png" src="_images/ui_error_status.png" style="width: 95%;" /></a>
+<figcaption>
+<p><span class="caption-text">Image of <code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code> screen GUI in caQtDM showing
+<cite>update</cite> command error due to missing beam line name.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="clear-the-epics-pvs">
+<h2>Clear the EPICS PVs<a class="headerlink" href="#clear-the-epics-pvs" title="Permalink to this headline">¶</a></h2>
+<p>To clear the information from the PVs, use this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss clear 9id:bss:
+clear EPICS 9id:bss:
+connected in 0.104s
+cleared in 0.011s
+</pre></div>
+</div>
+</section>
+<section id="report-information-in-the-epics-pvs">
+<h2>Report information in the EPICS PVs<a class="headerlink" href="#report-information-in-the-epics-pvs" title="Permalink to this headline">¶</a></h2>
+<p>To view all the information in the PVs, use this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss report 9id:bss:
+clear EPICS 9id:bss:
+</pre></div>
+</div>
+<p>Since this content is rather large, it is available
+for download: <a class="reference download internal" download="" href="_downloads/468f3778f39e56d262f4b42c224eaf9b/apsbss_report.txt"><code class="xref download docutils literal notranslate"><span class="pre">apsbss</span> <span class="pre">report</span></code></a></p>
+</section>
+<section id="example-apsbss-command-line">
+<h2>Example - <code class="docutils literal notranslate"><span class="pre">apsbss</span></code> command line<a class="headerlink" href="#example-apsbss-command-line" title="Permalink to this headline">¶</a></h2>
+<p>Before using the command-line interface, find out what
+the <em>apsbss</em> application expects:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss  -h
+usage: apsbss [-h] [-v]
+              {beamlines,current,cycles,esaf,list,proposal,clear,setup,update,report}
+              ...
+
+Retrieve specific records from the APS Proposal and ESAF databases.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -v, --version         print version number and exit
+
+subcommand:
+  {beamlines,current,cycles,esaf,proposal,clear,setup,update,report}
+    beamlines           print list of beamlines
+    current             print current ESAF(s) and proposal(s), DEPRECATED: use &#39;list&#39; instead
+    cycles              print APS run cycle names
+    esaf                print specific ESAF
+    list                list by cycle
+    proposal            print specific proposal
+    clear               EPICS PVs: clear
+    setup               EPICS PVs: setup
+    update              EPICS PVs: update from BSS
+    report              EPICS PVs: report what is in the PVs
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="source/index.html#beamtime-source-docs"><span class="std std-ref">APS Proposal and ESAF Support</span></a> for the source code documentation
+of each of these subcommands.</p>
+</section>
+<section id="displays-for-medm-caqtdm">
+<span id="apsbss-epics-gui-screens"></span><h2>Displays for MEDM &amp; caQtDM<a class="headerlink" href="#displays-for-medm-caqtdm" title="Permalink to this headline">¶</a></h2>
+<p>Display screen files are provided for viewing some of the EPICS PVs
+using either MEDM (<code class="docutils literal notranslate"><span class="pre">apsbss.adl</span></code>) or caQtDM (<code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code>).</p>
+<ul class="simple">
+<li><p>caQtDM screen: <a class="reference download internal" download="" href="_downloads/bdda52f699d162621bb505ca35bbec94/apsbss.ui"><code class="xref download docutils literal notranslate"><span class="pre">apsbss.ui</span></code></a></p></li>
+<li><p>MEDM screen: <a class="reference download internal" download="" href="_downloads/a1c34f7781a829861f6cf18e061fc9f7/apsbss.adl"><code class="xref download docutils literal notranslate"><span class="pre">apsbss.adl</span></code></a></p></li>
+</ul>
+<p>Start caQtDM with this command: <code class="docutils literal notranslate"><span class="pre">caQtDM</span> <span class="pre">-macro</span> <span class="pre">&quot;P=9id:bss:&quot;</span> <span class="pre">apsbss.ui</span> <span class="pre">&amp;</span></code></p>
+<p>Start MEDM with this command: <code class="docutils literal notranslate"><span class="pre">medm</span> <span class="pre">-x</span> <span class="pre">-macro</span> <span class="pre">&quot;P=9id:bss:&quot;</span> <span class="pre">apsbss.ui</span> <span class="pre">&amp;</span></code></p>
+<p>Here’s an example starter script for caQtDM from APS 9-ID-C (USAXS):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="nv">BLUESKY_ROOT</span><span class="o">=</span>/APSshare/anaconda3/Bluesky
+<span class="nv">APSBSS_PKG</span><span class="o">=</span><span class="si">${</span><span class="nv">BLUESKY_ROOT</span><span class="si">}</span>/lib/python3.7/site-packages/apsbss
+<span class="nv">GUI_SCREEN</span><span class="o">=</span><span class="si">${</span><span class="nv">APSBSS_PKG</span><span class="si">}</span>/apsbss.ui
+<span class="nv">CAQTDM</span><span class="o">=</span>/APSshare/bin/caQtDM
+
+<span class="nb">source</span> <span class="si">${</span><span class="nv">BLUESKY_ROOT</span><span class="si">}</span>/bin/activate
+<span class="si">${</span><span class="nv">CAQTDM</span><span class="si">}</span> -macro <span class="nv">P</span><span class="o">=</span>9idc:bss: <span class="si">${</span><span class="nv">GUI_SCREEN</span><span class="si">}</span> <span class="p">&amp;</span>
+</pre></div>
+</div>
+</section>
+<section id="ioc-management">
+<h2>IOC Management<a class="headerlink" href="#ioc-management" title="Permalink to this headline">¶</a></h2>
+<p>The EPICS PVs are provided by running an instance of <code class="docutils literal notranslate"><span class="pre">apsbss.db</span></code>
+either in an existing EPICS IOC or using the <code class="docutils literal notranslate"><span class="pre">softIoc</span></code> application
+from EPICS base.  A shell script (<code class="docutils literal notranslate"><span class="pre">apsbss_ioc.sh</span></code>) is included
+for loading Proposal and ESAF information from the
+APS databases into the IOC.</p>
+<ul class="simple">
+<li><p><a class="reference download internal" download="" href="_downloads/46c2c44d7f66c7e2364ade0357376d16/apsbss.db"><code class="xref download docutils literal notranslate"><span class="pre">apsbss.db</span></code></a></p></li>
+</ul>
+<p>See the section titled “<a class="reference internal" href="apsbss_ioc.html#apsbss-ioc"><span class="std std-ref">apsbss: IOC Startup and Management</span></a>”
+for the management of the EPICS IOC.</p>
+</section>
+<section id="reading-yaml-in-python">
+<span id="reading-yaml"></span><h2>Reading YAML in Python<a class="headerlink" href="#reading-yaml-in-python" title="Permalink to this headline">¶</a></h2>
+<p>It’s easy to read a YAML string and convert it into a
+Python structure.  Take the example ESAF information shown
+above.  It is available in EPICS PV <code class="docutils literal notranslate"><span class="pre">9id:bss:esaf:raw</span></code> which
+is a waveform record containing up to 8kB of text.  This IPython
+session uses PyEpics and YAML to show how to read the text
+from EPICS and convert it back into a Python structure.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">epics</span><span class="o">,</span> <span class="nn">yaml</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">epics</span><span class="o">.</span><span class="n">caget</span><span class="p">(</span><span class="s2">&quot;9id:bss:esaf:raw&quot;</span><span class="p">,</span> <span class="n">as_string</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">msg</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="s2">&quot;description: We will commission beamline and  USAXS instrument. We will perform experiments</span><span class="se">\n</span><span class="s2">  with safe beamline standards and test samples (all located at beamline and used</span><span class="se">\n</span><span class="s2">  for this purpose routinely) to evaluate performance of beamline and instrument.</span><span class="se">\n</span><span class="s2">  We will perform hardware and software development as needed.</span><span class="se">\n</span><span class="s2">esafId: 226319</span><span class="se">\n</span><span class="s2">esafStatus: Approved</span><span class="se">\n</span><span class="s2">esafTitle: Commission 9ID and USAXS</span><span class="se">\n</span><span class="s2">experimentEndDate: &#39;2020-09-28 08:00:00&#39;</span><span class="se">\n</span><span class="s2">experimentStartDate: &#39;2020-05-26 08:00:00&#39;</span><span class="se">\n</span><span class="s2">experimentUsers:</span><span class="se">\n</span><span class="s2">- badge: &#39;86312&#39;</span><span class="se">\n</span><span class="s2">  badgeNumber: &#39;86312&#39;</span><span class="se">\n</span><span class="s2">  email: ilavsky@aps.anl.gov</span><span class="se">\n</span><span class="s2">  firstName: Jan</span><span class="se">\n</span><span class="s2">  lastName: Ilavsky</span><span class="se">\n</span><span class="s2">- badge: &#39;53748&#39;</span><span class="se">\n</span><span class="s2">  badgeNumber: &#39;53748&#39;</span><span class="se">\n</span><span class="s2">  email: emaxey@aps.anl.gov</span><span class="se">\n</span><span class="s2">  firstName: Evan</span><span class="se">\n</span><span class="s2">  lastName: Maxey</span><span class="se">\n</span><span class="s2">- badge: &#39;64065&#39;</span><span class="se">\n</span><span class="s2">  badgeNumber: &#39;64065&#39;</span><span class="se">\n</span><span class="s2">  email: kuzmenko@aps.anl.gov</span><span class="se">\n</span><span class="s2">  firstName: Ivan</span><span class="se">\n</span><span class="s2">  lastName: Kuzmenko</span><span class="se">\n</span><span class="s2">sector: 09&quot;</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">ymsg</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span>
+<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">beams</span><span class="o">/</span><span class="n">JEMIAN</span><span class="o">/.</span><span class="n">conda</span><span class="o">/</span><span class="n">envs</span><span class="o">/</span><span class="n">bluesky_2020_5</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">ipython</span><span class="p">:</span><span class="mi">1</span><span class="p">:</span> <span class="n">YAMLLoadWarning</span><span class="p">:</span> <span class="n">calling</span> <span class="n">yaml</span><span class="o">.</span><span class="n">load</span><span class="p">()</span> <span class="n">without</span> <span class="n">Loader</span><span class="o">=...</span> <span class="ow">is</span> <span class="n">deprecated</span><span class="p">,</span> <span class="k">as</span> <span class="n">the</span> <span class="n">default</span> <span class="n">Loader</span> <span class="ow">is</span> <span class="n">unsafe</span><span class="o">.</span> <span class="n">Please</span> <span class="n">read</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">msg</span><span class="o">.</span><span class="n">pyyaml</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">load</span> <span class="k">for</span> <span class="n">full</span> <span class="n">details</span><span class="o">.</span>
+  <span class="c1">#!/home/beams/JEMIAN/.conda/envs/bluesky_2020_5/bin/python</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">ymsg</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">5</span><span class="p">]:</span>
+<span class="p">{</span><span class="s1">&#39;description&#39;</span><span class="p">:</span> <span class="s1">&#39;We will commission beamline and  USAXS instrument. We will perform experiments with safe beamline standards and test samples (all located at beamline and used for this purpose routinely) to evaluate performance of beamline and instrument. We will perform hardware and software development as needed.&#39;</span><span class="p">,</span>
+<span class="s1">&#39;esafId&#39;</span><span class="p">:</span> <span class="mi">226319</span><span class="p">,</span>
+<span class="s1">&#39;esafStatus&#39;</span><span class="p">:</span> <span class="s1">&#39;Approved&#39;</span><span class="p">,</span>
+<span class="s1">&#39;esafTitle&#39;</span><span class="p">:</span> <span class="s1">&#39;Commission 9ID and USAXS&#39;</span><span class="p">,</span>
+<span class="s1">&#39;experimentEndDate&#39;</span><span class="p">:</span> <span class="s1">&#39;2020-09-28 08:00:00&#39;</span><span class="p">,</span>
+<span class="s1">&#39;experimentStartDate&#39;</span><span class="p">:</span> <span class="s1">&#39;2020-05-26 08:00:00&#39;</span><span class="p">,</span>
+<span class="s1">&#39;experimentUsers&#39;</span><span class="p">:</span> <span class="p">[{</span><span class="s1">&#39;badge&#39;</span><span class="p">:</span> <span class="s1">&#39;86312&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;badgeNumber&#39;</span><span class="p">:</span> <span class="s1">&#39;86312&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;ilavsky@aps.anl.gov&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;firstName&#39;</span><span class="p">:</span> <span class="s1">&#39;Jan&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;lastName&#39;</span><span class="p">:</span> <span class="s1">&#39;Ilavsky&#39;</span><span class="p">},</span>
+  <span class="p">{</span><span class="s1">&#39;badge&#39;</span><span class="p">:</span> <span class="s1">&#39;53748&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;badgeNumber&#39;</span><span class="p">:</span> <span class="s1">&#39;53748&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;emaxey@aps.anl.gov&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;firstName&#39;</span><span class="p">:</span> <span class="s1">&#39;Evan&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;lastName&#39;</span><span class="p">:</span> <span class="s1">&#39;Maxey&#39;</span><span class="p">},</span>
+  <span class="p">{</span><span class="s1">&#39;badge&#39;</span><span class="p">:</span> <span class="s1">&#39;64065&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;badgeNumber&#39;</span><span class="p">:</span> <span class="s1">&#39;64065&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="s1">&#39;kuzmenko@aps.anl.gov&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;firstName&#39;</span><span class="p">:</span> <span class="s1">&#39;Ivan&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;lastName&#39;</span><span class="p">:</span> <span class="s1">&#39;Kuzmenko&#39;</span><span class="p">}],</span>
+<span class="s1">&#39;sector&#39;</span><span class="p">:</span> <span class="s1">&#39;09&#39;</span><span class="p">}</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">6</span><span class="p">]:</span>
+</pre></div>
+</div>
+</section>
+<section id="downloads">
+<h2>Downloads<a class="headerlink" href="#downloads" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>EPICS database: <a class="reference download internal" download="" href="_downloads/46c2c44d7f66c7e2364ade0357376d16/apsbss.db"><code class="xref download docutils literal notranslate"><span class="pre">apsbss.db</span></code></a></p></li>
+<li><p>EPICS IOC shell script <a class="reference download internal" download="" href="_downloads/f93f174d713b0aa51f2edc567a19a2fb/apsbss_ioc.sh"><code class="xref download docutils literal notranslate"><span class="pre">apsbss_ioc.sh</span></code></a></p></li>
+<li><p>MEDM screen: <a class="reference download internal" download="" href="_downloads/a1c34f7781a829861f6cf18e061fc9f7/apsbss.adl"><code class="xref download docutils literal notranslate"><span class="pre">apsbss.adl</span></code></a></p></li>
+<li><p>caQtDM screen: <a class="reference download internal" download="" href="_downloads/bdda52f699d162621bb505ca35bbec94/apsbss.ui"><code class="xref download docutils literal notranslate"><span class="pre">apsbss.ui</span></code></a></p></li>
+</ul>
+</section>
+<section id="source-code-documentation">
+<h2>Source code documentation<a class="headerlink" href="#source-code-documentation" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="source/index.html#beamtime-source-docs"><span class="std std-ref">APS Proposal and ESAF Support</span></a> for the source code documentation.</p>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">apsbss</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#initialize-pvs-for-beam-line-and-apc-run-cycle">Initialize PVs for beam line and APC run cycle</a><ul>
+<li><a class="reference internal" href="#what-beam-line-name-to-use">What beam line name to use?</a></li>
+<li><a class="reference internal" href="#what-aps-run-cycle-to-use">What APS run cycle to use?</a></li>
+<li><a class="reference internal" href="#write-the-beam-line-name-and-cycle-to-the-pvs">Write the beam line name and cycle to the PVs</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#what-proposal-and-esaf-id-numbers-to-use">What Proposal and ESAF ID numbers to use?</a></li>
+<li><a class="reference internal" href="#view-proposal-information">View Proposal Information</a></li>
+<li><a class="reference internal" href="#get-esaf-information">Get ESAF Information</a></li>
+<li><a class="reference internal" href="#update-epics-pvs-with-proposal-and-esaf">Update EPICS PVs with Proposal and ESAF</a></li>
+<li><a class="reference internal" href="#clear-the-epics-pvs">Clear the EPICS PVs</a></li>
+<li><a class="reference internal" href="#report-information-in-the-epics-pvs">Report information in the EPICS PVs</a></li>
+<li><a class="reference internal" href="#example-apsbss-command-line">Example - <code class="docutils literal notranslate"><span class="pre">apsbss</span></code> command line</a></li>
+<li><a class="reference internal" href="#displays-for-medm-caqtdm">Displays for MEDM &amp; caQtDM</a></li>
+<li><a class="reference internal" href="#ioc-management">IOC Management</a></li>
+<li><a class="reference internal" href="#reading-yaml-in-python">Reading YAML in Python</a></li>
+<li><a class="reference internal" href="#downloads">Downloads</a></li>
+<li><a class="reference internal" href="#source-code-documentation">Source code documentation</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">apsbss</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="apsbss_ioc.html"
+                        title="next chapter">apsbss: IOC Startup and Management</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/apsbss.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="apsbss_ioc.html" title="apsbss: IOC Startup and Management"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="apsbss"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">apsbss 1.5.4rc2+12.g1f4997c documentation</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">apsbss</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright .
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.0.
+    </div>
+  </body>
+</html>
