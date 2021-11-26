@@ -36,6 +36,6 @@ $(window).resize(function(){
         $("li.nav-item-0 a").text("Top");
     }
     else {
-        $("li.nav-item-0 a").text("apsbss 1.5.4rc2+12.g1f4997c documentation");
+        $("li.nav-item-0 a").text("apsbss 1.5.4rc3 documentation");
     }
 });
