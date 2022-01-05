@@ -23,7 +23,7 @@ describe the future plans.
 1.5.4
 ******
 
-release expected 2022-01-01
+released 2022-01-05
 
 This package (``apsbss``) was moved out of ``apstools`` release 1.5.4. See the
 *apstools* `change history
