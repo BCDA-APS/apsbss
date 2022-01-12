@@ -500,12 +500,20 @@ def listProposals(cycles, beamline):
 
     proposals = []
     for cycle in cycles:
-        for prop in api_bss.listProposals(
-            beamlineName=beamline, runName=cycle
-        ):
-            prop = dict(prop)
-            prop["cycle"] = cycle
-            proposals.append(prop)
+        try:
+            props = api_bss.listProposals(beamlineName=beamline, runName=cycle)
+            for prop in props:
+                prop = dict(prop)
+                prop["cycle"] = cycle
+                proposals.append(prop)
+        except Exception as exc:
+            logger.error(
+                (
+                    "Received exception from data management: "
+                    " beamlineName=%s, runName=%s"
+                    " exception=%s"
+                ) % (beamline, cycle, exc)
+            )
     return proposals
 
 
