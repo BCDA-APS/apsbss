@@ -17,26 +17,31 @@ def test_cycle_not_found():
         assert f"APS cycle '{cycle}' not found." in str(exc.value)
 
 
-def test_listESAFs():
+@pytest.mark.parametrize(
+    "cycle, sector, count",
+    [
+        ["2011-3", 9, 33],
+        ["2020-1", 9, 41],
+        ["2020-2", 9, 38],
+        [("2020-2"), 9, 38],
+        [["2020-1", "2020-2"], 9, 41+38],
+    ]
+)
+def test_listESAFs(cycle, sector, count):
     if is_aps_workstation():
-        cycle = "2020-2"
-        assert len(apsbss.listESAFs(cycle, 9)) == 35
-        assert len(apsbss.listESAFs([cycle], 9)) == 35
-        assert len(apsbss.listESAFs((cycle), 9)) == 35
-        assert len(apsbss.listESAFs("2020-1", 9)) == 41
-        assert len(apsbss.listESAFs(["2020-1", "2020-2"], 9)) == 41 + 35
-        # TODO: other tests
+        assert len(apsbss.listESAFs(cycle, sector)) == count
 
 
-def test_listProposals():
+@pytest.mark.parametrize(
+    "cycle, bl, count",
+    [
+        ["2011-3", "9-ID-B,C", 0],
+        ["2020-1", "9-ID-B,C", 12],
+        ["2020-2", "9-ID-B,C", 21],
+        [("2020-2"), "9-ID-B,C", 21],
+        [["2020-1", "2020-2"], "9-ID-B,C", 12+21],
+    ]
+)
+def test_listProposals(cycle, bl, count):
     if is_aps_workstation():
-        cycle = "2020-2"
-        bl = "9-ID-B,C"
-        assert len(apsbss.listProposals(cycle, bl)) == 21
-        assert len(apsbss.listProposals([cycle], bl)) == 21
-        assert len(apsbss.listProposals((cycle), bl)) == 21
-        assert len(apsbss.listProposals("2020-1", bl)) == 12
-        assert (
-            len(apsbss.listProposals(["2020-1", "2020-2"], bl)) == 12 + 21
-        )
-        # TODO: other tests
+        assert len(apsbss.listProposals(cycle, bl)) == count
