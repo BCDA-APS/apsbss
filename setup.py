@@ -13,7 +13,7 @@ import apsbss as package
 
 __entry_points__ = {
     "console_scripts": [
-        "apsbss = apsbss:main",
+        "apsbss = apsbss.apsbss:main",
     ],
     # 'gui_scripts': [],
 }
