@@ -20,6 +20,29 @@ describe the future plans.
 ..
    next release expected by -tba-
 
+pyyaml
+
+1.5.6
+*****
+
+released 2022-03-24
+
+Fixes
+~~~~~
+
+* add ``pyyaml`` to package requirements
+
+1.5.5
+*****
+
+released 2022-01-12
+
+Fixes
+~~~~~
+
+* install with Python 3.7+
+* ``main()`` now found for command-line use
+
 1.5.4
 ******
 
