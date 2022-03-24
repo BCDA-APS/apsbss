@@ -3,4 +3,5 @@ databroker>=1.0.6
 ophyd>=1.5.1
 pyepics>=3.4.2
 pyRestTable
+pyyaml
 spec2nexus>=2021.1.7
