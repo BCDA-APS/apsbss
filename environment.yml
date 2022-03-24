@@ -10,6 +10,7 @@ dependencies:
   - ophyd >=1.6.1
   - pip
   - pyRestTable
+  - pyyaml
   - sphinx
   - pip:
     - ipython-genutils==0.2.0
