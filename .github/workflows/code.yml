@@ -81,7 +81,7 @@ jobs:
   # https://coveralls-python.readthedocs.io/en/latest/usage/configuration.html#github-actions-support
   coveralls:
     name: Report unit test coverage to coveralls
-    needs: test-matrix
+    needs: matrix
     runs-on: ubuntu-latest
     container: python:3-slim
 
