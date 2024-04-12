@@ -712,9 +712,7 @@ def get_options():
     """Handle command line arguments."""
     global parser
     import argparse
-    from apsbss._version import get_versions
-
-    version = get_versions()["version"]
+    from .__init__ import __version__
 
     parser = argparse.ArgumentParser(
         prog=os.path.split(sys.argv[0])[-1],
@@ -726,7 +724,7 @@ def get_options():
         "--version",
         action="version",
         help="print version number and exit",
-        version=version,
+        version=__version__,
     )
 
     subcommand = parser.add_subparsers(
