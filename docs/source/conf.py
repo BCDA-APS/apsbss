@@ -61,12 +61,8 @@ html_static_path = ['_static']
 
 # http://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#confval-autodoc_mock_imports
 # TODO: review
-autodoc_mock_imports = [
-    'h5py',
-    'matplotlib',
-    'networkx',
-    'openpyxl',
-    'pyRestTable',
-    'snapshot',
-    'xarray',
-    ]
+autodoc_mock_imports = """
+    bluesky
+    ophyd
+    pyRestTable
+""".split()
