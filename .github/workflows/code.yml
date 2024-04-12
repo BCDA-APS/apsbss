@@ -51,6 +51,7 @@ jobs:
           environment-file: environment.yml
           environment-name: anaconda-test-env-py-${{ matrix.python-version }}
           create-args: >-
+            caproto
             coveralls
             pytest
             pytest-cov
