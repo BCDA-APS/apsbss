@@ -1,5 +1,6 @@
 name: apsbss-package
 channels:
+  - apsu
   - conda-forge
   - aps-anl-tag
   - defaults
