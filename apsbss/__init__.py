@@ -1,3 +1,18 @@
+"""Configuration of apsbss package."""
+
+__project__ = "apsbss"
+
+try:
+    from setuptools_scm import get_version
+
+    __version__ = get_version(root="..", relative_to=__file__)
+    del get_version
+except (LookupError, ModuleNotFoundError):
+    from importlib.metadata import version
+
+    __version__ = version(__project__)
+    del version
+
 # -----------------------------------------------------------------------------
 # :author:    Pete R. Jemian
 # :email:     jemian@anl.gov
@@ -7,64 +22,3 @@
 #
 # The full license is in the file LICENSE.txt, distributed with this software.
 # -----------------------------------------------------------------------------
-
-__project__ = u"apsbss"
-__description__ = (
-    u"Read-only interface to information from APS Proposal"
-    u" and ESAF (experiment safety approval form) databases."
-)
-__copyright__ = u"2017-2022, UChicago Argonne, LLC"
-__authors__ = [
-    u"Pete Jemian",
-]
-__author__ = ", ".join(__authors__)
-__institution__ = u"Advanced Photon Source, Argonne National Laboratory"
-__author_email__ = u"jemian@anl.gov"
-__url__ = u"https://BCDA-APS.github.io/apsbss"
-__license__ = u"(c) " + __copyright__
-__license__ += u" (see LICENSE.txt file for details)"
-__platforms__ = "any"
-__zip_safe__ = False
-__exclude_project_dirs__ = ["docs", ]
-__python_version_required__ = ">=3.7"
-
-__package_name__ = __project__
-__long_description__ = __description__
-
-from ._requirements import (
-    learn_requirements,
-)  # lgtm [py/import-own-module]
-
-__install_requires__ = learn_requirements()
-del learn_requirements
-
-__classifiers__ = [
-    "Development Status :: 5 - Production/Stable",
-    "Environment :: Console",
-    "Intended Audience :: Science/Research",
-    "License :: Freely Distributable",
-    "License :: Public Domain",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.7",
-    # "Programming Language :: Python :: 3.8",
-    # "Programming Language :: Python :: 3.9",
-    "Topic :: Scientific/Engineering",
-    "Topic :: Scientific/Engineering :: Astronomy",
-    "Topic :: Scientific/Engineering :: Bio-Informatics",
-    "Topic :: Scientific/Engineering :: Chemistry",
-    "Topic :: Scientific/Engineering :: Information Analysis",
-    "Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator",
-    "Topic :: Scientific/Engineering :: Mathematics",
-    "Topic :: Scientific/Engineering :: Physics",
-    "Topic :: Software Development :: Embedded Systems",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Scientific/Engineering :: Visualization",
-    "Topic :: Software Development",
-    "Topic :: Utilities",
-]
-
-from ._version import get_versions  # lgtm [py/import-own-module]
-
-__version__ = get_versions()["version"]
-del get_versions

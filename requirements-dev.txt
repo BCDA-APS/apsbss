@@ -1,3 +1,0 @@
-versioneer
-coverage
-coveralls
