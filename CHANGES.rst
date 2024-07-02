@@ -31,7 +31,7 @@ describe the future plans.
    Maintenance
    -----------
 
-   Update to install and run with Python versions 3.10, 3.11, 3.12.
+   Update to install and run with Python versions 3.9, 3.10, 3.11.
 
 pyyaml
 

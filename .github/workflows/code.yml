@@ -32,8 +32,8 @@ jobs:
         python-version:
           - "3.9"
           - "3.10"
+          - "3.11"
           # https://anaconda.org/aps-anl-tag/aps-dm-api/files
-          - "3.11"  # dm does not support yet.
           # - "3.12"  # dm does not support yet.
       max-parallel: 5
 
