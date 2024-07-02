@@ -16,7 +16,7 @@ maintainers = [
 ]
 dynamic = ["version"]
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 keywords = ["APS", "BSS", "bluesky", "ophyd"]
 # https://packaging.python.org/en/latest/specifications/declaring-project-metadata/?highlight=license
 license = {file = "LICENSE.txt"}
@@ -29,9 +29,11 @@ classifiers = [
     "License :: Public Domain",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
+    # https://anaconda.org/aps-anl-tag/aps-dm-api/files
+    # "Programming Language :: Python :: 3.11", # dm does not support yet.
+    # "Programming Language :: Python :: 3.12", # dm does not support yet.
     "Topic :: Scientific/Engineering",
     "Topic :: Scientific/Engineering :: Astronomy",
     "Topic :: Scientific/Engineering :: Bio-Informatics",
