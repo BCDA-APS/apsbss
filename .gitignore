@@ -1,5 +1,5 @@
-# local developer code
-dev_*.py
+# local developer files
+dev_*.*
 
 # analysis of unt test code coverage
 .coverage
