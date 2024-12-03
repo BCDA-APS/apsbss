@@ -1,6 +1,6 @@
 # apsbss
 
-Read-only interface to information from APS Proposal and ESAF (experiment safety
+Read-only interface to get information from APS Proposal and ESAF (experiment safety
 approval form) databases.
 
 home: https://bcda-aps.github.io/apsbss/

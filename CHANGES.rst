@@ -18,7 +18,43 @@ The project `milestones <https://github.com/BCDA-APS/apstools/milestones>`_
 describe the future plans.
 
 ..
+   2.0.0
+   *****
+
    next release expected by -tba-
+
+   Notice
+   ------
+
+   Complete overhaul for APS-U era.
+
+   Maintenance
+   -----------
+
+   Update to install and run with Python versions 3.9, 3.10, 3.11.
+
+pyyaml
+
+1.5.6
+*****
+
+released 2022-03-24
+
+Fixes
+~~~~~
+
+* add ``pyyaml`` to package requirements
+
+1.5.5
+*****
+
+released 2022-01-12
+
+Fixes
+~~~~~
+
+* install with Python 3.7+
+* ``main()`` now found for command-line use
 
 1.5.4
 ******

@@ -1,0 +1,99 @@
+[build-system]
+requires = [
+  "setuptools>=64",
+  "setuptools_scm[toml]>=8",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "apsbss"
+description = "Get information from APS Beamline Scheduling System."
+authors = [
+  { name="Pete Jemian", email="prjemian@gmail.com" },
+]
+maintainers = [
+  { name="Pete Jemian", email="prjemian@gmail.com" },
+]
+dynamic = ["version"]
+readme = "README.md"
+requires-python = ">=3.9"
+keywords = ["APS", "BSS", "bluesky", "ophyd"]
+# https://packaging.python.org/en/latest/specifications/declaring-project-metadata/?highlight=license
+license = {file = "LICENSE.txt"}
+# https://pypi.org/classifiers/
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Console",
+    "Intended Audience :: Science/Research",
+    "License :: Freely Distributable",
+    "License :: Public Domain",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    # https://anaconda.org/aps-anl-tag/aps-dm-api/files
+    # "Programming Language :: Python :: 3.12", # dm does not support yet.
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Astronomy",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Physics",
+    "Topic :: Software Development :: Embedded Systems",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Visualization",
+    "Topic :: Software Development",
+    "Topic :: Utilities",
+]
+
+# qt ==5
+# pyqt ==5
+dependencies = [
+  "bluesky",
+  "databroker",
+  "ophyd",
+  "pyRestTable",
+  "pyyaml",
+  "spec2nexus",
+]
+
+[project.urls]
+"Homepage" = "https://BCDA-APS.github.io/apsbss"
+"Bug Tracker" = "https://github.com/BCDA-APS/apsbss/issues"
+
+[project.scripts]
+apsbss = "apsbss.apsbss:main"
+
+[tool.black]
+line-length = 115
+
+[tool.copyright]
+copyright = "2017-2024, UChicago Argonne, LLC"
+
+[tool.flake8]
+max-line-length = 115
+extend-ignore = [
+  "E226",
+  "E402",
+  "E501",
+  "E741",
+  "F401",
+  "F403",
+  "W503",
+  "W504",
+]
+
+[tool.isort]
+force_single_line = true
+# multi_line_output = 1
+line_length = 115
+include_trailing_comma = true
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
+[tool.setuptools_scm]
