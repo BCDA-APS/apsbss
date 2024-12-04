@@ -52,10 +52,18 @@ today_fmt = "%Y-%m-%d %H:%M"
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
-# html_theme = "alabaster"
-html_theme = "bizstyle"  # ok, looks industrial
+html_context = {
+    "github_user": "BCDA-APS",
+    "github_repo": "apsbss",
+    "github_version": "main",
+    "doc_path": "docs",
+}
+html_static_path = ["_static"]
+html_theme = "pydata_sphinx_theme"
+html_theme_options = {
+    "github_url": "https://github.com/BCDA-APS/apsbss",
+}
 html_title = f"{project} {version}"
-html_static_path = ['_static']
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
