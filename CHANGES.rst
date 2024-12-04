@@ -21,19 +21,19 @@ describe the future plans.
    2.0.0
    *****
 
-   next release expected by -tba-
+   * next release expected by 2024-12-31
 
    Notice
    ------
 
-   Complete overhaul for APS-U era.
+   * Complete overhaul for APS-U era.
 
    Maintenance
    -----------
 
-   Update to install and run with Python versions 3.9, 3.10, 3.11.
+   * Update to install and run with Python versions 3.9, 3.10, 3.11.
 
-pyyaml
+-------------
 
 1.5.6
 *****
