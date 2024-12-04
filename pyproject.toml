@@ -57,6 +57,7 @@ dependencies = [
   "ophyd",
   "pyRestTable",
   "pyyaml",
+  "requests",
   "spec2nexus",
 ]
 
