@@ -8,11 +8,11 @@ Support the APSU-era scheduling system restful web service.
 
 .. rubric:: Exceptions
 .. autosummary::
-    ~AuthenticationError
-    ~AuthorizationError
-    ~ForbiddenError
+    ~MissingAuthentication
+    ~NotAllowedToRespond
     ~RequestNotFound
     ~SchedulingServerException
+    ~Unauthorized
 
 https://beam-api-dev.aps.anl.gov/beamline-scheduling/swagger-ui/index.html
 
@@ -28,15 +28,15 @@ class SchedulingServerException(RuntimeError):
     """Base for any exception from the scheduling server support."""
 
 
-class AuthenticationError(SchedulingServerException):
+class MissingAuthentication(SchedulingServerException):
     """Incorrect or missing authentication details."""
 
 
-class AuthorizationError(SchedulingServerException):
+class Unauthorized(SchedulingServerException):
     """Credentials valid but not authorized to access."""
 
 
-class ForbiddenError(SchedulingServerException):
+class NotAllowedToRespond(SchedulingServerException):
     """Scheduling server is not allowed to respond to that request."""
 
 
@@ -146,6 +146,7 @@ class SchedulingServer:
     @property
     def authorizedBeamlines(self):
         """Beamlines where these credentials are authorized."""
+        # TODO: just the beamline names?
         return self.webget("userBeamlineAuthorizedEdit/getAuthorizedBeamlines")
 
     def auth_from_creds(self, username, password):
@@ -251,7 +252,7 @@ class SchedulingServer:
         type        meaning
         =========== ================================================
         None        Default to the current time (in the local timezone).
-        str         ISO8601-formatted date and time representation: "2024-12-01T08:21" (seconds are optional).
+        str         ISO8601-formatted date and time representation: "2024-12-01T08:21:00-06:00".
         datetime    A 'datetime.datetime' object.
         =========== ================================================
         """
@@ -279,7 +280,7 @@ class SchedulingServer:
         import requests  # The name 'requests' might be used elsewhere.
 
         if self.creds is None:
-            raise AuthenticationError("Authentication is not set.")
+            raise MissingAuthentication("Authentication is not set.")
         uri = f"{self.base}/{api}"
         logger.debug("URI: %r", uri)
 
@@ -291,8 +292,8 @@ class SchedulingServer:
 
         if not self.response.ok:
             raiser = {
-                "Unauthorized": AuthorizationError,
-                "Forbidden": ForbiddenError,
+                "Unauthorized": Unauthorized,
+                "Forbidden": NotAllowedToRespond,
             }.get(self.response.reason, SchedulingServerException)
             raise raiser(
                 f"reason: {self.response.reason!r}"
