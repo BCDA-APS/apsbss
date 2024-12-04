@@ -33,7 +33,9 @@ __all__ = [
 
 # from ..plans import addDeviceDataAsStream
 from bluesky import plan_stubs as bps
-from ophyd import Component, Device, EpicsSignal
+from ophyd import Component
+from ophyd import Device
+from ophyd import EpicsSignal
 
 
 class EpicsEsafExperimenterDevice(Device):

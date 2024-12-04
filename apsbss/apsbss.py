@@ -62,14 +62,18 @@ APPLICATION
 # -----------------------------------------------------------------------------
 
 import datetime
-import dm  # APS data management library
 import logging
 import os
-import pyRestTable
 import sys
 import time
 import warnings
+
+import dm  # APS data management library
+import pyRestTable
 import yaml
+
+from .sched_system import SchedulingServer
+from .sched_system import SchedulingServerException
 
 # logger = logging.getLogger(__name__).addHandler(logging.NullHandler())
 logger = logging.getLogger(__name__)
@@ -712,6 +716,7 @@ def get_options():
     """Handle command line arguments."""
     global parser
     import argparse
+
     from .__init__ import __version__
 
     parser = argparse.ArgumentParser(
