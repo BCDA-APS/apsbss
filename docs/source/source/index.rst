@@ -3,8 +3,7 @@
 APS Proposal and ESAF Support
 =============================
 
-Source code documentation of the
-support for the APS Proposal and ESAF
+Source code documentation of the support for the APS Proposal and ESAF
 (experiment safety approval form) databases.
 
 .. toctree::
