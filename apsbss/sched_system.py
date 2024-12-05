@@ -68,37 +68,98 @@ class BeamtimeRequest:
     @property
     def current(self) -> bool:
         """Is this proposal active now?"""
-        return False  # TODO
+        now = datetime.datetime.now().astimezone()
+        start = datetime.datetime.fromisoformat(self._dig("run.startTime", ""))
+        end = datetime.datetime.fromisoformat(self._dig("run.endTime", ""))
+        return start <= now <= end
+
+    def _dig(self, path, default={}):
+        """Dig through the raw dictionary along the dotted path."""
+        obj = self.raw
+        num = len(path.split("."))
+        for i, part in enumerate(path.split("."), start=1):
+            fallback = {} if i < num else default
+            obj = obj.get(part, fallback)
+        return obj
+
+    def _find_user(self, first, last):
+        """Return the dictionary with the specified user."""
+        matches = [
+            user
+            for user in self._dig("beamtime.proposal.experimenters", [])
+            if user["firstName"] == first and user["lastName"] == last
+        ]
+        return matches
 
     @property
     def emails(self) -> list:
         """List of emails on this proposal."""
-        return ["TODO"]  # TODO
+        return [
+            user["email"]
+            for user in self._dig("proposal.experimenters", [])
+        ]
 
     @property
-    def experiment_info(self) -> str:
+    def experiment_info(self) -> dict:
         """Experiment details provided with this proposal."""
-        return "TODO"  # TODO
+        pi = self._find_user(self._dig("piFirstName", ""), self._dig("piLastName", ""))[0]
+
+        info = {}
+        info["run"] = self._dig("run.runName")
+        info["PI Name"] = f'{pi["firstName"]} {pi["lastName"]}'
+        info["PI affiliation"] = pi["institution"]
+        info["PI email"] = pi["email"]
+        info["PI badge"] = pi["badge"]
+        info["Proposal GUP"] = self.proposal_id
+        info["Proposal Title"] = self.title
+        if self._dig("proposalType", None) == "PUP":
+            info["Proposal PUP"] = self._dig("proposal.pupId", "")
+
+        info["Equipment"] = self._dig("beamtime.equipment", "")
+        
+        # is there a better choice for these times?
+        info["Start time"] = self._dig("run.startTime", "")
+        info["End time"] = self._dig("run.endTime", "")
+        info["User email addresses"] = self.emails
+
+        return info
 
     @property
     def pi(self) -> str:
         """Principal Investigator (last name) on this proposal."""
-        return "TODO"  # TODO
+        return self.raw.get("piLastName", {})
 
     @property
     def proposal_id(self) -> str:
         """The proposal identifier."""
-        return "TODO"  # TODO
+        return self._dig("proposal.gupId", "no GUP")
 
     @property
     def title(self) -> str:
         """The proposal title."""
-        return "TODO"  # TODO
+        return self._dig("proposalTitle", "no title")
 
     @property
     def users(self) -> list:
-        """List of users on this proposal."""
-        return ["TODO"]  # TODO
+        """List of users (first & last names) on this proposal."""
+        return [
+            f'{user["firstName"]} {user["lastName"]}'
+            for user in self._dig("proposal.experimenters", [])
+        ]
+
+    def __repr__(self):
+        """Short summary of this beamtime request."""
+        n_truncate = 40
+        title = self.title
+        if len(title) > n_truncate:
+            title = title[:n_truncate-4] + " ..."
+        return (
+            "BeamtimeRequest("
+              f"id:{self.proposal_id!r}"
+              f", pi:{self.pi!r}"
+              f", title:{title!r}"
+            ")"
+        )
 
 
 class SchedulingServer:
