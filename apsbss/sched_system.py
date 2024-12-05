@@ -68,10 +68,14 @@ class BeamtimeRequest:
     @property
     def current(self) -> bool:
         """Is this proposal active now?"""
-        now = datetime.datetime.now().astimezone()
-        start = datetime.datetime.fromisoformat(self._dig("run.startTime", ""))
-        end = datetime.datetime.fromisoformat(self._dig("run.endTime", ""))
-        return start <= now <= end
+        try:
+            now = datetime.datetime.now().astimezone()
+            start = datetime.datetime.fromisoformat(self._dig("run.startTime", ""))
+            end = datetime.datetime.fromisoformat(self._dig("run.endTime", ""))
+            return start <= now <= end
+        except ValueError:
+            # Cannot determine (at least one of) the dates.
+            return False
 
     def _dig(self, path, default={}):
         """Dig through the raw dictionary along the dotted path."""

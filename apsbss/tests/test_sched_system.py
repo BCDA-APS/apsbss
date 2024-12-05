@@ -5,6 +5,7 @@ import pathlib
 from contextlib import nullcontext as does_not_raise
 
 import pytest
+import yaml
 
 from ..sched_system import BeamtimeRequest
 from ..sched_system import MissingAuthentication
@@ -14,13 +15,73 @@ from ..sched_system import SchedulingServerException
 from ..sched_system import Unauthorized
 from ._core import is_aps_workstation
 
-CREDS_FILE = pathlib.Path(__file__).parent / "dev_creds.txt"
+TEST_DATA_PATH = pathlib.Path(__file__).parent / "data"
+CREDS_FILE = TEST_DATA_PATH / "dev_creds.txt"
+BTR_77056_FILE = TEST_DATA_PATH / "gupId-77056.yml"
 
 
 def test_BeamtimeRequest():
-    btr = BeamtimeRequest({})  # TODO: class needs to be filled out.
+    btr = BeamtimeRequest({})
     assert btr.raw == {}
     assert not btr.current
+
+    btr = BeamtimeRequest(
+        yaml.load(
+            open(BTR_77056_FILE).read(),
+            Loader=yaml.SafeLoader,
+        )
+    )
+    assert len(btr.raw) == 23
+    assert not btr.current
+    assert btr._dig("beamtime.proposal.proposalType.display") == "PUP"
+
+    user = btr._find_user("Andrew", "Allen")
+    assert isinstance(user, list)
+    assert len(user) == 1
+
+    user = user[0]
+    assert isinstance(user, dict)
+    assert user["firstName"] == "Andrew"
+    assert user["lastName"] == "Allen"
+    assert user["piFlag"] == "Y"
+
+    assert isinstance(btr.emails, list)
+    assert len(btr.emails) == 6
+    assert "andrew.allen@nist.gov" in btr.emails
+
+    info = btr.experiment_info
+    assert isinstance(info, dict)
+    assert len(info) == 12
+    assert info["run"] == "2022-2"
+    assert info["PI Name"] != btr.pi
+    assert info["PI Name"] == "Andrew Allen"
+    assert info["PI affiliation"] == "National Institute of Standards and Technology (NIST)"
+    assert info["PI email"] == "andrew.allen@nist.gov"
+    assert info["PI badge"] == "85849"
+    assert info["Proposal GUP"] == btr.proposal_id
+    assert info["Proposal Title"] == btr.title
+    assert info["Proposal PUP"] == "57504"
+    assert "capillary gas flow detector system;" in info["Equipment"]
+    assert info["Start time"] == "2022-05-24T08:00:00-05:00"
+    assert info["End time"] == "2022-10-01T00:00:00-05:00"
+    assert info["User email addresses"] == btr.emails
+
+    assert btr.pi == "Allen"
+    assert isinstance(btr.proposal_id, str), f"{type(btr.proposal_id)=!r}"
+    assert btr.proposal_id == "77056"
+
+    assert btr.title == "USAXS/SAXS/WAXS Characterization at an MBA Storage Ring"
+
+    assert isinstance(btr.users, list)
+    assert len(btr.users) == 6
+    assert "Andrew Allen" in btr.users
+
+    summary = repr(btr)
+    assert summary.startswith("BeamtimeRequest(")
+    assert summary.endswith(")")
+    assert "id:'77056'" in summary
+    assert "pi:'Allen'" in summary
+    assert "title:'USAXS/SAXS/WAXS" in summary
 
 
 def test_SchedulingServer_credentials():
