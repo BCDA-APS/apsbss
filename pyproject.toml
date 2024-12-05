@@ -61,6 +61,23 @@ dependencies = [
   "spec2nexus",
 ]
 
+[project.optional-dependencies]
+dev = ["build", "ipython", "isort", "mypy", "pre-commit", "pytest", "ruff"]
+
+doc = [
+    "ipykernel",
+    "jinja2",
+    "pydata-sphinx-theme",
+    "pygments-ipython-console",
+    "pygments",
+    "sphinx-design",
+    "sphinx-tabs",
+    "sphinx",
+]
+
+all = ["apsbss[dev,doc]"]
+
+
 [project.urls]
 "Homepage" = "https://BCDA-APS.github.io/apsbss"
 "Bug Tracker" = "https://github.com/BCDA-APS/apsbss/issues"

@@ -20,7 +20,7 @@ Package Information
 :author: Pete R. Jemian <jemian@anl.gov>
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Contents:
    :glob:
 
