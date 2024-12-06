@@ -72,16 +72,15 @@ import dm  # APS data management library
 import pyRestTable
 import yaml
 
-from .sched_system import SchedulingServer
-from .sched_system import SchedulingServerException
+from .core import DM_APS_DB_WEB_SERVICE_URL
 
-# logger = logging.getLogger(__name__).addHandler(logging.NullHandler())
 logger = logging.getLogger(__name__)
 
-DM_APS_DB_WEB_SERVICE_URL = "https://xraydtn01.xray.aps.anl.gov:11236"
 CONNECT_TIMEOUT = 5
 POLL_INTERVAL = 0.01
 
+# TODO: refactor from dm_bss module
+# TODO: consider sched_system module as alternative BSS API
 api_bss = dm.BssApsDbApi(DM_APS_DB_WEB_SERVICE_URL)
 api_esaf = dm.EsafApsDbApi(DM_APS_DB_WEB_SERVICE_URL)
 
@@ -468,7 +467,7 @@ def listESAFs(cycles, sector):
     if len(sector) == 1:
         sector = "0" + sector
 
-    runs = {r["name"]: r for r in api_bss.listRuns()}
+    runs = {r["name"]: r for r in listAllRuns()}
 
     results = []
 
@@ -568,7 +567,7 @@ def listRecentRuns(quantity=6):
     tNow = datetime.datetime.now()
     runs = [
         run["name"]
-        for run in api_bss.listRuns()
+        for run in listAllRuns()
         if (
             datetime.datetime.timestamp(iso2datetime(run["startTime"]))
             <=
@@ -831,7 +830,7 @@ def cmd_cycles(args):
             return entry["startTime"]
 
         for entry in sorted(
-            api_bss.listRuns(), key=sorter, reverse=args.ascending
+            listAllRuns(), key=sorter, reverse=args.ascending
         ):
             table.addRow(
                 (entry["name"], entry["startTime"], entry["endTime"],)

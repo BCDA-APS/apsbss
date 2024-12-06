@@ -1,10 +1,10 @@
 """
-Support the APSU-era scheduling system restful web service.
+Support the APSU-era scheduling system restful web service from the IS group.
 
 .. autosummary::
 
-    ~BeamtimeRequest
-    ~SchedulingServer
+    ~IS_BeamtimeRequest
+    ~IS_SchedulingServer
 
 .. rubric:: Exceptions
 .. autosummary::
@@ -20,6 +20,10 @@ https://beam-api-dev.aps.anl.gov/beamline-scheduling/swagger-ui/index.html
 
 import datetime
 import logging
+
+from .core import ProposalBase
+from .core import ScheduleInterfaceBase
+from .core import User
 
 logger = logging.getLogger(__name__)
 
@@ -44,38 +48,42 @@ class RequestNotFound(SchedulingServerException):
     """Beamtime request (proposal) was not found."""
 
 
-class BeamtimeRequest:
+class IS_BeamtimeRequest(ProposalBase):
     """
-    A single beamtime request (proposal).
+    Content of a single beamtime request (proposal).
 
     .. autosummary::
 
         ~current
         ~emails
-        ~experiment_info
+        ~endTime
+        ~info
         ~pi
         ~proposal_id
+        ~startTime
         ~title
         ~users
-
-    Compare with Francesco's draft code:
-    https://github.com/decarlof/sandbox/blob/d1cbe8a1d0a07f9b730c9f71a21c38bf21ffc57a/rest-api/connect_schedule_01.py#L49C5-L49C16
     """
 
     def __init__(self, raw: dict) -> None:
         self.raw = raw
 
-    @property
-    def current(self) -> bool:
-        """Is this proposal active now?"""
-        try:
-            now = datetime.datetime.now().astimezone()
-            start = datetime.datetime.fromisoformat(self._dig("run.startTime", ""))
-            end = datetime.datetime.fromisoformat(self._dig("run.endTime", ""))
-            return start <= now <= end
-        except ValueError:
-            # Cannot determine (at least one of) the dates.
-            return False
+    def __repr__(self):
+        """Short summary of this beamtime request."""
+        n_truncate = 40
+        title = self.title
+        if len(title) > n_truncate:
+            title = title[: n_truncate - 4] + " ..."
+        # fmt: off
+        return (
+            "IS_BeamtimeRequest("
+            f"id:{self.proposal_id!r}"
+            f", current:{self.current}"
+            f", title:{title!r}" ")"
+            f", pi:{self.pi!r}"
+            ")"
+        )
+        # fmt: on
 
     def _dig(self, path, default={}):
         """Dig through the raw dictionary along the dotted path."""
@@ -88,50 +96,74 @@ class BeamtimeRequest:
 
     def _find_user(self, first, last):
         """Return the dictionary with the specified user."""
-        matches = [
-            user
-            for user in self._dig("beamtime.proposal.experimenters", [])
-            if user["firstName"] == first and user["lastName"] == last
-        ]
-        return matches
+        full_name = f"{first} {last}"
+        all_matches = [user for user in self._users if user.fullName == full_name]
+        return all_matches
+
+    @property
+    def current(self) -> bool:
+        """Is this proposal active now?"""
+        try:
+            now = datetime.datetime.now().astimezone()
+            return self.startTime <= now <= self.endTime
+        except ValueError:
+            # Cannot determine (at least one of) the dates.
+            return False
 
     @property
     def emails(self) -> list:
         """List of emails on this proposal."""
-        return [
-            user["email"]
-            for user in self._dig("proposal.experimenters", [])
-        ]
+        return [user.email for user in self._users]
 
     @property
-    def experiment_info(self) -> dict:
-        """Experiment details provided with this proposal."""
-        pi = self._find_user(self._dig("piFirstName", ""), self._dig("piLastName", ""))[0]
+    def endTime(self) -> datetime.datetime:
+        """Return the ending time of this proposal."""
+        # FIXME: Too general! Is there a better source for this info?
+        # Perhaps from an "activity"?
+        return datetime.datetime.fromisoformat(self._dig("run.endTime", ""))
+
+    @property
+    def info(self) -> dict:
+        """Details provided with this proposal."""
 
         info = {}
-        info["run"] = self._dig("run.runName")
-        info["PI Name"] = f'{pi["firstName"]} {pi["lastName"]}'
-        info["PI affiliation"] = pi["institution"]
-        info["PI email"] = pi["email"]
-        info["PI badge"] = pi["badge"]
         info["Proposal GUP"] = self.proposal_id
         info["Proposal Title"] = self.title
+
+        info["Start time"] = str(self.startTime)
+        info["End time"] = str(self.endTime)
+
+        pi = self._pi
+        info["Users"] = [str(u) for u in self._users]
+        info["PI Name"] = pi.fullName
+        info["PI affiliation"] = pi.affiliation
+        info["PI email"] = pi.email
+        info["PI badge"] = pi.badge
+
+        # Scheduling System rest interface provides this info
+        # which is not available vi DM's API.
+        info["Equipment"] = self._dig("beamtime.equipment", "")
+        info["run"] = self.run
         if self._dig("proposalType", None) == "PUP":
             info["Proposal PUP"] = self._dig("proposal.pupId", "")
-
-        info["Equipment"] = self._dig("beamtime.equipment", "")
-        
-        # is there a better choice for these times?
-        info["Start time"] = self._dig("run.startTime", "")
-        info["End time"] = self._dig("run.endTime", "")
-        info["User email addresses"] = self.emails
 
         return info
 
     @property
-    def pi(self) -> str:
-        """Principal Investigator (last name) on this proposal."""
-        return self.raw.get("piLastName", {})
+    def _pi(self) -> User:
+        """Return first listed principal investigator or user."""
+        default = None
+        for user in self._users:
+            if default is None:
+                default = user  # Otherwise, pick the first one.
+            if user.is_pi:
+                return user
+        return default
+
+    @property
+    def pi(self):
+        """Return the full name and email of the principal investigator."""
+        return str(self._pi)
 
     @property
     def proposal_id(self) -> str:
@@ -139,49 +171,49 @@ class BeamtimeRequest:
         return self._dig("proposal.gupId", "no GUP")
 
     @property
+    def run(self) -> str:
+        """The run identifier."""
+        return self._dig("run.runName")
+
+    @property
+    def startTime(self) -> datetime.datetime:
+        """Return the starting time of this proposal."""
+        # FIXME: Too general! Is there a better source for this info?
+        # Perhaps from an "activity"?
+        return datetime.datetime.fromisoformat(self._dig("run.startTime", ""))
+
+    @property
     def title(self) -> str:
         """The proposal title."""
         return self._dig("proposalTitle", "no title")
 
     @property
+    def _users(self) -> object:
+        """Return a list of all users, as 'User' objects."""
+        return [User(u) for u in self._dig("beamtime.proposal.experimenters", [])]
+
+    @property
     def users(self) -> list:
         """List of users (first & last names) on this proposal."""
-        return [
-            f'{user["firstName"]} {user["lastName"]}'
-            for user in self._dig("proposal.experimenters", [])
-        ]
-
-    def __repr__(self):
-        """Short summary of this beamtime request."""
-        n_truncate = 40
-        title = self.title
-        if len(title) > n_truncate:
-            title = title[:n_truncate-4] + " ..."
-        return (
-            "BeamtimeRequest("
-              f"id:{self.proposal_id!r}"
-              f", pi:{self.pi!r}"
-              f", title:{title!r}"
-            ")"
-        )
+        return [user.fullName for user in self._users]
 
 
-class SchedulingServer:
+class IS_SchedulingServer(ScheduleInterfaceBase):
     """
     Interact with the APS-U era beamline scheduling restful web server.
 
     .. autosummary::
 
         ~activeBeamlines
-        ~allRuns
         ~auth_from_creds
         ~auth_from_file
         ~beamlines
-        ~beamtime_requests
         ~current_proposal
         ~current_run
         ~get_activities
         ~get_request
+        ~proposals
+        ~runs
         ~runsByDateTime
         ~runsByRunYear
         ~webget
@@ -204,7 +236,7 @@ class SchedulingServer:
         return self.webget("beamline/findAllActiveBeamlines")
 
     @property
-    def allRuns(self):
+    def runs(self):
         """Details about all known runs in database."""
         return self.webget("run/getAllRuns")
 
@@ -232,9 +264,9 @@ class SchedulingServer:
         """List of all active beamlines, by name."""
         return sorted([entry["beamlineId"] for entry in self.activeBeamlines])
 
-    def beamtime_requests(self, beamline: str, run: str = None) -> dict:
+    def proposals(self, beamline: str, run: str = None) -> dict:
         """
-        Get all beamtime request details for 'beamline' and 'run'.
+        Get all proposal (beamtime request) details for 'beamline' and 'run'.
 
         Credentials must match to the specific beamline.
 
@@ -257,9 +289,13 @@ class SchedulingServer:
             Credentials are not authorized access to view beamtime requests (or
             proposals) from 'beamline'.
         """
+        # TODO: cache proposals, such as ApsDmScheduleInterface
+        # key = f"proposals-{beamline!r}-{run!r}"
+
         if run is None:
             run = self.current_run["runName"]
 
+        # Server will validate if data from 'beamline' & 'run' can be provided.
         if beamline != self._beamline or run != self._run:
             # Only if not already in memeory.
             api = "beamtimeRequests/findBeamtimeRequestsByRunAndBeamline"
@@ -270,14 +306,14 @@ class SchedulingServer:
             self._run = run
             self._proposals = {}
             for entry in entries:
-                proposal = BeamtimeRequest(entry)
+                proposal = IS_BeamtimeRequest(entry)
                 self._proposals[proposal.proposal_id] = proposal
 
         return self._proposals
 
     def current_proposal(self, beamline: str):
         """Return the current (active) proposal or 'None'."""
-        for proposal in self.beamtime_requests(beamline).values():
+        for proposal in self.proposals(beamline).values():
             if proposal.current:
                 return proposal
         return None
@@ -302,7 +338,7 @@ class SchedulingServer:
         if run is None:
             run = self.current_run["runName"]
 
-        proposal = self.beamtime_requests(beamline).get(proposal_id)
+        proposal = self.proposals(beamline).get(proposal_id)
         if proposal is None:
             raise RequestNotFound(f"{beamline=!r}, {proposal_id!r}, {run=!r}")
         return proposal

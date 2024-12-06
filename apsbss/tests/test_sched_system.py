@@ -7,12 +7,13 @@ from contextlib import nullcontext as does_not_raise
 import pytest
 import yaml
 
-from ..sched_system import BeamtimeRequest
+from ..sched_system import IS_BeamtimeRequest
+from ..sched_system import IS_SchedulingServer
 from ..sched_system import MissingAuthentication
 from ..sched_system import NotAllowedToRespond
-from ..sched_system import SchedulingServer
 from ..sched_system import SchedulingServerException
 from ..sched_system import Unauthorized
+from ..sched_system import User
 from ._core import is_aps_workstation
 
 TEST_DATA_PATH = pathlib.Path(__file__).parent / "data"
@@ -20,12 +21,12 @@ CREDS_FILE = TEST_DATA_PATH / "dev_creds.txt"
 BTR_77056_FILE = TEST_DATA_PATH / "gupId-77056.yml"
 
 
-def test_BeamtimeRequest():
-    btr = BeamtimeRequest({})
+def test_IS_BeamtimeRequest():
+    btr = IS_BeamtimeRequest({})
     assert btr.raw == {}
     assert not btr.current
 
-    btr = BeamtimeRequest(
+    btr = IS_BeamtimeRequest(
         yaml.load(
             open(BTR_77056_FILE).read(),
             Loader=yaml.SafeLoader,
@@ -40,16 +41,16 @@ def test_BeamtimeRequest():
     assert len(user) == 1
 
     user = user[0]
-    assert isinstance(user, dict)
-    assert user["firstName"] == "Andrew"
-    assert user["lastName"] == "Allen"
-    assert user["piFlag"] == "Y"
+    assert isinstance(user, User)
+    assert user.firstName == "Andrew"
+    assert user.lastName == "Allen"
+    assert user.is_pi
 
     assert isinstance(btr.emails, list)
     assert len(btr.emails) == 6
     assert "andrew.allen@nist.gov" in btr.emails
 
-    info = btr.experiment_info
+    info = btr.info
     assert isinstance(info, dict)
     assert len(info) == 12
     assert info["run"] == "2022-2"
@@ -62,11 +63,11 @@ def test_BeamtimeRequest():
     assert info["Proposal Title"] == btr.title
     assert info["Proposal PUP"] == "57504"
     assert "capillary gas flow detector system;" in info["Equipment"]
-    assert info["Start time"] == "2022-05-24T08:00:00-05:00"
-    assert info["End time"] == "2022-10-01T00:00:00-05:00"
-    assert info["User email addresses"] == btr.emails
+    assert info["Start time"] == "2022-05-24 08:00:00-05:00"
+    assert info["End time"] == "2022-10-01 00:00:00-05:00"
+    assert info["Users"] == list(map(str, btr._users))  # [str(u) for u in btr._users]
 
-    assert btr.pi == "Allen"
+    assert btr.pi == str(user)
     assert isinstance(btr.proposal_id, str), f"{type(btr.proposal_id)=!r}"
     assert btr.proposal_id == "77056"
 
@@ -77,15 +78,15 @@ def test_BeamtimeRequest():
     assert "Andrew Allen" in btr.users
 
     summary = repr(btr)
-    assert summary.startswith("BeamtimeRequest(")
+    assert summary.startswith("IS_BeamtimeRequest(")
     assert summary.endswith(")")
     assert "id:'77056'" in summary
-    assert "pi:'Allen'" in summary
+    assert "pi:'Andrew Allen <andrew.allen@nist.gov>'" in summary
     assert "title:'USAXS/SAXS/WAXS" in summary
 
 
 def test_SchedulingServer_credentials():
-    ss = SchedulingServer(dev=True)  # prepare to connect
+    ss = IS_SchedulingServer(dev=True)  # prepare to connect
     assert ss is not None
     assert "-dev" in ss.base
 
@@ -127,13 +128,13 @@ def test_SchedulingServer_credentials():
 
 
 def test_SchedulingServer():
-    ss = SchedulingServer(dev=True)  # prepare to connect
+    ss = IS_SchedulingServer(dev=True)  # prepare to connect
     assert ss is not None
     if not CREDS_FILE.exists() or not is_aps_workstation():
         return  # Can't test anything here.
 
     ss.auth_from_file(CREDS_FILE)
-    assert len(ss.allRuns) > 40  # more than 40 run cycles in the database
+    assert len(ss.runs) > 40  # more than 40 run cycles in the database
 
     run = ss.current_run
     assert isinstance(run, dict)
@@ -165,23 +166,23 @@ def test_SchedulingServer():
     ],
 )
 def test_beamlines(beamline, run, expected):
-    ss = SchedulingServer(dev=True)  # prepare to connect
+    ss = IS_SchedulingServer(dev=True)  # prepare to connect
     assert ss is not None
     if not CREDS_FILE.exists() or not is_aps_workstation():
         return  # Can't test anything here.
 
     ss.auth_from_file(CREDS_FILE)
-    assert len(ss.allRuns) > 40  # more than 40 run cycles in the database
+    assert len(ss.runs) > 40  # more than 40 run cycles in the database
 
     assert beamline in ss.beamlines
 
     my_beamlines = [entry["beamline"] for entry in ss.authorizedBeamlines]
     if beamline in my_beamlines:
         # expected = 0  # expect to see zero requests when unauthorized
-        requests = ss.beamtime_requests(beamline, run)
+        requests = ss.proposals(beamline, run)
         assert len(requests) == expected
     else:
         with pytest.raises(NotAllowedToRespond) as reason:
-            ss.beamtime_requests(beamline, run)
+            ss.proposals(beamline, run)
         # text truncated: "User not authorized for beamline Id :"
         assert "Forbidden" in str(reason)
