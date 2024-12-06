@@ -1,4 +1,9 @@
-"""Schedule info via APS Data Management Interface to IS Service."""
+"""
+BSS_DM
+======
+
+Schedule info via APS Data Management Interface to IS Service.
+"""
 
 import logging
 
@@ -156,17 +161,6 @@ class ApsDmScheduleInterface(ScheduleInterfaceBase):
             self._cache["beamlines"] = [bl["name"] for bl in beamlines]
         return self._cache["beamlines"]
 
-    @property
-    def runs(self) -> list:
-        """List of names of all known runs."""
-        if "runs" not in self._cache:
-            self._cache["runs"] = [run["name"] for run in self.listRuns]
-        return self._cache["runs"]
-
-    def getProposal(self, proposal_id, beamline, cycle):
-        """Get 'proposal_id' for 'beamline' during 'run'.  None if not found."""
-        return self.proposals(beamline, cycle).get(proposal_id)
-
     def proposals(self, beamline, run) -> dict:
         """
         Get all proposal (beamtime request) details for 'beamline' and 'run'.
@@ -199,8 +193,15 @@ class ApsDmScheduleInterface(ScheduleInterfaceBase):
         return self._cache[key]
 
     @property
-    def listRuns(self) -> list:
+    def _runs(self) -> list:
         """List of details of all known runs."""
         if "listRuns" not in self._cache:
             self._cache["listRuns"] = self.api.listRuns()
         return self._cache["listRuns"]
+
+    @property
+    def runs(self) -> list:
+        """List of names of all known runs."""
+        if "runs" not in self._cache:
+            self._cache["runs"] = [run["name"] for run in self._runs]
+        return self._cache["runs"]

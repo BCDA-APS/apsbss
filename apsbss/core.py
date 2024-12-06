@@ -8,6 +8,7 @@ Core components.
     ~User
 """
 
+import abc
 import datetime
 
 DM_APS_DB_WEB_SERVICE_URL = "https://xraydtn01.xray.aps.anl.gov:11236"
@@ -59,7 +60,7 @@ class User:
         return (self._raw.get("piFlag") or "n").lower()[0] == "y"
 
 
-class ProposalBase:
+class ProposalBase(abc.ABC):
     """
     Base class for a single beam time request (proposal).
 
@@ -183,7 +184,53 @@ class ProposalBase:
         return dict(self._raw)
 
 
-class ScheduleInterfaceBase:
+class ScheduleInterfaceBase(abc.ABC):
     """Base class for interface to any scheduling system."""
 
     # TODO generalize from subclasses
+
+    @property
+    @abc.abstractmethod
+    def beamlines(self) -> list:
+        """List of all known beamlines, by name."""
+
+    @property
+    def current_run(self) -> dict:
+        """All details about the current run."""
+        now = datetime.datetime.now().astimezone()
+        for run in self.runs:
+            start = run.startTime
+            end = run.endTime
+            if start <= now <= end:
+                return run
+        return {}
+
+    def getProposal(self, proposal_id, beamline, cycle):
+        """Get 'proposal_id' for 'beamline' during 'run'.  None if not found."""
+        return self.proposals(beamline, cycle).get(proposal_id)
+
+    @abc.abstractmethod
+    def proposals(self, beamline: str, run: str = None) -> dict:
+        """
+        Get all proposal (beamtime request) details for 'beamline' and 'run'.
+
+        Credentials must match to the specific beamline.
+
+        Parameters
+        ----------
+        beamline : str
+            beamline ID as stored in the APS scheduling system, e.g. 2-BM-A,B or 7-BM-B or 32-ID-B,C
+        run : str
+            Run name e.g. '2024-1'.  Default: name of the current run.
+
+        Returns
+        -------
+        proposals : dict
+            Dictionary of 'ProposalBase' objects, keyed by proposal number,
+            scheduled on 'beamline' for 'run'.
+        """
+
+    @property
+    @abc.abstractmethod
+    def runs(self) -> list:
+        """Details (from server) about all known runs."""

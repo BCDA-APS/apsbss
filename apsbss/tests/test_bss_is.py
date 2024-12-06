@@ -1,24 +1,23 @@
-"""Test the Scheduling Server API (only works at APS)."""
+"""Test the Scheduling Server API (some tests only work at APS)."""
 
 import datetime
-import pathlib
 from contextlib import nullcontext as does_not_raise
 
 import pytest
 import yaml
 
 from ..bss_is import IS_BeamtimeRequest
+from ..bss_is import IS_Exception
+from ..bss_is import IS_MissingAuthentication
+from ..bss_is import IS_NotAllowedToRespond
 from ..bss_is import IS_SchedulingServer
-from ..bss_is import MissingAuthentication
-from ..bss_is import NotAllowedToRespond
-from ..bss_is import SchedulingServerException
-from ..bss_is import Unauthorized
+from ..bss_is import IS_Unauthorized
 from ..bss_is import User
+from ._core import CREDS_FILE
+from ._core import TEST_DATA_PATH
 from ._core import is_aps_workstation
 
-TEST_DATA_PATH = pathlib.Path(__file__).parent / "data"
-CREDS_FILE = TEST_DATA_PATH / "dev_creds.txt"
-BTR_77056_FILE = TEST_DATA_PATH / "gupId-77056.yml"
+IS_BTR_77056_FILE = TEST_DATA_PATH / "is-gupId-77056.yml"
 
 
 def test_IS_BeamtimeRequest():
@@ -28,7 +27,7 @@ def test_IS_BeamtimeRequest():
 
     btr = IS_BeamtimeRequest(
         yaml.load(
-            open(BTR_77056_FILE).read(),
+            open(IS_BTR_77056_FILE).read(),
             Loader=yaml.SafeLoader,
         )
     )
@@ -61,15 +60,15 @@ def test_IS_BeamtimeRequest():
     assert info["PI badge"] == "85849"
     assert info["Proposal GUP"] == btr.proposal_id
     assert info["Proposal Title"] == btr.title
-    assert info["Proposal PUP"] == "57504"
+    assert info["Proposal PUP"] == 57504
     assert "capillary gas flow detector system;" in info["Equipment"]
     assert info["Start time"] == "2022-05-24 08:00:00-05:00"
     assert info["End time"] == "2022-10-01 00:00:00-05:00"
     assert info["Users"] == list(map(str, btr._users))  # [str(u) for u in btr._users]
 
     assert btr.pi == str(user)
-    assert isinstance(btr.proposal_id, str), f"{type(btr.proposal_id)=!r}"
-    assert btr.proposal_id == "77056"
+    assert isinstance(btr.proposal_id, int), f"{type(btr.proposal_id)=!r}"
+    assert btr.proposal_id == 77056
 
     assert btr.title == "USAXS/SAXS/WAXS Characterization at an MBA Storage Ring"
 
@@ -80,7 +79,7 @@ def test_IS_BeamtimeRequest():
     summary = repr(btr)
     assert summary.startswith("IS_BeamtimeRequest(")
     assert summary.endswith(")")
-    assert "id:'77056'" in summary
+    assert "id:77056" in summary
     assert "pi:'Andrew Allen <andrew.allen@nist.gov>'" in summary
     assert "title:'USAXS/SAXS/WAXS" in summary
 
@@ -91,7 +90,7 @@ def test_SchedulingServer_credentials():
     assert "-dev" in ss.base
 
     # no credentials
-    with pytest.raises(MissingAuthentication) as reason:
+    with pytest.raises(IS_MissingAuthentication) as reason:
         ss.webget("run/getAllRuns")
     assert "Authentication is not set." in str(reason)
 
@@ -102,13 +101,13 @@ def test_SchedulingServer_credentials():
 
     # empty credentials
     ss.creds = ("", "")
-    with pytest.raises(Unauthorized) as reason:
+    with pytest.raises(IS_Unauthorized) as reason:
         ss.webget("run/getAllRuns")
     assert "401: Unauthorized" in str(reason)
 
     # credentials not recognized
     ss.creds = ("username", "password")
-    with pytest.raises(Unauthorized) as reason:
+    with pytest.raises(IS_Unauthorized) as reason:
         ss.webget("run/getAllRuns")
     assert "401: Unauthorized" in str(reason)
 
@@ -121,7 +120,7 @@ def test_SchedulingServer_credentials():
         assert reply is not None
 
         # Move this assertion to tests of exceptions
-        with pytest.raises(SchedulingServerException) as reason:
+        with pytest.raises(IS_Exception) as reason:
             ss.runsByDateTime(2024)  # should use iso8601 text or None
         # The text "Unparseable date" might be converted into "..."
         assert "Internal Server Error" in str(reason)
@@ -182,7 +181,7 @@ def test_beamlines(beamline, run, expected):
         requests = ss.proposals(beamline, run)
         assert len(requests) == expected
     else:
-        with pytest.raises(NotAllowedToRespond) as reason:
+        with pytest.raises(IS_NotAllowedToRespond) as reason:
             ss.proposals(beamline, run)
         # text truncated: "User not authorized for beamline Id :"
         assert "Forbidden" in str(reason)

@@ -1,4 +1,7 @@
 """
+BSS_IS
+======
+
 Support the APSU-era scheduling system restful web service from the IS group.
 
 .. autosummary::
@@ -8,11 +11,11 @@ Support the APSU-era scheduling system restful web service from the IS group.
 
 .. rubric:: Exceptions
 .. autosummary::
-    ~MissingAuthentication
-    ~NotAllowedToRespond
-    ~RequestNotFound
-    ~SchedulingServerException
-    ~Unauthorized
+    ~IS_Exception
+    ~IS_MissingAuthentication
+    ~IS_NotAllowedToRespond
+    ~IS_RequestNotFound
+    ~IS_Unauthorized
 
 https://beam-api-dev.aps.anl.gov/beamline-scheduling/swagger-ui/index.html
 
@@ -28,23 +31,23 @@ from .core import User
 logger = logging.getLogger(__name__)
 
 
-class SchedulingServerException(RuntimeError):
+class IS_Exception(RuntimeError):
     """Base for any exception from the scheduling server support."""
 
 
-class MissingAuthentication(SchedulingServerException):
+class IS_MissingAuthentication(IS_Exception):
     """Incorrect or missing authentication details."""
 
 
-class Unauthorized(SchedulingServerException):
+class IS_Unauthorized(IS_Exception):
     """Credentials valid but not authorized to access."""
 
 
-class NotAllowedToRespond(SchedulingServerException):
+class IS_NotAllowedToRespond(IS_Exception):
     """Scheduling server is not allowed to respond to that request."""
 
 
-class RequestNotFound(SchedulingServerException):
+class IS_RequestNotFound(IS_Exception):
     """Beamtime request (proposal) was not found."""
 
 
@@ -229,6 +232,7 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
         self._beamline = None  # Most-recent beamline
         self._run = None  # Most-recent run
         self._proposals = {}  # Proposals for beamline+run
+        self._cache = {}  # TODO: as in bss_dm
 
     @property
     def activeBeamlines(self):
@@ -236,14 +240,8 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
         return self.webget("beamline/findAllActiveBeamlines")
 
     @property
-    def runs(self):
-        """Details about all known runs in database."""
-        return self.webget("run/getAllRuns")
-
-    @property
     def authorizedBeamlines(self):
         """Beamlines where these credentials are authorized."""
-        # TODO: just the beamline names?
         return self.webget("userBeamlineAuthorizedEdit/getAuthorizedBeamlines")
 
     def auth_from_creds(self, username, password):
@@ -263,6 +261,38 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
     def beamlines(self):
         """List of all active beamlines, by name."""
         return sorted([entry["beamlineId"] for entry in self.activeBeamlines])
+
+    def current_proposal(self, beamline: str):
+        """Return the current (active) proposal or 'None'."""
+        for proposal in self.proposals(beamline).values():
+            if proposal.current:
+                return proposal
+        return None
+
+    @property
+    def current_run(self):
+        """All details about the current run."""
+        entries = self.webget("run/getCurrentRun")
+        return entries[0]
+
+    def get_activities(self, beamline, run=None):
+        """An "activity" describes what is scheduled."""
+        if run is None:
+            run = self.current_run["runName"]
+        logger.warning("get_activities(%r, %r)", beamline, run)
+        return self.webget(
+            "activity/findByRunNameAndBeamlineId" f"/{run}/{beamline}",
+        )
+
+    def get_request(self, beamline, proposal_id, run=None):
+        """Return the request (proposal) by beamline, id, and run."""
+        if run is None:
+            run = self.current_run["runName"]
+
+        proposal = self.proposals(beamline).get(proposal_id)
+        if proposal is None:
+            raise IS_RequestNotFound(f"{beamline=!r}, {proposal_id!r}, {run=!r}")
+        return proposal
 
     def proposals(self, beamline: str, run: str = None) -> dict:
         """
@@ -285,7 +315,7 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
 
         Raises
         -------
-        SchedulingServerException :
+        IS_Exception :
             Credentials are not authorized access to view beamtime requests (or
             proposals) from 'beamline'.
         """
@@ -311,37 +341,10 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
 
         return self._proposals
 
-    def current_proposal(self, beamline: str):
-        """Return the current (active) proposal or 'None'."""
-        for proposal in self.proposals(beamline).values():
-            if proposal.current:
-                return proposal
-        return None
-
     @property
-    def current_run(self):
-        """All details about the current run."""
-        entries = self.webget("run/getCurrentRun")
-        return entries[0]
-
-    def get_activities(self, beamline, run=None):
-        """How is this different from getRequestByRunAndBeamline()?"""
-        if run is None:
-            run = self.current_run["runName"]
-        logger.warning("get_activities(%r, %r)", beamline, run)
-        return self.webget(
-            "activity/findByRunNameAndBeamlineId" f"/{run}/{beamline}",
-        )
-
-    def get_request(self, beamline, proposal_id, run=None):
-        """Return the request (proposal) by beamline, id, and run."""
-        if run is None:
-            run = self.current_run["runName"]
-
-        proposal = self.proposals(beamline).get(proposal_id)
-        if proposal is None:
-            raise RequestNotFound(f"{beamline=!r}, {proposal_id!r}, {run=!r}")
-        return proposal
+    def runs(self):
+        """Details about all known runs in database."""
+        return self.webget("run/getAllRuns")
 
     def runsByDateTime(self, dateTime=None):
         """
@@ -381,21 +384,21 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
         import requests  # The name 'requests' might be used elsewhere.
 
         if self.creds is None:
-            raise MissingAuthentication("Authentication is not set.")
+            raise IS_MissingAuthentication("Authentication is not set.")
         uri = f"{self.base}/{api}"
         logger.debug("URI: %r", uri)
 
         # main event: Send the server the URI, get the response
         self.response = requests.get(uri, auth=self.creds)
         if self.response is None:
-            raise SchedulingServerException(f"None response from server.  {uri=!r}")
+            raise IS_Exception(f"None response from server.  {uri=!r}")
         logger.debug("response OK? %s", self.response.ok)
 
         if not self.response.ok:
             raiser = {
-                "Unauthorized": Unauthorized,
-                "Forbidden": NotAllowedToRespond,
-            }.get(self.response.reason, SchedulingServerException)
+                "Unauthorized": IS_Unauthorized,
+                "Forbidden": IS_NotAllowedToRespond,
+            }.get(self.response.reason, IS_Exception)
             raise raiser(
                 f"reason: {self.response.reason!r}"
                 f", text: {self.response.text!r}"
