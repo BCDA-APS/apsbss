@@ -2,8 +2,7 @@ name: apsbss-package
 channels:
   - apsu
   - conda-forge
-  - aps-anl-tag
-  - defaults
+  - nodefaults
 dependencies:
   - python >=3.9
   - aps-dm-api
