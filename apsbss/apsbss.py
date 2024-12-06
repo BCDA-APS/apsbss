@@ -79,8 +79,8 @@ logger = logging.getLogger(__name__)
 CONNECT_TIMEOUT = 5
 POLL_INTERVAL = 0.01
 
-# TODO: refactor from dm_bss module
-# TODO: consider sched_system module as alternative BSS API
+# TODO: refactor from bss_dm module
+# TODO: consider bss_is module as alternative BSS API
 api_bss = dm.BssApsDbApi(DM_APS_DB_WEB_SERVICE_URL)
 api_esaf = dm.EsafApsDbApi(DM_APS_DB_WEB_SERVICE_URL)
 

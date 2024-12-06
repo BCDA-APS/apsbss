@@ -1,8 +1,8 @@
-.. _sched_system:
+.. _bss_is:
 
 APSU-era scheduling system restful web service
 ==============================================
 
-.. automodule:: apsbss.sched_system
+.. automodule:: apsbss.bss_is
     :members:
 

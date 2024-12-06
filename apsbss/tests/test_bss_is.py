@@ -7,13 +7,13 @@ from contextlib import nullcontext as does_not_raise
 import pytest
 import yaml
 
-from ..sched_system import IS_BeamtimeRequest
-from ..sched_system import IS_SchedulingServer
-from ..sched_system import MissingAuthentication
-from ..sched_system import NotAllowedToRespond
-from ..sched_system import SchedulingServerException
-from ..sched_system import Unauthorized
-from ..sched_system import User
+from ..bss_is import IS_BeamtimeRequest
+from ..bss_is import IS_SchedulingServer
+from ..bss_is import MissingAuthentication
+from ..bss_is import NotAllowedToRespond
+from ..bss_is import SchedulingServerException
+from ..bss_is import Unauthorized
+from ..bss_is import User
 from ._core import is_aps_workstation
 
 TEST_DATA_PATH = pathlib.Path(__file__).parent / "data"
