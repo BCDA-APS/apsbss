@@ -4,7 +4,6 @@ import datetime
 from contextlib import nullcontext as does_not_raise
 
 import pytest
-import yaml
 
 from ..bss_is import IS_BeamtimeRequest
 from ..bss_is import IS_Exception
@@ -17,6 +16,7 @@ from ..core import miner
 from ._core import CREDS_FILE
 from ._core import TEST_DATA_PATH
 from ._core import is_aps_workstation
+from ._core import yaml_loader
 
 IS_BTR_77056_FILE = TEST_DATA_PATH / "is-gupId-77056.yml"
 
@@ -26,12 +26,7 @@ def test_IS_BeamtimeRequest():
     assert btr.raw == {}
     assert not btr.current
 
-    btr = IS_BeamtimeRequest(
-        yaml.load(
-            open(IS_BTR_77056_FILE).read(),
-            Loader=yaml.SafeLoader,
-        )
-    )
+    btr = IS_BeamtimeRequest(yaml_loader(IS_BTR_77056_FILE))
     assert len(btr.raw) == 23
     assert not btr.current
     assert miner(btr.raw, "beamtime.proposal.proposalType.display") == "PUP"
