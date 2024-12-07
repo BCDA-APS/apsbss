@@ -26,8 +26,8 @@ Package Information
 
    install
    apsbss
-   apsbss_ioc
-   source/index
+   ioc
+   api/index
    changes
    license
 

@@ -1,5 +1,6 @@
 """
-Core components.
+Core components
+===============
 
 .. autosummary::
 
@@ -15,8 +16,40 @@ import datetime
 DM_APS_DB_WEB_SERVICE_URL = "https://xraydtn01.xray.aps.anl.gov:11236"
 
 
+def miner(root, path: str, default=None):
+    """
+    Return a value from a nested dictionary-like structure.
+
+    root : dict-like
+        The nested dictionary-like structure.
+    path: str
+        Text description of the keys to be navigated.  Keys are separated by dots.
+    default : object
+        Return this value if 'path' is not found.
+        Default is 'None.
+    """
+    obj = root
+    num = len(path.split("."))
+    for i, part in enumerate(path.split("."), start=1):
+        fallback = {} if i < num else default
+        obj = obj.get(part, fallback)
+    return obj
+
+
 class User:
-    """A single user on a proposal (beamtime request)."""
+    """
+    A single user on a proposal (beamtime request).
+
+    .. rubric:: Property Methods
+    .. autosummary::
+        ~affiliation
+        ~badge
+        ~email
+        ~firstName
+        ~fullName
+        ~lastName
+        ~is_pi
+    """
 
     def __init__(self, raw):
         self._raw = raw  # dict-like object
@@ -65,8 +98,13 @@ class ProposalBase(abc.ABC):
     """
     Base class for a single beam time request (proposal).
 
-    .. autosummary::
+    Override any of the methods to access the raw data from the server.
 
+    .. autosummary::
+        ~to_dict
+
+    .. rubric:: Property Methods
+    .. autosummary::
         ~current
         ~emails
         ~endTime
@@ -79,6 +117,14 @@ class ProposalBase(abc.ABC):
     """
 
     def __init__(self, raw) -> None:
+        """
+        Create a new instance.
+
+        Parameters
+        ----------
+        raw : dict
+            Dictionary-like object with raw information from the server.
+        """
         self._raw = raw  # dict-like object
 
     def __repr__(self) -> str:
@@ -186,9 +232,21 @@ class ProposalBase(abc.ABC):
 
 
 class ScheduleInterfaceBase(abc.ABC):
-    """Base class for interface to any scheduling system."""
+    """
+    Base class for interface to any scheduling system.
 
-    # TODO generalize from subclasses
+    Override any of the methods to access the raw data from the server.
+
+    .. autosummary::
+        ~getProposal
+
+    .. rubric:: Property Methods
+    .. autosummary::
+        ~beamlines
+        ~current_run
+        ~proposals
+        ~runs
+    """
 
     @property
     @abc.abstractmethod
@@ -235,23 +293,3 @@ class ScheduleInterfaceBase(abc.ABC):
     @abc.abstractmethod
     def runs(self) -> list:
         """Details (from server) about all known runs."""
-
-
-def miner(root, path: str, default=None):
-    """
-    Return a value from a nested dictionary-like structure.
-
-    root : dict-like
-        The nested dictionary-like structure.
-    path: str
-        Text description of the keys to be navigated.  Keys are separated by dots.
-    default : object
-        Return this value if 'path' is not found.
-        Default is 'None.
-    """
-    obj = root
-    num = len(path.split("."))
-    for i, part in enumerate(path.split("."), start=1):
-        fallback = {} if i < num else default
-        obj = obj.get(part, fallback)
-    return obj

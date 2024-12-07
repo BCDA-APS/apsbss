@@ -1,7 +1,7 @@
 .. _beamtime_source_docs:
 
-APS Proposal and ESAF Support
-=============================
+API
+===
 
 Source code documentation of the support for the APS Proposal and ESAF
 (experiment safety approval form) databases.
