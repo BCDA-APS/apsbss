@@ -13,6 +13,7 @@ from ..bss_is import IS_NotAllowedToRespond
 from ..bss_is import IS_SchedulingServer
 from ..bss_is import IS_Unauthorized
 from ..bss_is import User
+from ..core import miner
 from ._core import CREDS_FILE
 from ._core import TEST_DATA_PATH
 from ._core import is_aps_workstation
@@ -33,7 +34,7 @@ def test_IS_BeamtimeRequest():
     )
     assert len(btr.raw) == 23
     assert not btr.current
-    assert btr._dig("beamtime.proposal.proposalType.display") == "PUP"
+    assert miner(btr.raw, "beamtime.proposal.proposalType.display") == "PUP"
 
     user = btr._find_user("Andrew", "Allen")
     assert isinstance(user, list)

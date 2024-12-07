@@ -3,6 +3,7 @@ Core components.
 
 .. autosummary::
 
+    ~miner
     ~ProposalBase
     ~ScheduleInterfaceBase
     ~User
@@ -234,3 +235,23 @@ class ScheduleInterfaceBase(abc.ABC):
     @abc.abstractmethod
     def runs(self) -> list:
         """Details (from server) about all known runs."""
+
+
+def miner(root, path: str, default=None):
+    """
+    Return a value from a nested dictionary-like structure.
+
+    root : dict-like
+        The nested dictionary-like structure.
+    path: str
+        Text description of the keys to be navigated.  Keys are separated by dots.
+    default : object
+        Return this value if 'path' is not found.
+        Default is 'None.
+    """
+    obj = root
+    num = len(path.split("."))
+    for i, part in enumerate(path.split("."), start=1):
+        fallback = {} if i < num else default
+        obj = obj.get(part, fallback)
+    return obj

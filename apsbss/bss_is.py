@@ -26,7 +26,7 @@ import logging
 
 from .core import ProposalBase
 from .core import ScheduleInterfaceBase
-from .core import User
+from .core import User, miner
 
 logger = logging.getLogger(__name__)
 
@@ -88,15 +88,6 @@ class IS_BeamtimeRequest(ProposalBase):
         )
         # fmt: on
 
-    def _dig(self, path, default={}):
-        """Dig through the raw dictionary along the dotted path."""
-        obj = self.raw
-        num = len(path.split("."))
-        for i, part in enumerate(path.split("."), start=1):
-            fallback = {} if i < num else default
-            obj = obj.get(part, fallback)
-        return obj
-
     def _find_user(self, first, last):
         """Return the dictionary with the specified user."""
         full_name = f"{first} {last}"
@@ -121,9 +112,10 @@ class IS_BeamtimeRequest(ProposalBase):
     @property
     def endTime(self) -> datetime.datetime:
         """Return the ending time of this proposal."""
-        # FIXME: Too general! Is there a better source for this info?
-        # Perhaps from an "activity"?
-        return datetime.datetime.fromisoformat(self._dig("run.endTime", ""))
+        iso = miner(self.raw, "activity.endTime")
+        if iso is None:
+            iso = miner(self.raw, "run.endTime", "")
+        return datetime.datetime.fromisoformat(iso)
 
     @property
     def info(self) -> dict:
@@ -145,10 +137,10 @@ class IS_BeamtimeRequest(ProposalBase):
 
         # Scheduling System rest interface provides this info
         # which is not available vi DM's API.
-        info["Equipment"] = self._dig("beamtime.equipment", "")
+        info["Equipment"] = miner(self.raw, "beamtime.equipment", "")
         info["run"] = self.run
-        if self._dig("proposalType", None) == "PUP":
-            info["Proposal PUP"] = self._dig("proposal.pupId", "")
+        if miner(self.raw, "proposalType", None) == "PUP":
+            info["Proposal PUP"] = miner(self.raw, "proposal.pupId", "")
 
         return info
 
@@ -171,29 +163,30 @@ class IS_BeamtimeRequest(ProposalBase):
     @property
     def proposal_id(self) -> str:
         """The proposal identifier."""
-        return self._dig("proposal.gupId", "no GUP")
+        return miner(self.raw, "proposal.gupId", "no GUP")
 
     @property
     def run(self) -> str:
         """The run identifier."""
-        return self._dig("run.runName")
+        return miner(self.raw, "run.runName")
 
     @property
     def startTime(self) -> datetime.datetime:
         """Return the starting time of this proposal."""
-        # FIXME: Too general! Is there a better source for this info?
-        # Perhaps from an "activity"?
-        return datetime.datetime.fromisoformat(self._dig("run.startTime", ""))
+        iso = miner(self.raw, "activity.startTime")
+        if iso is None:
+            iso = miner(self.raw, "run.startTime", "")
+        return datetime.datetime.fromisoformat(iso)
 
     @property
     def title(self) -> str:
         """The proposal title."""
-        return self._dig("proposalTitle", "no title")
+        return miner(self.raw, "proposalTitle", "no title")
 
     @property
-    def _users(self) -> object:
+    def _users(self) -> list:
         """Return a list of all users, as 'User' objects."""
-        return [User(u) for u in self._dig("beamtime.proposal.experimenters", [])]
+        return [User(u) for u in miner(self.raw, "beamtime.proposal.experimenters", [])]
 
     @property
     def users(self) -> list:
@@ -208,12 +201,12 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
     .. autosummary::
 
         ~activeBeamlines
+        ~activities
         ~auth_from_creds
         ~auth_from_file
         ~beamlines
         ~current_proposal
         ~current_run
-        ~get_activities
         ~get_request
         ~proposals
         ~runs
@@ -232,12 +225,28 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
         self._beamline = None  # Most-recent beamline
         self._run = None  # Most-recent run
         self._proposals = {}  # Proposals for beamline+run
-        self._cache = {}  # TODO: as in bss_dm
+        self._cache = {}
 
     @property
     def activeBeamlines(self):
         """Details about all active beamlines in database."""
         return self.webget("beamline/findAllActiveBeamlines")
+
+    def activities(self, beamline, run=None) -> dict:
+        """An "activity" describes scheduled beamtime."""
+        if run is None:
+            run = self.current_run["runName"]
+
+        key = f"activities-{beamline!r}-{run!r}"
+        if key not in self._cache:
+            self._cache[key] = {
+                miner(activity, "beamtime.proposal.gupId"): dict(activity)
+                for activity in self.webget(
+                    f"activity/findByRunNameAndBeamlineId/{run}/{beamline}",
+                )
+            }
+
+        return self._cache[key]
 
     @property
     def authorizedBeamlines(self):
@@ -274,15 +283,6 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
         """All details about the current run."""
         entries = self.webget("run/getCurrentRun")
         return entries[0]
-
-    def get_activities(self, beamline, run=None):
-        """An "activity" describes what is scheduled."""
-        if run is None:
-            run = self.current_run["runName"]
-        logger.warning("get_activities(%r, %r)", beamline, run)
-        return self.webget(
-            "activity/findByRunNameAndBeamlineId" f"/{run}/{beamline}",
-        )
 
     def get_request(self, beamline, proposal_id, run=None):
         """Return the request (proposal) by beamline, id, and run."""
@@ -337,7 +337,12 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
             self._proposals = {}
             for entry in entries:
                 proposal = IS_BeamtimeRequest(entry)
-                self._proposals[proposal.proposal_id] = proposal
+                gupId = proposal.proposal_id
+                activity = self.activities(beamline, run).get(gupId)
+                if activity is not None:
+                    entry["activity"] = activity
+                    proposal = IS_BeamtimeRequest(entry)
+                self._proposals[gupId] = proposal
 
         return self._proposals
 
