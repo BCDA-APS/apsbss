@@ -1,0 +1,360 @@
+activiityTypeName: sector staff
+beamline:
+  beamlineId: 8-ID-E
+  beamlineIdOld: 8-ID
+  beamlineName: GIXS, GISAXS, GIWAXS, and XPCS
+  beamlineNum: 109
+  inactiveDate: null
+  operator:
+    operatorId: 15
+    operatorName: X-ray Science Division, APS
+    operatorShortName: XSD
+  sector:
+    sectorId: 8
+    sectorName: Sector 8
+    sectorNum: 8
+  source:
+    sourceId: 2
+    sourceName: ID
+  stations:
+  - beamLineNum: 109
+    createdDate: null
+    inactiveDate: null
+    stationId: 84
+    stationName: E
+  supportedTechniques:
+  - collaborationOnlyFlag: N
+    orderColumn: 1
+    supportedTechniquesId:
+      beamLineNum: 109
+      techniqueId: 508
+    technique:
+      category: Spectroscopy
+      inactiveFlag: null
+      subCategory: Hard X-ray Spectroscopy
+      techniqueId: 508
+      techniqueName: X-ray photon correlation spectroscopy
+  - collaborationOnlyFlag: N
+    orderColumn: 0
+    supportedTechniquesId:
+      beamLineNum: 109
+      techniqueId: 510
+    technique:
+      category: Scattering
+      inactiveFlag: null
+      subCategory: Hard X-ray Scattering
+      techniqueId: 510
+      techniqueName: 'Grazing incidence small-angle scattering '
+beamlineId: 8-ID-E
+beamlineRank: 1st
+beamlineScheduledShifts: 9
+beamtime:
+  actualShifts: null
+  anyBeamlineFlag: null
+  beamlineFirst:
+    beamlineId: 8-ID-E
+    beamlineIdOld: 8-ID
+    beamlineName: GIXS, GISAXS, GIWAXS, and XPCS
+    beamlineNum: 109
+    inactiveDate: null
+    operator:
+      operatorId: 15
+      operatorName: X-ray Science Division, APS
+      operatorShortName: XSD
+    sector:
+      sectorId: 8
+      sectorName: Sector 8
+      sectorNum: 8
+    source:
+      sourceId: 2
+      sourceName: ID
+    stations:
+    - beamLineNum: 109
+      createdDate: null
+      inactiveDate: null
+      stationId: 84
+      stationName: E
+    supportedTechniques:
+    - collaborationOnlyFlag: N
+      orderColumn: 1
+      supportedTechniquesId:
+        beamLineNum: 109
+        techniqueId: 508
+      technique:
+        category: Spectroscopy
+        inactiveFlag: null
+        subCategory: Hard X-ray Spectroscopy
+        techniqueId: 508
+        techniqueName: X-ray photon correlation spectroscopy
+    - collaborationOnlyFlag: N
+      orderColumn: 0
+      supportedTechniquesId:
+        beamLineNum: 109
+        techniqueId: 510
+      technique:
+        category: Scattering
+        inactiveFlag: null
+        subCategory: Hard X-ray Scattering
+        techniqueId: 510
+        techniqueName: 'Grazing incidence small-angle scattering '
+  beamlineSecond: null
+  beamlineThird: null
+  beamtimeId: 218797
+  declinedFlag: null
+  equipment: null
+  grantedBeamline:
+    beamlineId: 8-ID-E
+    beamlineIdOld: 8-ID
+    beamlineName: GIXS, GISAXS, GIWAXS, and XPCS
+    beamlineNum: 109
+    inactiveDate: null
+    operator:
+      operatorId: 15
+      operatorName: X-ray Science Division, APS
+      operatorShortName: XSD
+    sector:
+      sectorId: 8
+      sectorName: Sector 8
+      sectorNum: 8
+    source:
+      sourceId: 2
+      sourceName: ID
+    stations:
+    - beamLineNum: 109
+      createdDate: null
+      inactiveDate: null
+      stationId: 84
+      stationName: E
+    supportedTechniques:
+    - collaborationOnlyFlag: N
+      orderColumn: 1
+      supportedTechniquesId:
+        beamLineNum: 109
+        techniqueId: 508
+      technique:
+        category: Spectroscopy
+        inactiveFlag: null
+        subCategory: Hard X-ray Spectroscopy
+        techniqueId: 508
+        techniqueName: X-ray photon correlation spectroscopy
+    - collaborationOnlyFlag: N
+      orderColumn: 0
+      supportedTechniquesId:
+        beamLineNum: 109
+        techniqueId: 510
+      technique:
+        category: Scattering
+        inactiveFlag: null
+        subCategory: Hard X-ray Scattering
+        techniqueId: 510
+        techniqueName: 'Grazing incidence small-angle scattering '
+  grantedShifts: null
+  preferredDates: []
+  proposal:
+    experimenters:
+    - badge: '44673'
+      email: fong@anl.gov
+      firstName: Dillon
+      gupExperimenterId: 516065
+      institution: Argonne National Laboratory
+      lastName: Fong
+      piFlag: null
+    - badge: '299214'
+      email: b299214@anl.gov
+      firstName: Hui
+      gupExperimenterId: 516069
+      institution: Argonne National Laboratory
+      lastName: Cao
+      piFlag: null
+    - badge: '258711'
+      email: jwenderott@anl.gov
+      firstName: Jill
+      gupExperimenterId: 516067
+      institution: Argonne National Laboratory
+      lastName: Wenderott
+      piFlag: null
+    - badge: '301250'
+      email: yanx@anl.gov
+      firstName: Xi
+      gupExperimenterId: 516068
+      institution: Argonne National Laboratory
+      lastName: Yan
+      piFlag: null
+    - badge: '85323'
+      email: dufresne@anl.gov
+      firstName: Eric
+      gupExperimenterId: 516071
+      institution: Argonne National Laboratory
+      lastName: Dufresne
+      piFlag: Y
+    - badge: '305918'
+      email: yan.li@anl.gov
+      firstName: Yan
+      gupExperimenterId: 516070
+      institution: Argonne National Laboratory
+      lastName: Li
+      piFlag: null
+    gupId: 78544
+    mailInFlag: null
+    proposalStatus:
+      statusDesc: SUBMITTED
+      statusId: 2
+      statusType: BOTH
+    proposalTitle: In-situ X-ray Photon Correlation Spectroscopy Studies of Ionic
+      Devices
+    proposalType:
+      display: APS Staff
+      inactiveFlag: null
+      typeDescription: 'APS Beamline Staff '
+      typeId: A
+    proprietaryFlag: N
+    pupId: null
+    submittedDate: '2022-02-25T11:08:43-06:00'
+    totalShiftsRequested: null
+  proposalStatus:
+    statusDesc: ALLOCATED
+    statusId: 4
+    statusType: BTR
+  rapidAccessFlag: null
+  requestedDate: '2022-02-25T11:08:42-06:00'
+  scheduledBeamline1:
+    beamlineId: 8-ID-E
+    beamlineIdOld: 8-ID
+    beamlineName: GIXS, GISAXS, GIWAXS, and XPCS
+    beamlineNum: 109
+    inactiveDate: null
+    operator:
+      operatorId: 15
+      operatorName: X-ray Science Division, APS
+      operatorShortName: XSD
+    sector:
+      sectorId: 8
+      sectorName: Sector 8
+      sectorNum: 8
+    source:
+      sourceId: 2
+      sourceName: ID
+    stations:
+    - beamLineNum: 109
+      createdDate: null
+      inactiveDate: null
+      stationId: 84
+      stationName: E
+    supportedTechniques:
+    - collaborationOnlyFlag: N
+      orderColumn: 1
+      supportedTechniquesId:
+        beamLineNum: 109
+        techniqueId: 508
+      technique:
+        category: Spectroscopy
+        inactiveFlag: null
+        subCategory: Hard X-ray Spectroscopy
+        techniqueId: 508
+        techniqueName: X-ray photon correlation spectroscopy
+    - collaborationOnlyFlag: N
+      orderColumn: 0
+      supportedTechniquesId:
+        beamLineNum: 109
+        techniqueId: 510
+      technique:
+        category: Scattering
+        inactiveFlag: null
+        subCategory: Hard X-ray Scattering
+        techniqueId: 510
+        techniqueName: 'Grazing incidence small-angle scattering '
+  scheduledBeamline2: null
+  scheduledBeamline3: null
+  scheduledBeamline4: null
+  scheduledShifts: 9
+  scheduledShifts2: null
+  scheduledShifts3: null
+  scheduledShifts4: null
+  schedulingPeriods:
+    notifyUserDate: '2021-12-22T08:00:00-06:00'
+    runEndDate: '2022-04-28T00:00:00-05:00'
+    runStartDate: '2022-02-01T00:00:00-06:00'
+    schedulingPeriods: 2022-1
+  timeUnit: 1
+beamtimeId: 218797
+customGroup: staff
+grantedShifts: 0
+localAccess: local
+loggedInBadgeNo: '41981'
+piFirstName: Eric
+piInstitution: Argonne National Laboratory
+piLastName: Dufresne
+proposal:
+  experimenters:
+  - badge: '44673'
+    email: fong@anl.gov
+    firstName: Dillon
+    gupExperimenterId: 516065
+    institution: Argonne National Laboratory
+    lastName: Fong
+    piFlag: null
+  - badge: '299214'
+    email: b299214@anl.gov
+    firstName: Hui
+    gupExperimenterId: 516069
+    institution: Argonne National Laboratory
+    lastName: Cao
+    piFlag: null
+  - badge: '258711'
+    email: jwenderott@anl.gov
+    firstName: Jill
+    gupExperimenterId: 516067
+    institution: Argonne National Laboratory
+    lastName: Wenderott
+    piFlag: null
+  - badge: '301250'
+    email: yanx@anl.gov
+    firstName: Xi
+    gupExperimenterId: 516068
+    institution: Argonne National Laboratory
+    lastName: Yan
+    piFlag: null
+  - badge: '85323'
+    email: dufresne@anl.gov
+    firstName: Eric
+    gupExperimenterId: 516071
+    institution: Argonne National Laboratory
+    lastName: Dufresne
+    piFlag: Y
+  - badge: '305918'
+    email: yan.li@anl.gov
+    firstName: Yan
+    gupExperimenterId: 516070
+    institution: Argonne National Laboratory
+    lastName: Li
+    piFlag: null
+  gupId: 78544
+  mailInFlag: null
+  proposalStatus:
+    statusDesc: SUBMITTED
+    statusId: 2
+    statusType: BOTH
+  proposalTitle: In-situ X-ray Photon Correlation Spectroscopy Studies of Ionic Devices
+  proposalType:
+    display: APS Staff
+    inactiveFlag: null
+    typeDescription: 'APS Beamline Staff '
+    typeId: A
+  proprietaryFlag: N
+  pupId: null
+  submittedDate: '2022-02-25T11:08:43-06:00'
+  totalShiftsRequested: null
+proposalTitle: In-situ X-ray Photon Correlation Spectroscopy Studies of Ionic Devices
+proposalType: APS Staff
+requestedShifts: 9
+run:
+  endTime: '2022-05-24T08:00:00-05:00'
+  runId: 427
+  runName: 2022-1
+  startTime: '2022-01-25T08:00:00-06:00'
+  version: 0
+schedulingPeriod: 2022-1
+status: Claimed by 8 - ID
+timeUnitString: shifts
+totalScheduledShifts: 9
+typeDescription: 'APS Beamline Staff '

@@ -12,7 +12,7 @@ from ..core import miner
 from ._core import TEST_DATA_PATH
 from ._core import yaml_loader
 
-nested = yaml_loader(TEST_DATA_PATH / "is-gupId-77056.yml")
+nested = yaml_loader(TEST_DATA_PATH / "is-77056-btr.yml")
 minimal_proposal_dict = {
     "id": 123456,
     "title": "test proposal",

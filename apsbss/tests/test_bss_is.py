@@ -18,18 +18,18 @@ from ._core import TEST_DATA_PATH
 from ._core import is_aps_workstation
 from ._core import yaml_loader
 
-IS_BTR_77056_FILE = TEST_DATA_PATH / "is-gupId-77056.yml"
+IS_BTR_77056_FILE = TEST_DATA_PATH / "is-77056-btr.yml"
 
 
 def test_IS_BeamtimeRequest():
     btr = IS_BeamtimeRequest({})
-    assert btr.raw == {}
+    assert btr._raw == {}
     assert not btr.current
 
     btr = IS_BeamtimeRequest(yaml_loader(IS_BTR_77056_FILE))
-    assert len(btr.raw) == 23
+    assert len(btr._raw) == 23
     assert not btr.current
-    assert miner(btr.raw, "beamtime.proposal.proposalType.display") == "PUP"
+    assert miner(btr._raw, "beamtime.proposal.proposalType.display") == "PUP"
 
     user = btr._find_user("Andrew", "Allen")
     assert isinstance(user, list)
