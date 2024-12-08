@@ -1,4 +1,4 @@
-"""Test the Scheduling Server API (some tests only work at APS)."""
+"""Test the IS Scheduling Server API (some tests only work at APS)."""
 
 import datetime
 from contextlib import nullcontext as does_not_raise
@@ -11,7 +11,7 @@ from ..bss_is import IS_MissingAuthentication
 from ..bss_is import IS_NotAllowedToRespond
 from ..bss_is import IS_SchedulingServer
 from ..bss_is import IS_Unauthorized
-from ..bss_is import User
+from ..core import User
 from ..core import miner
 from ._core import CREDS_FILE
 from ._core import TEST_DATA_PATH

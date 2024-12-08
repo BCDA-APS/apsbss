@@ -254,6 +254,7 @@ class ScheduleInterfaceBase(abc.ABC):
         """List of all known beamlines, by name."""
 
     @property
+    @abc.abstractmethod
     def current_run(self) -> dict:
         """All details about the current run."""
         now = datetime.datetime.now().astimezone()
