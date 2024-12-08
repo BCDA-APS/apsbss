@@ -11,8 +11,8 @@
     Deprecations
     Contributors
 
-Change History
-##############
+History
+#######
 
 The project `milestones <https://github.com/BCDA-APS/apstools/milestones>`_
 describe the future plans.
@@ -21,19 +21,27 @@ describe the future plans.
    2.0.0
    *****
 
-   next release expected by -tba-
+   * next release expected by 2024-12-31
 
    Notice
    ------
 
-   Complete overhaul for APS-U era.
+   * Complete overhaul for APS-U era.
+
+   New Features
+   ------------
+
+   * Add support for direct access to read IS database.
 
    Maintenance
    -----------
 
-   Update to install and run with Python versions 3.9, 3.10, 3.11.
 
-pyyaml
+   * Add requests to project requirements.
+   * Switch documentation to use pydata sphinx theme.
+   * Update to install and run with Python versions 3.9, 3.10, 3.11.
+
+-------------
 
 1.5.6
 *****

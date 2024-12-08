@@ -20,7 +20,7 @@ EXAMPLE::
 # -----------------------------------------------------------------------------
 # :author:    Pete R. Jemian
 # :email:     jemian@anl.gov
-# :copyright: (c) 2017-2021, UChicago Argonne, LLC
+# :copyright: (c) 2017-2025, UChicago Argonne, LLC
 #
 # Distributed under the terms of the Creative Commons Attribution 4.0 International Public License.
 #
@@ -33,7 +33,9 @@ __all__ = [
 
 # from ..plans import addDeviceDataAsStream
 from bluesky import plan_stubs as bps
-from ophyd import Component, Device, EpicsSignal
+from ophyd import Component
+from ophyd import Device
+from ophyd import EpicsSignal
 
 
 class EpicsEsafExperimenterDevice(Device):

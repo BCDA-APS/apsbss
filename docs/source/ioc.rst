@@ -1,7 +1,7 @@
 .. _apsbss_ioc:
 
-apsbss: IOC Startup and Management
-==================================
+EPICS IOC
+=========
 
 The :ref:`apsbss_application` software
 provides information from the APS Proposal
