@@ -3,21 +3,20 @@ General tests of the apsbss module
 """
 
 import datetime
-import epics
 import pathlib
-import pytest
 import socket
 import subprocess
 import sys
 import time
 import uuid
 
-from ophyd.signal import EpicsSignalBase
+import epics
 import ophyd
+import pytest
+from ophyd.signal import EpicsSignalBase
 
 from .. import apsbss
 from .. import apsbss_makedb
-
 
 BSS_TEST_IOC_PREFIX = f"tst{uuid.uuid4().hex[:7]}:bss:"
 SRC_PATH = pathlib.Path(__file__).parent.parent

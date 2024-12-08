@@ -1,5 +1,6 @@
-import pytest
 import sys
+
+import pytest
 
 from ..apsbss import getCurrentCycle
 from ..apsbss import main
