@@ -52,41 +52,7 @@ class IS_RequestNotFound(IS_Exception):
 
 
 class IS_BeamtimeRequest(ProposalBase):
-    """
-    Content of a single beamtime request (proposal).
-
-    .. autosummary::
-
-        ~current
-        ~emails
-        ~endTime
-        ~info
-        ~pi
-        ~proposal_id
-        ~startTime
-        ~title
-        ~users
-    """
-
-    def __init__(self, raw: dict) -> None:
-        self.raw = raw
-
-    def __repr__(self):
-        """Short summary of this beamtime request."""
-        n_truncate = 40
-        title = self.title
-        if len(title) > n_truncate:
-            title = title[: n_truncate - 4] + " ..."
-        # fmt: off
-        return (
-            "IS_BeamtimeRequest("
-            f"id:{self.proposal_id!r}"
-            f", current:{self.current}"
-            f", title:{title!r}" ")"
-            f", pi:{self.pi!r}"
-            ")"
-        )
-        # fmt: on
+    """Content of a single beamtime request (proposal)."""
 
     def _find_user(self, first, last):
         """Return the dictionary with the specified user."""
@@ -95,26 +61,11 @@ class IS_BeamtimeRequest(ProposalBase):
         return all_matches
 
     @property
-    def current(self) -> bool:
-        """Is this proposal active now?"""
-        try:
-            now = datetime.datetime.now().astimezone()
-            return self.startTime <= now <= self.endTime
-        except ValueError:
-            # Cannot determine (at least one of) the dates.
-            return False
-
-    @property
-    def emails(self) -> list:
-        """List of emails on this proposal."""
-        return [user.email for user in self._users]
-
-    @property
     def endTime(self) -> datetime.datetime:
         """Return the ending time of this proposal."""
-        iso = miner(self.raw, "activity.endTime")
+        iso = miner(self._raw, "activity.endTime")
         if iso is None:
-            iso = miner(self.raw, "run.endTime", "")
+            iso = miner(self._raw, "run.endTime", "")
         return datetime.datetime.fromisoformat(iso)
 
     @property
@@ -137,61 +88,40 @@ class IS_BeamtimeRequest(ProposalBase):
 
         # Scheduling System rest interface provides this info
         # which is not available vi DM's API.
-        info["Equipment"] = miner(self.raw, "beamtime.equipment", "")
+        info["Equipment"] = miner(self._raw, "beamtime.equipment", "")
         info["run"] = self.run
-        if miner(self.raw, "proposalType", None) == "PUP":
-            info["Proposal PUP"] = miner(self.raw, "proposal.pupId", "")
+        if miner(self._raw, "proposalType", None) == "PUP":
+            info["Proposal PUP"] = miner(self._raw, "proposal.pupId", "")
 
         return info
 
     @property
-    def _pi(self) -> User:
-        """Return first listed principal investigator or user."""
-        default = None
-        for user in self._users:
-            if default is None:
-                default = user  # Otherwise, pick the first one.
-            if user.is_pi:
-                return user
-        return default
-
-    @property
-    def pi(self):
-        """Return the full name and email of the principal investigator."""
-        return str(self._pi)
-
-    @property
     def proposal_id(self) -> str:
         """The proposal identifier."""
-        return miner(self.raw, "proposal.gupId", "no GUP")
+        return miner(self._raw, "proposal.gupId", "no GUP")
 
     @property
     def run(self) -> str:
         """The run identifier."""
-        return miner(self.raw, "run.runName")
+        return miner(self._raw, "run.runName")
 
     @property
     def startTime(self) -> datetime.datetime:
         """Return the starting time of this proposal."""
-        iso = miner(self.raw, "activity.startTime")
+        iso = miner(self._raw, "activity.startTime")
         if iso is None:
-            iso = miner(self.raw, "run.startTime", "")
+            iso = miner(self._raw, "run.startTime", "")
         return datetime.datetime.fromisoformat(iso)
 
     @property
     def title(self) -> str:
         """The proposal title."""
-        return miner(self.raw, "proposalTitle", "no title")
+        return miner(self._raw, "proposalTitle", "no title")
 
     @property
     def _users(self) -> list:
         """Return a list of all users, as 'User' objects."""
-        return [User(u) for u in miner(self.raw, "beamtime.proposal.experimenters", [])]
-
-    @property
-    def users(self) -> list:
-        """List of users (first & last names) on this proposal."""
-        return [user.fullName for user in self._users]
+        return [User(u) for u in miner(self._raw, "beamtime.proposal.experimenters", [])]
 
 
 class IS_SchedulingServer(ScheduleInterfaceBase):
