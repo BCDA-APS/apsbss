@@ -26,7 +26,7 @@ def test_ApsDmScheduleInterface():
     assert isinstance(run, dm.common.objects.runInfo.RunInfo)
     assert "name" in run
 
-    run = run["name"]
+    run = run["name"]  # TODO run_name, run_start, run_end properties
     assert isinstance(run, str)
     assert "-" in run
 

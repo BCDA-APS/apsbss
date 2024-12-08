@@ -83,6 +83,10 @@ def test_ScheduleInterfaceBase():
         def beamlines(self):
             return []
 
+        @property
+        def current_run(self):
+            return {}
+
         def proposals(self, beamline, run):
             return {}
 

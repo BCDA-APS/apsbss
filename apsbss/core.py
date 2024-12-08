@@ -259,6 +259,7 @@ class ScheduleInterfaceBase(abc.ABC):
         """All details about the current run."""
         now = datetime.datetime.now().astimezone()
         for run in self.runs:
+            # TODO run_name, run_start, run_end properties
             start = run.startTime
             end = run.endTime
             if start <= now <= end:
