@@ -2,10 +2,8 @@
 
 import datetime
 
-import dm.common.objects.runInfo
-
-from ..bss_dm import ApsDmScheduleInterface
 from ..bss_dm import DM_BeamtimeProposal
+from ..bss_dm import DM_ScheduleInterface
 from ..core import User
 from ._core import TEST_DATA_PATH
 from ._core import is_aps_workstation
@@ -15,18 +13,19 @@ DM_BTR_78243_FILE = TEST_DATA_PATH / "dm-78243-btr.yml"
 
 
 def test_ApsDmScheduleInterface():
-    ss = ApsDmScheduleInterface()
+    ss = DM_ScheduleInterface()
     assert ss is not None
 
     if not is_aps_workstation():
         return
 
     run = ss.current_run
-    assert not isinstance(run, dict)
-    assert isinstance(run, dm.common.objects.runInfo.RunInfo)
-    assert "name" in run
+    assert isinstance(run, dict)
+    assert isinstance(run.get("name"), str)
+    assert isinstance(run.get("startTime"), datetime.datetime)
+    assert isinstance(run.get("endTime"), datetime.datetime)
 
-    run = run["name"]  # TODO run_name, run_start, run_end properties
+    run = run["name"]
     assert isinstance(run, str)
     assert "-" in run
 

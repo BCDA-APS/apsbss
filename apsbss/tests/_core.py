@@ -1,7 +1,8 @@
 """Common support for testing."""
 
-import socket
 import pathlib
+import socket
+
 import yaml
 
 TEST_DATA_PATH = pathlib.Path(__file__).parent / "data"

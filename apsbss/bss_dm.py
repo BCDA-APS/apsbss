@@ -6,8 +6,8 @@ Schedule info via APS Data Management Interface to IS Service.
 
 .. autosummary::
 
-    ~ApsDmScheduleInterface
     ~DM_BeamtimeProposal
+    ~DM_ScheduleInterface
 """
 
 import datetime
@@ -26,11 +26,11 @@ class DM_BeamtimeProposal(ProposalBase):
     """Content of a single beamtime request (proposal)."""
 
 
-class ApsDmScheduleInterface(ScheduleInterfaceBase):
-    """APS Data Management interface to scheduling system."""
+class DM_ScheduleInterface(ScheduleInterfaceBase):
+    """APS Data Management interface to schedule system."""
 
     def __init__(self) -> None:
-        self._cache = {}
+        super().__init__()
         self.api = dm.BssApsDbApi(DM_APS_DB_WEB_SERVICE_URL)
 
     @property
@@ -41,16 +41,16 @@ class ApsDmScheduleInterface(ScheduleInterfaceBase):
             self._cache["beamlines"] = [bl["name"] for bl in beamlines]
         return self._cache["beamlines"]
 
-    @property
-    def current_run(self) -> dict:
-        """All details about the current run."""
-        now = datetime.datetime.now().astimezone()
-        for run in self._runs:
-            start = datetime.datetime.fromisoformat(run["startTime"])
-            end = datetime.datetime.fromisoformat(run["endTime"])
-            if start <= now <= end:
-                return run
-        return {}
+    # @property
+    # def current_run(self) -> dict:
+    #     """All details about the current run."""
+    #     now = datetime.datetime.now().astimezone()
+    #     for run in self._runs:
+    #         start = datetime.datetime.fromisoformat(run["startTime"])
+    #         end = datetime.datetime.fromisoformat(run["endTime"])
+    #         if start <= now <= end:
+    #             return run
+    #     return {}
 
     def proposals(self, beamline, run) -> dict:
         """
@@ -69,9 +69,9 @@ class ApsDmScheduleInterface(ScheduleInterfaceBase):
             Dictionary of 'BeamtimeRequest' objects, keyed by proposal ID,
             scheduled on 'beamline' for 'run'.
         """
-        # Server will validate if data from 'beamline' & 'run' can be provided.
         key = f"proposals-{beamline!r}-{run!r}"
         if key not in self._cache:
+            # Server will validate if data from 'beamline' & 'run' can be provided.
             proposals = self.api.listProposals(
                 beamlineName=beamline,
                 runName=run,
@@ -87,12 +87,19 @@ class ApsDmScheduleInterface(ScheduleInterfaceBase):
     def _runs(self) -> list:
         """List of details of all known runs."""
         if "listRuns" not in self._cache:
-            self._cache["listRuns"] = self.api.listRuns()
+            run_list = []
+            for run in self.api.listRuns():
+                rdict = {"name": run["name"]}
+                for key in "startTime endTime".split():
+                    value = datetime.datetime.fromisoformat(run[key]).astimezone()
+                    rdict[key] = value
+                run_list.append(rdict)
+            self._cache["listRuns"] = run_list
         return self._cache["listRuns"]
 
-    @property
-    def runs(self) -> list:
-        """List of names of all known runs."""
-        if "runs" not in self._cache:
-            self._cache["runs"] = [run["name"] for run in self._runs]
-        return self._cache["runs"]
+    # @property
+    # def runs(self) -> list:
+    #     """List of names of all known runs."""
+    #     if "runs" not in self._cache:
+    #         self._cache["runs"] = [run["name"] for run in self._runs]
+    #     return self._cache["runs"]

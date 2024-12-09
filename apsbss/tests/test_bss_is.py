@@ -1,6 +1,7 @@
 """Test the IS Scheduling Server API (some tests only work at APS)."""
 
 import datetime
+import warnings
 from contextlib import nullcontext as does_not_raise
 
 import pytest
@@ -9,7 +10,7 @@ from ..bss_is import IS_BeamtimeRequest
 from ..bss_is import IS_Exception
 from ..bss_is import IS_MissingAuthentication
 from ..bss_is import IS_NotAllowedToRespond
-from ..bss_is import IS_SchedulingServer
+from ..bss_is import IS_ScheduleSystem
 from ..bss_is import IS_Unauthorized
 from ..core import User
 from ..core import miner
@@ -19,6 +20,21 @@ from ._core import is_aps_workstation
 from ._core import yaml_loader
 
 IS_BTR_77056_FILE = TEST_DATA_PATH / "is-77056-btr.yml"
+
+
+def server_available():
+    """At times, the IS server is not available."""
+    ss = IS_ScheduleSystem(dev=True)  # prepare to connect
+    if not CREDS_FILE.exists():
+        warnings.warn(f"IS server credentials file ({CREDS_FILE}) does not exist. Tests skipped.")
+        return False
+    try:
+        ss.auth_from_file(CREDS_FILE)
+        ss.current_run
+        return True
+    except Exception as reason:
+        warnings.warn(f"IS server is not available: {reason}")
+        return False
 
 
 def test_IS_BeamtimeRequest():
@@ -81,9 +97,12 @@ def test_IS_BeamtimeRequest():
 
 
 def test_SchedulingServer_credentials():
-    ss = IS_SchedulingServer(dev=True)  # prepare to connect
+    ss = IS_ScheduleSystem(dev=True)  # prepare to connect
     assert ss is not None
     assert "-dev" in ss.base
+
+    if not server_available():
+        return
 
     # no credentials
     with pytest.raises(IS_MissingAuthentication) as reason:
@@ -123,9 +142,9 @@ def test_SchedulingServer_credentials():
 
 
 def test_SchedulingServer():
-    ss = IS_SchedulingServer(dev=True)  # prepare to connect
+    ss = IS_ScheduleSystem(dev=True)  # prepare to connect
     assert ss is not None
-    if not CREDS_FILE.exists() or not is_aps_workstation():
+    if not CREDS_FILE.exists() or not is_aps_workstation() or not server_available():
         return  # Can't test anything here.
 
     ss.auth_from_file(CREDS_FILE)
@@ -133,6 +152,9 @@ def test_SchedulingServer():
 
     run = ss.current_run
     assert isinstance(run, dict)
+    assert isinstance(run.get("name"), str)
+    assert isinstance(run.get("startTime"), datetime.datetime)
+    assert isinstance(run.get("endTime"), datetime.datetime)
 
     run = run["runName"]
     assert isinstance(run, str)
@@ -161,9 +183,9 @@ def test_SchedulingServer():
     ],
 )
 def test_beamlines(beamline, run, expected):
-    ss = IS_SchedulingServer(dev=True)  # prepare to connect
+    ss = IS_ScheduleSystem(dev=True)  # prepare to connect
     assert ss is not None
-    if not CREDS_FILE.exists() or not is_aps_workstation():
+    if not CREDS_FILE.exists() or not is_aps_workstation() or not server_available():
         return  # Can't test anything here.
 
     ss.auth_from_file(CREDS_FILE)

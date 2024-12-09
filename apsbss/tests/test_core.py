@@ -83,15 +83,11 @@ def test_ScheduleInterfaceBase():
         def beamlines(self):
             return []
 
-        @property
-        def current_run(self):
-            return {}
-
         def proposals(self, beamline, run):
             return {}
 
         @property
-        def runs(self):
+        def _runs(self):
             return []
 
     sched = MinimalSubClass()

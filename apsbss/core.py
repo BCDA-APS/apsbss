@@ -126,6 +126,7 @@ class ProposalBase(abc.ABC):
             Dictionary-like object with raw information from the server.
         """
         self._raw = raw  # dict-like object
+        self._cache = {}
 
     def __repr__(self) -> str:
         """Text representation."""
@@ -187,14 +188,17 @@ class ProposalBase(abc.ABC):
     @property
     def _pi(self) -> User:
         """Return first listed principal investigator or user."""
-        # TODO: Cache the value, once found?
-        default = None
-        for user in self._users:
-            if default is None:
-                default = user  # Otherwise, pick the first one.
-            if user.is_pi:
-                return user
-        return default
+        found = None
+        if "PI" not in self._cache:
+            default = None
+            for user in self._users:
+                if default is None:
+                    default = user  # Otherwise, pick the first one.
+                if user.is_pi:
+                    found = user
+                    break
+            self._cache["PI"] = found or default
+        return self._cache["PI"]
 
     @property
     def pi(self) -> str:
@@ -245,8 +249,12 @@ class ScheduleInterfaceBase(abc.ABC):
         ~beamlines
         ~current_run
         ~proposals
+        ~_runs
         ~runs
     """
+
+    def __init__(self) -> None:
+        self._cache = {}
 
     @property
     @abc.abstractmethod
@@ -254,14 +262,12 @@ class ScheduleInterfaceBase(abc.ABC):
         """List of all known beamlines, by name."""
 
     @property
-    @abc.abstractmethod
     def current_run(self) -> dict:
         """All details about the current run."""
         now = datetime.datetime.now().astimezone()
-        for run in self.runs:
-            # TODO run_name, run_start, run_end properties
-            start = run.startTime
-            end = run.endTime
+        for run in self._runs:
+            start = run["startTime"]
+            end = run["endTime"]
             if start <= now <= end:
                 return run
         return {}
@@ -293,5 +299,25 @@ class ScheduleInterfaceBase(abc.ABC):
 
     @property
     @abc.abstractmethod
+    def _runs(self) -> list:
+        """
+        Details (from server) about all known runs.
+
+        The returned value of is a list of dictionaries where each dict contains
+        the details of a single run.
+
+        =========   =================   ===============================
+        key         type                description
+        =========   =================   ===============================
+        name        str                 name of the run
+        startTime   datetime.datetime   when run starts (with timezone)
+        endTime     datetime.datetime   when run ends (with timezone)
+        =========   =================   ===============================
+        """
+
+    @property
     def runs(self) -> list:
-        """Details (from server) about all known runs."""
+        """List of names of all known runs."""
+        if "runs" not in self._cache:
+            self._cache["runs"] = [run["name"] for run in self._runs]
+        return self._cache["runs"]

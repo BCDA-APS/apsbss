@@ -7,7 +7,7 @@ Support the APSU-era scheduling system restful web service from the IS group.
 .. autosummary::
 
     ~IS_BeamtimeRequest
-    ~IS_SchedulingServer
+    ~IS_ScheduleSystem
 
 .. rubric:: Exceptions
 .. autosummary::
@@ -18,7 +18,6 @@ Support the APSU-era scheduling system restful web service from the IS group.
     ~IS_Unauthorized
 
 https://beam-api-dev.aps.anl.gov/beamline-scheduling/swagger-ui/index.html
-
 """
 
 import datetime
@@ -26,7 +25,8 @@ import logging
 
 from .core import ProposalBase
 from .core import ScheduleInterfaceBase
-from .core import User, miner
+from .core import User
+from .core import miner
 
 logger = logging.getLogger(__name__)
 
@@ -124,9 +124,9 @@ class IS_BeamtimeRequest(ProposalBase):
         return [User(u) for u in miner(self._raw, "beamtime.proposal.experimenters", [])]
 
 
-class IS_SchedulingServer(ScheduleInterfaceBase):
+class IS_ScheduleSystem(ScheduleInterfaceBase):
     """
-    Interact with the APS-U era beamline scheduling restful web server.
+    Interact with the APS-U era beamline schedule system.
 
     .. autosummary::
 
@@ -150,12 +150,9 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
 
     def __init__(self, dev=False) -> None:
         self.base = self.dev_base if dev else self.prod_base
+        super().__init__()
         self.creds = None
         self.response = None  # Most-recent response object from web server.
-        self._beamline = None  # Most-recent beamline
-        self._run = None  # Most-recent run
-        self._proposals = {}  # Proposals for beamline+run
-        self._cache = {}
 
     @property
     def activeBeamlines(self):
@@ -208,11 +205,11 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
                 return proposal
         return None
 
-    @property
-    def current_run(self):
-        """All details about the current run."""
-        entries = self.webget("run/getCurrentRun")
-        return entries[0]
+    # @property
+    # def current_run(self):
+    #     """All details about the current run."""
+    #     entries = self.webget("run/getCurrentRun")
+    #     return entries[0]
 
     def get_request(self, beamline, proposal_id, run=None):
         """Return the request (proposal) by beamline, id, and run."""
@@ -249,22 +246,17 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
             Credentials are not authorized access to view beamtime requests (or
             proposals) from 'beamline'.
         """
-        # TODO: cache proposals, such as ApsDmScheduleInterface
-        # key = f"proposals-{beamline!r}-{run!r}"
-
         if run is None:
             run = self.current_run["runName"]
 
-        # Server will validate if data from 'beamline' & 'run' can be provided.
-        if beamline != self._beamline or run != self._run:
-            # Only if not already in memeory.
+        key = f"proposals-{beamline!r}-{run!r}"
+        if key not in self._cache:
+            # Server will validate if data from 'beamline' & 'run' can be provided.
             api = "beamtimeRequests/findBeamtimeRequestsByRunAndBeamline"
             api += f"/{run}/{beamline}"
             entries = self.webget(api)
 
-            self._beamline = beamline
-            self._run = run
-            self._proposals = {}
+            prop_dict = {}
             for entry in entries:
                 proposal = IS_BeamtimeRequest(entry)
                 gupId = proposal.proposal_id
@@ -272,14 +264,25 @@ class IS_SchedulingServer(ScheduleInterfaceBase):
                 if activity is not None:
                     entry["activity"] = activity
                     proposal = IS_BeamtimeRequest(entry)
-                self._proposals[gupId] = proposal
+                prop_dict[gupId] = proposal
 
-        return self._proposals
+            self._cache[key] = prop_dict
+
+        return self._cache[key]
 
     @property
-    def runs(self):
+    def _runs(self) -> list:
         """Details about all known runs in database."""
-        return self.webget("run/getAllRuns")
+        if "listRuns" not in self._cache:
+            run_list = {}
+            for run in self.webget("run/getAllRuns"):
+                rdict = {"name": run["name"]}
+                for key in "startTime endTime".split():
+                    value = datetime.datetime.fromisoformat(run[key]).astimezone()
+                    rdict[key] = value
+                run_list.append(rdict)
+            self._cache["listRuns"] = run_list
+        return self._cache["listRuns"]
 
     def runsByDateTime(self, dateTime=None):
         """
