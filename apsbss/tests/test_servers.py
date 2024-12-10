@@ -6,11 +6,16 @@ from ..servers import EsafNotFound
 from ..servers import ProposalNotFound
 from ..servers import RunNotFound
 from ..servers import Server
+from ._core import is_aps_workstation
 
 
 def test_Server():
     server = Server()
     assert server is not None
+    
+    if not is_aps_workstation():
+        return
+
     assert 10 < len(server.beamlines) < 100
     assert len(server.current_run) == 6
     assert 10 < len(server.runs) < 100
@@ -35,6 +40,9 @@ def test_Server():
 
 def test_Server_raises():
     server = Server()
+    
+    if not is_aps_workstation():
+        return
 
     with pytest.raises(RunNotFound) as reason:
         server.esafs(8, "1915-1")

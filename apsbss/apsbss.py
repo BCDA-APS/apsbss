@@ -594,7 +594,7 @@ def cmd_report(args):
     from apstools.utils import listdevice  # TODO: HEAVY addition for one function
 
     bss = connect_epics(args.prefix)
-    listdevice(bss)
+    print(listdevice(bss))
 
 
 def main():
