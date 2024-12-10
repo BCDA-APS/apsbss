@@ -6,8 +6,10 @@ Core components
 
     ~iso2dt
     ~miner
+    ~printColumns
     ~ProposalBase
     ~ScheduleInterfaceBase
+    ~trim
     ~User
 """
 
@@ -48,6 +50,61 @@ def miner(root, path: str, default=None):
         fallback = {} if i < num else default
         obj = obj.get(part, fallback)
     return obj
+
+
+def printColumns(items, numColumns=5, width=10):
+    """
+    Print a list of ``items`` in column order.
+
+    PARAMETERS
+
+    items : [str]
+        List of items to report
+    numColumns : int
+        number of columns, optional (default: 5)
+    width : int
+        width of each column, optional (default: 10)
+    """
+    n = len(items)
+    rows = n // numColumns
+    if n % numColumns > 0:
+        rows += 1
+    for base in range(0, rows):
+        # fmt: off
+        row = [
+            items[base + k * rows]
+            for k in range(numColumns)
+            if base + k * rows < n
+        ]
+        # fmt: on
+        print("".join([f"{s:{width}s}" for s in row]))
+
+
+def trim(text, length=40):
+    """
+    Return a string that is no longer than ``length``.
+
+    If a string is longer than ``length``, it is shortened
+    to the ``length-3`` characters, then, ``...`` is appended.
+    For very short length, the string is shortened to ``length``
+    (and no ``...`` is appended).
+
+    PARAMETERS
+
+    text
+        *str* :
+        String, potentially longer than ``length``
+    length
+        *int* :
+        maximum length, optional (default: 40)
+    """
+    if length < 1:
+        raise ValueError(f"length must be positive, received {length}")
+    if length < 5:
+        text = text[:length]
+    elif len(text) > length:
+        text = text[: length - 3] + "..."
+    return text
 
 
 class User:

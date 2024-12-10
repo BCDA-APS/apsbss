@@ -13,32 +13,25 @@ EXAMPLES::
     apsbss esaf 226319
     apsbss proposal 66083 2020-2 9-ID-B,C
 
-EPICS SUPPORT
+.. rubric:: Application
+.. autosummary::
 
+    ~cmd_esaf
+    ~cmd_list
+    ~cmd_proposal
+    ~cmd_report
+    ~cmd_runs
+    ~get_options
+    ~main
+
+
+.. rubric:: EPICS Support
 .. autosummary::
 
     ~connect_epics
     ~epicsClear
     ~epicsSetup
     ~epicsUpdate
-
-APS ESAF & PROPOSAL ACCESS
-
-.. autosummary::
-
-    ~printColumns
-    ~trim
-
-APPLICATION
-
-.. autosummary::
-
-    ~cmd_current
-    ~cmd_esaf
-    ~cmd_list
-    ~cmd_proposal
-    ~get_options
-    ~main
 """
 
 # -----------------------------------------------------------------------------
@@ -59,6 +52,8 @@ import time
 import pyRestTable
 import yaml
 
+from .core import printColumns
+from .core import trim
 from .servers import Server
 
 CONNECT_TIMEOUT = 5
@@ -254,31 +249,6 @@ def epicsSetup(prefix, beamline, run=None):
     bss.status_msg.put("Done")
 
 
-def printColumns(items, numColumns=5, width=10):
-    """
-    Print a list of ``items`` in column order.
-
-    PARAMETERS
-
-    items
-        *[str]* :
-        List of items to report
-    numColumns
-        *int* :
-        number of columns, optional (default: 5)
-    width
-        *int* :
-        width of each column, optional (default: 10)
-    """
-    n = len(items)
-    rows = n // numColumns
-    if n % numColumns > 0:
-        rows += 1
-    for base in range(0, rows):
-        row = [items[base + k * rows] for k in range(numColumns) if base + k * rows < n]
-        print("".join([f"{s:{width}s}" for s in row]))
-
-
 def printEsafTable(records, title=""):
     """
     Print the list of ESAFs as a table.
@@ -352,33 +322,6 @@ def printProposalTable(records, title=""):
             )
         )
     print(f"{title}\n\n{table}")
-
-
-def trim(text, length=40):
-    """
-    Return a string that is no longer than ``length``.
-
-    If a string is longer than ``length``, it is shortened
-    to the ``length-3`` characters, then, ``...`` is appended.
-    For very short length, the string is shortened to ``length``
-    (and no ``...`` is appended).
-
-    PARAMETERS
-
-    text
-        *str* :
-        String, potentially longer than ``length``
-    length
-        *int* :
-        maximum length, optional (default: 40)
-    """
-    if length < 1:
-        raise ValueError(f"length must be positive, received {length}")
-    if length < 5:
-        text = text[:length]
-    elif len(text) > length:
-        text = text[: length - 3] + "..."
-    return text
 
 
 def get_options():
@@ -464,36 +407,6 @@ def get_options():
     p_sub.add_argument("prefix", type=str, help="EPICS PV prefix")
 
     return parser.parse_args()
-
-
-def cmd_runs(args):
-    """
-    Handle ``runs`` command.
-
-    PARAMETERS
-
-    args
-        *obj* :
-        Object returned by ``argparse``
-    """
-    if args.full:
-        table = pyRestTable.Table()
-        table.labels = "run start end".split()
-
-        def sorter(entry):
-            return entry["startTime"]
-
-        for entry in sorted(server._runs, key=sorter, reverse=args.ascending):
-            table.addRow(
-                (
-                    entry["name"],
-                    entry["startTime"],
-                    entry["endTime"],
-                )
-            )
-        print(str(table))
-    else:
-        printColumns(server.runs)
 
 
 def cmd_esaf(args):
@@ -591,10 +504,38 @@ def cmd_report(args):
         *obj* :
         Object returned by ``argparse``
     """
-    from apstools.utils import listdevice  # TODO: HEAVY addition for one function
-
     bss = connect_epics(args.prefix)
-    print(listdevice(bss))
+    print(bss._table(length=30))
+
+
+def cmd_runs(args):
+    """
+    Handle ``runs`` command.
+
+    PARAMETERS
+
+    args
+        *obj* :
+        Object returned by ``argparse``
+    """
+    if args.full:
+        table = pyRestTable.Table()
+        table.labels = "run start end".split()
+
+        def sorter(entry):
+            return entry["startTime"]
+
+        for entry in sorted(server._runs, key=sorter, reverse=args.ascending):
+            table.addRow(
+                (
+                    entry["name"],
+                    entry["startTime"],
+                    entry["endTime"],
+                )
+            )
+        print(str(table))
+    else:
+        printColumns(server.runs)
 
 
 def main():

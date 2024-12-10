@@ -11,6 +11,8 @@ from ..core import ScheduleInterfaceBase
 from ..core import User
 from ..core import iso2dt
 from ..core import miner
+from ..core import printColumns
+from ..core import trim as core_trim
 from ._core import TEST_DATA_PATH
 from ._core import yaml_loader
 
@@ -45,6 +47,25 @@ def test_iso2dt():
 def test_miner(path, default, expected):
     result = miner(nested, path, default)
     assert result == expected, f"{path=!r} {default=!r} {expected=!r} {result=!r}"
+
+
+def test_printColumns(capsys):
+    printColumns("1 2 3 4 5 6".split(), numColumns=3, width=3)
+    captured = capsys.readouterr()
+    received = captured.out.strip().split("\n")
+    assert len(received) == 2
+    assert received[0].strip() == "1  3  5"
+    assert received[1].strip() == "2  4  6"
+
+
+def test_trim():
+    source = "0123456789"
+    assert core_trim(source) == source
+    got = core_trim(source, length=8)
+    assert got != source
+    assert got.endswith("...")
+    assert len(got) == 8
+    assert got == "01234..."
 
 
 @pytest.mark.parametrize(

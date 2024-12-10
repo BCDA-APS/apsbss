@@ -84,25 +84,6 @@ def test_only_at_aps():
     assert len(apsbss.server.beamlines) > 1
 
 
-def test_printColumns(capsys):
-    apsbss.printColumns("1 2 3 4 5 6".split(), numColumns=3, width=3)
-    captured = capsys.readouterr()
-    received = captured.out.strip().split("\n")
-    assert len(received) == 2
-    assert received[0].strip() == "1  3  5"
-    assert received[1].strip() == "2  4  6"
-
-
-def test_trim():
-    source = "0123456789"
-    assert apsbss.trim(source) == source
-    got = apsbss.trim(source, length=8)
-    assert got != source
-    assert got.endswith("...")
-    assert len(got) == 8
-    assert got == "01234..."
-
-
 class IOC_ProcessConfig:
     bss = None
     manager = None
@@ -254,15 +235,6 @@ def test_apsbss_commands_beamlines(argv):
     assert args.subcommand == sys.argv[1]
 
 
-def test_apsbss_commands_runs(argv):
-    sys.argv = argv + [
-        "runs",
-    ]
-    args = apsbss.get_options()
-    assert args is not None
-    assert args.subcommand == sys.argv[1]
-
-
 def test_apsbss_commands_esaf(argv):
     sys.argv = argv + [
         "esaf",
@@ -282,6 +254,19 @@ def test_apsbss_commands_proposal(argv):
     assert args.proposalId == sys.argv[2]
     assert args.run == sys.argv[3]
     assert args.beamlineName == sys.argv[4]
+
+
+def test_apsbss_commands_report(argv):
+    assert True  # TODO:
+
+
+def test_apsbss_commands_runs(argv):
+    sys.argv = argv + [
+        "runs",
+    ]
+    args = apsbss.get_options()
+    assert args is not None
+    assert args.subcommand == sys.argv[1]
 
 
 def test_apsbss_commands_EPICS_clear(argv):
