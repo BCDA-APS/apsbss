@@ -26,7 +26,7 @@ raw_data = """
 status	stringout
 ioc_host	stringout
 ioc_user	stringout
-esaf:cycle	stringout
+esaf:run	stringout
 esaf:description	waveform	4096
 esaf:endDate	stringout
 esaf:id	stringout

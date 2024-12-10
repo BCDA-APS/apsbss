@@ -213,8 +213,8 @@ def epicsSetup(prefix, beamline, run=None):
         Name of beam line (as defined by the BSS)
     run
         *str* :
-        Name of APS run cycle (as defined by the BSS).
-        optional: default is current APS run cycle name.
+        Name of APS run (as defined by the BSS).
+        optional: default is current APS run name.
     """
     bss = connect_epics(prefix)
 
@@ -262,7 +262,7 @@ def get_options():
 
     subcommand.add_parser("beamlines", help="print list of beamlines")
 
-    p_sub = subcommand.add_parser("runs", help="print APS run cycle names")
+    p_sub = subcommand.add_parser("runs", help="print APS run names")
     p_sub.add_argument(
         "-f",
         "--full",
@@ -283,7 +283,7 @@ def get_options():
 
     p_sub = subcommand.add_parser("list", help="list by run")
     msg = (
-        "APS run (cycle) name."
+        "APS run name."
         "  One of the names returned by ``apsbss runs``"
         " or one of these (``past``,  ``prior``, ``previous``)"
         " for the previous run, (``current`` or ``now``)"
@@ -302,7 +302,7 @@ def get_options():
 
     p_sub = subcommand.add_parser("proposal", help="print specific proposal")
     p_sub.add_argument("proposalId", type=str, help="proposal ID number")
-    p_sub.add_argument("run", type=str, help="APS run (cycle) name")
+    p_sub.add_argument("run", type=str, help="APS run name")
     p_sub.add_argument("beamlineName", type=str, help="Beamline name")
 
     p_sub = subcommand.add_parser("clear", help="EPICS PVs: clear")
@@ -311,7 +311,7 @@ def get_options():
     p_sub = subcommand.add_parser("setup", help="EPICS PVs: setup")
     p_sub.add_argument("prefix", type=str, help="EPICS PV prefix")
     p_sub.add_argument("beamlineName", type=str, help="Beamline name")
-    p_sub.add_argument("run", type=str, help="APS run (cycle) name")
+    p_sub.add_argument("run", type=str, help="APS run name")
 
     p_sub = subcommand.add_parser("update", help="EPICS PVs: update from BSS")
     p_sub.add_argument("prefix", type=str, help="EPICS PV prefix")

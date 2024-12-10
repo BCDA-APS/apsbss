@@ -28,18 +28,35 @@ describe the future plans.
 
    * Complete overhaul for APS-U era.
 
+   Breaking Changes
+   ----------------
+
+   * Standardize on **run** instead of **cycle** as the reference used for the
+     name of an APS operations *run* period.
+
+     * Includes EPICS PV: ``record(stringout, "$(P)esaf:run")``
+
    New Features
    ------------
 
    * Add support for direct access to read IS database.
+   * Add Server class that chooses between DM or IS interface.
 
    Maintenance
    -----------
 
-
    * Add requests to project requirements.
+   * Increased code coverage of unit testing.
+   * Moved report and table generation to new Server class.
+   * Refactored (and simplified) IOC report table.
+   * Relocated functions out of apsbss module.
    * Switch documentation to use pydata sphinx theme.
    * Update to install and run with Python versions 3.9, 3.10, 3.11.
+
+   Deprecations
+   -------------
+
+   * Removed all items marked for deprecation.
 
 -------------
 

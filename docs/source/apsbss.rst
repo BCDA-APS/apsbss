@@ -29,7 +29,7 @@ databases from this software.*
 Given:
 
 * a beam line name (such as ``9-ID-B,C``)
-* APS run cycle name (such as ``2019-2``) to locate a specific proposal ID
+* APS run name (such as ``2019-2``) to locate a specific proposal ID
 * proposal ID number (such as ``66083``)
 * ESAF ID number (such as ``226319``)
 
@@ -55,25 +55,25 @@ We'll demonstrate ``apsbss`` with information for APS beam
 line 9-ID, using PV prefix ``9id:bss:``.
 
 #. Create the PVs in an EPICS IOC (see section :ref:`apsbss_ioc`)
-#. Initialize PVs with beam line name and APS run cycle number
+#. Initialize PVs with beam line name and APS run number
 #. Set PVs with the Proposal and ESAF ID numbers
 #. Retrieve (& update PVs) information from APS databases
 
-**Enter beam line and APS run (cycle) info**
+**Enter beam line and APS run info**
 
 .. figure:: ./_static//ui_initialized.png
    :width: 95%
 
    Image of ``apsbss.ui`` screen GUI in caQtDM showing PV prefix
-   (``9id:bss:``), APS run cycle ``2019-2`` and beam line ``9-ID-B,C``.
+   (``9id:bss:``), APS run ``2019-2`` and beam line ``9-ID-B,C``.
 
    * beam line name PV: ``9id:bss:proposal:beamline``
-   * APS run cycle PV: ``9id:bss:esaf:cycle``
+   * APS run PV: ``9id:bss:esaf:run``
 
 
 **Enter Proposal and ESAF ID numbers**
 
-Note we had to use the APS run cycle of `2019-2`
+Note we had to use the APS run of `2019-2`
 to match what is in the proposal's information.
 
 .. figure:: ./_static//ui_id_entered.png
@@ -106,12 +106,12 @@ To clear the PVs, in the GUI, press the button labeled ``clear PVs``.
 This button executes the command line: ``apsbss clear 9id:bss:``
 
 
-Initialize PVs for beam line and APC run cycle
+Initialize PVs for beam line and APC run
 ++++++++++++++++++++++++++++++++++++++++++++++
 
 After creating the PVs in an IOC, the next step is to
 initialize them with the beam line name and the APS
-run cycle name.  Both of these must match exactly
+run name.  Both of these must match exactly
 with values known in the data management (``dm``) system.
 
 For any of these commands, you must know the EPICS
@@ -149,13 +149,13 @@ To learn the beam line names accepted by the system, use this command
 For either station at 9-ID, use ``9-ID-B,C``.
 
 
-What APS run cycle to use?
+What APS run to use?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-To learn the APS run cycle names accepted by the system, use this command
-(showing APS run cycle names as defined on 2020-07-10)::
+To learn the APS run names accepted by the system, use this command
+(showing APS run names as defined on 2020-07-10)::
 
-    $ apsbss cycles
+    $ apsbss runs
     2008-3    2011-2    2014-1    2016-3    2019-2
     2009-1    2011-3    2014-2    2017-1    2019-3
     2009-2    2012-1    2014-3    2017-2    2020-1
@@ -165,13 +165,13 @@ To learn the APS run cycle names accepted by the system, use this command
     2010-3    2013-2    2016-1    2018-3
     2011-1    2013-3    2016-2    2019-1
 
-Pick the cycle of interest.  Here, we pick ``2020-2``.
+Pick the run of interest.  Here, we pick ``2020-2``.
 
-To print the full report (including start and end of each cycle)::
+To print the full report (including start and end of each run)::
 
-    $ apsbss cycles --full
+    $ apsbss runs --full
     ====== =================== ===================
-    cycle  start               end
+    run    start               end
     ====== =================== ===================
     2020-2 2020-06-09 07:00:00 2020-10-01 07:00:00
     2020-1 2020-01-28 08:00:00 2020-06-09 07:00:00
@@ -212,16 +212,16 @@ To print the full report (including start and end of each cycle)::
     ====== =================== ===================
 
 
-Write the beam line name and cycle to the PVs
+Write the beam line name and run to the PVs
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To configure ``9id:bss:`` PVs for beam line
-``9-ID-B,C`` and cycle ``2020-2``,
+``9-ID-B,C`` and run ``2020-2``,
 use this command::
 
     $ apsbss setup 9id:bss: 9-ID-B,C 2020-2
     connected in 0.143s
-    setup EPICS 9id:bss: 9-ID-B,C cycle=2020-2 sector=9
+    setup EPICS 9id:bss: 9-ID-B,C run=2020-2 sector=9
 
 Or you could enter them into the appropriate boxes on the GUI.
 
@@ -233,13 +233,13 @@ Proposals are usually valid for two years.  To learn what
 proposals are valid for your beam line, use this command
 with your own beam line's name.  The report will provide
 two tables, one for Proposals and the other for ESAFs,
-both with entries in the current APS run cycle::
+both with entries in the current APS run::
 
     $ apsbss list 9-ID-B,C
-    Proposal(s):  beam line 9-ID-B,C,  cycle(s) now
+    Proposal(s):  beam line 9-ID-B,C,  run(s) now
 
     ===== ====== =================== =================== ==================== ========================================
-    id    cycle  start               end                 user(s)              title                                   
+    id    run    start               end                 user(s)              title                                   
     ===== ====== =================== =================== ==================== ========================================
     70118 2020-3 2020-12-05 08:00:00 2020-12-05 16:00:00 Beaucage,Gogia,Ku... In situ structural modification and d...
     63765 2020-3 2020-11-19 08:00:00 2020-11-23 08:00:00 Swantek,Powell,Ka... USAXS Measurements of Fuel Injection ...
@@ -253,7 +253,7 @@ both with entries in the current APS run cycle::
     71891 2020-3 2020-10-05 07:00:00 2020-10-09 07:00:00 Ralle,Chen           Copper Distribution in Cyrptococcus N...
     ===== ====== =================== =================== ==================== ========================================
 
-    ESAF(s):  sector 9,  cycle(s) now
+    ESAF(s):  sector 9,  run(s) now
 
     ====== ======== ========== ========== ==================== ========================================
     id     status   start      end        user(s)              title                                   
@@ -292,7 +292,7 @@ View Proposal Information
 
 To view information about a specific proposal, you
 must be able to provide the proposal's ID number and
-the APS run cycle name.
+the APS run name.
 
 ::
 
@@ -377,7 +377,7 @@ Update EPICS PVs with Proposal and ESAF
 To update the PVs with Proposal and Information from the APS
 database, first enter the proposal and ESAF ID numbers into
 the GUI (or set the ``9id:bss:proposal:id``, and respectively).
-Note that for this ESAF ID, we had to change the cycle to `2019-2`.
+Note that for this ESAF ID, we had to change the run to `2019-2`.
 
 Then, use this command to retrieve the information and update
 the PVs::
@@ -427,7 +427,7 @@ the *apsbss* application expects::
 
     $ apsbss  -h
     usage: apsbss [-h] [-v]
-                  {beamlines,current,cycles,esaf,list,proposal,clear,setup,update,report}
+                  {beamlines,current,runs,esaf,list,proposal,clear,setup,update,report}
                   ...
 
     Retrieve specific records from the APS Proposal and ESAF databases.
@@ -437,12 +437,12 @@ the *apsbss* application expects::
       -v, --version         print version number and exit
 
     subcommand:
-      {beamlines,current,cycles,esaf,proposal,clear,setup,update,report}
+      {beamlines,current,runs,esaf,proposal,clear,setup,update,report}
         beamlines           print list of beamlines
         current             print current ESAF(s) and proposal(s), DEPRECATED: use 'list' instead
-        cycles              print APS run cycle names
+        runs                print APS run names
         esaf                print specific ESAF
-        list                list by cycle
+        list                list by run
         proposal            print specific proposal
         clear               EPICS PVs: clear
         setup               EPICS PVs: setup

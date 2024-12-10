@@ -148,7 +148,7 @@ def test_SchedulingServer():
         return  # Can't test anything here.
 
     ss.auth_from_file(CREDS_FILE)
-    assert len(ss.runs) > 40  # more than 40 run cycles in the database
+    assert len(ss.runs) > 40  # more than 40 runs in the database
 
     run = ss.current_run
     assert isinstance(run, dict)
@@ -189,7 +189,7 @@ def test_beamlines(beamline, run, expected):
         return  # Can't test anything here.
 
     ss.auth_from_file(CREDS_FILE)
-    assert len(ss.runs) > 40  # more than 40 run cycles in the database
+    assert len(ss.runs) > 40  # more than 40 runs in the database
 
     assert beamline in ss.beamlines
 

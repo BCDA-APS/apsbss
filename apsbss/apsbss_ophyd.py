@@ -65,7 +65,7 @@ class EpicsEsafDevice(Device):
         ~clear_users
     """
 
-    aps_run = Component(EpicsSignal, "cycle", string=True)
+    aps_run = Component(EpicsSignal, "run", string=True)
     description = Component(EpicsSignal, "description", string=True)
     end_date = Component(EpicsSignal, "endDate", string=True)
     esaf_id = Component(EpicsSignal, "id", string=True)
@@ -96,11 +96,11 @@ class EpicsEsafDevice(Device):
 
         Do not clear these items:
 
-        * ``aps_cycle``
+        * ``aps_run``
         * ``esaf_id``
         * ``sector``
         """
-        # self.aps_cycle.put("")    # user controls this
+        # self.aps_run.put("")    # user controls this
         self.description.put("")
         self.end_date.put("")
         # self.esaf_id.put("")      # user controls this

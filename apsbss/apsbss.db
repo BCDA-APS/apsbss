@@ -27,7 +27,7 @@ record(stringout, "$(P)ioc_host")
 
 record(stringout, "$(P)ioc_user")
 
-record(stringout, "$(P)esaf:cycle")
+record(stringout, "$(P)esaf:run")
 
 record(waveform, "$(P)esaf:description") {
     field(FTVL, "CHAR")

@@ -22,7 +22,7 @@ Overview
 --------
 
 #. Create the PVs in an EPICS IOC
-#. Initialize PVs with beam line name and APS run cycle number
+#. Initialize PVs with beam line name and APS run number
 #. Set PV with the Proposal ID number
 #. Set PV with the ESAF ID number
 #. Retrieve (& update PVs) information from APS databases

@@ -52,9 +52,9 @@ def using_APS_workstation():
 @pytest.fixture(scope="function")
 def bss_PV():
     # try connecting with one of the PVs in the database
-    cycle = epics.PV(f"{BSS_TEST_IOC_PREFIX}esaf:cycle")
-    cycle.wait_for_connection(timeout=2)
-    return cycle
+    run = epics.PV(f"{BSS_TEST_IOC_PREFIX}esaf:run")
+    run.wait_for_connection(timeout=2)
+    return run
 
 
 def test_general():
@@ -141,7 +141,7 @@ def test_ioc(ioc, bss_PV):
     assert ioc.bss.connected
     assert ioc.bss.esaf.title.get() == ""
     assert ioc.bss.esaf.description.get() == ""
-    # assert ioc.bss.esaf.aps_cycle.get() == ""
+    # assert ioc.bss.esaf.aps_run.get() == ""
 
 
 def test_EPICS(ioc, bss_PV):
@@ -150,7 +150,7 @@ def test_EPICS(ioc, bss_PV):
         return
 
     beamline = "9-ID-B,C"
-    cycle = "2019-3"
+    run = "2019-3"
 
     ioc.bss = apsbss.connect_epics(BSS_TEST_IOC_PREFIX)
     assert ioc.bss.connected
@@ -162,11 +162,11 @@ def test_EPICS(ioc, bss_PV):
         return
 
     # setup
-    apsbss.epicsSetup(BSS_TEST_IOC_PREFIX, beamline, cycle)
+    apsbss.epicsSetup(BSS_TEST_IOC_PREFIX, beamline, run)
 
     assert ioc.bss.proposal.beamline_name.get() != "harpo"
     assert ioc.bss.proposal.beamline_name.get() == beamline
-    assert ioc.bss.esaf.aps_run.get() == cycle
+    assert ioc.bss.esaf.aps_run.get() == run
     assert ioc.bss.esaf.sector.get() == beamline.split("-")[0]
 
     # epicsUpdate
@@ -179,7 +179,7 @@ def test_EPICS(ioc, bss_PV):
     # ====== ======== ========== ========== ==================== =================================
 
     # ===== ====== =================== ==================== ========================================
-    # id    cycle  date                user(s)              title
+    # id    run    date                user(s)              title
     # ===== ====== =================== ==================== ========================================
     # 64629 2019-2 2019-03-01 18:35:02 Ilavsky,Okasinski    2019 National School on Neutron & X-r...
     # ===== ====== =================== ==================== ========================================

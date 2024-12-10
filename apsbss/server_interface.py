@@ -223,7 +223,7 @@ class Server:
         beamline : str
             Canonical name of beam line.
         nruns : int
-            Number of APS runs (cycles) to include, optional (default: 3, a one year
+            Number of APS runs to include, optional (default: 3, a one year
             period)
 
         RETURNS
@@ -272,7 +272,7 @@ class Server:
 
     @property
     def current_run(self) -> str:
-        """Return the name of the current APS run (cycle)."""
+        """Return the name of the current APS run."""
         return self.bss_api.current_run["name"]
 
     def esaf(self, esaf_id):
@@ -377,8 +377,7 @@ class Server:
         PARAMETERS
 
         nruns : int
-            Number of APS runs (cycles) to include, optional (default: 6, a two year
-            period)
+            Number of APS run to include, optional (default: 6, a two year period)
         """
         runs = self.runs
         return sorted(runs[: 1 + runs.index(self.current_run)], reverse=True)[:nruns]
