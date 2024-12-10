@@ -41,9 +41,9 @@ def test_Server_raises():
     assert "Could not find run='1915-1'" in str(reason)
 
     with pytest.raises(EsafNotFound) as reason:
-        server.get_esaf("1")
+        server.esaf("1")
     assert "esaf_id='1'" in str(reason)
 
     with pytest.raises(ProposalNotFound) as reason:
-        server.get_proposal(1, "8-ID-I", "2024-3")
+        server.proposal(1, "8-ID-I", "2024-3")
     assert "proposal_id='1' beamline='8-ID-I' run='2024-3'" in str(reason)

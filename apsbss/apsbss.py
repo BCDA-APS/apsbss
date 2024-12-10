@@ -158,7 +158,7 @@ def epicsUpdate(prefix):
 
     if len(esaf_id) > 0:
         bss.status_msg.put(f"get ESAF {esaf_id} from APS ...")
-        esaf = server.get_esaf(esaf_id)
+        esaf = server.esaf(esaf_id)
 
         bss.status_msg.put("set ESAF PVs ...")
         bss.esaf.description.put(esaf["description"])
@@ -184,7 +184,7 @@ def epicsUpdate(prefix):
 
     if len(proposal_id) > 0:
         bss.status_msg.put(f"get Proposal {proposal_id} from APS ...")
-        proposal = server.get_proposal(proposal_id, beamline, run)
+        proposal = server.proposal(proposal_id, beamline, run)
 
         bss.status_msg.put("set Proposal PVs ...")
         bss.proposal.end_date.put(proposal["endTime"])
@@ -509,7 +509,7 @@ def cmd_esaf(args):
         Object returned by ``argparse``
     """
     try:
-        esaf = server.get_esaf(args.esafId)
+        esaf = server.esaf(args.esafId)
         print(yaml.dump(esaf))
     except Exception as reason:
         print(f"DM reported: {reason}")
@@ -577,7 +577,7 @@ def cmd_proposal(args):
         Object returned by ``argparse``
     """
     try:
-        proposal = server.get_proposal(args.proposalId, args.beamlineName, args.run)
+        proposal = server.proposal(args.proposalId, args.beamlineName, args.run)
         print(yaml.dump(proposal))
     except Exception as reason:
         print(f"DM reported: {reason}")
