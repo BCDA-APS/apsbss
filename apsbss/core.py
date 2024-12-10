@@ -4,6 +4,7 @@ Core components
 
 .. autosummary::
 
+    ~iso2dt
     ~miner
     ~ProposalBase
     ~ScheduleInterfaceBase
@@ -14,6 +15,19 @@ import abc
 import datetime
 
 DM_APS_DB_WEB_SERVICE_URL = "https://xraydtn01.xray.aps.anl.gov:11236"
+
+
+def iso2dt(isodate) -> datetime.datetime:
+    """
+    Convert a text ISO8601 date into a ``datetime`` object.
+
+    PARAMETERS
+
+    isodate : str
+        Date and time in modified ISO8601 format. (e.g.: ``2020-07-01
+        12:34:56.789012``) Fractional seconds are optional.
+    """
+    return datetime.datetime.fromisoformat(isodate).astimezone()
 
 
 def miner(root, path: str, default=None):
@@ -272,9 +286,9 @@ class ScheduleInterfaceBase(abc.ABC):
                 return run
         return {}
 
-    def getProposal(self, proposal_id, beamline, cycle):
+    def getProposal(self, proposal_id, beamline, run):
         """Get 'proposal_id' for 'beamline' during 'run'.  None if not found."""
-        return self.proposals(beamline, cycle).get(proposal_id)
+        return self.proposals(beamline, run).get(proposal_id)
 
     @abc.abstractmethod
     def proposals(self, beamline: str, run: str = None) -> dict:

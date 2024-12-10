@@ -27,7 +27,10 @@ ophyd.set_cl("caproto")  # switch command layers
 # set default timeout for all EpicsSignal connections & communications
 try:
     EpicsSignalBase.set_defaults(
-        auto_monitor=True, timeout=60, write_timeout=60, connection_timeout=60,
+        auto_monitor=True,
+        timeout=60,
+        write_timeout=60,
+        connection_timeout=60,
     )
 except RuntimeError:
     pass  # ignore if some EPICS object already created
@@ -88,6 +91,11 @@ def test_only_at_aps():
     assert apsbss.listRecentRuns()[0] in runs
     assert len(apsbss.listAllBeamlines()) > 1
 
+    proposal = apsbss.getProposal(78243, "2022-2", "8-ID-I")
+    assert proposal is not None
+    assert isinstance(proposal, dict)
+    assert "dynamics of colloidal suspensions" in proposal["title"]
+
     # TODO: test the other functions
     # getCurrentEsafs
     # getCurrentInfo
@@ -145,7 +153,7 @@ def ioc():
 
     cfg = IOC_ProcessConfig()
 
-    cfg.manager = (SRC_PATH / "apsbss_ioc.sh")
+    cfg.manager = SRC_PATH / "apsbss_ioc.sh"
     cfg.ioc_prefix = BSS_TEST_IOC_PREFIX
     cfg.ioc_process = run_process(cfg.command("restart"))
     time.sleep(0.5)  # allow the IOC to start
@@ -224,9 +232,7 @@ def test_EPICS(ioc, bss_PV):
     ioc.bss.proposal.proposal_id.put(proposal_id)
     apsbss.epicsUpdate(BSS_TEST_IOC_PREFIX)
     assert ioc.bss.esaf.title.get() == "Commission 9ID and USAXS"
-    assert ioc.bss.proposal.title.get().startswith(
-        "2019 National School on Neutron & X-r"
-    )
+    assert ioc.bss.proposal.title.get().startswith("2019 National School on Neutron & X-r")
 
     apsbss.epicsClear(BSS_TEST_IOC_PREFIX)
     assert ioc.bss.esaf.aps_cycle.get() != ""

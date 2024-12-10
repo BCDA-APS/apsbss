@@ -72,6 +72,7 @@ import dm  # APS data management library
 import pyRestTable
 import yaml
 
+from .bss_dm import DM_ScheduleInterface
 from .core import DM_APS_DB_WEB_SERVICE_URL
 
 logger = logging.getLogger(__name__)
@@ -79,30 +80,24 @@ logger = logging.getLogger(__name__)
 CONNECT_TIMEOUT = 5
 POLL_INTERVAL = 0.01
 
-# TODO: refactor from bss_dm module
+# TODO: Refactor all/most into a class
 # TODO: consider bss_is module as alternative BSS API
-api_bss = dm.BssApsDbApi(DM_APS_DB_WEB_SERVICE_URL)
+api_bss = DM_ScheduleInterface()
 api_esaf = dm.EsafApsDbApi(DM_APS_DB_WEB_SERVICE_URL)
 
 parser = None
 
-_cache_ = {}
+
+class EpicsNotConnected(Exception): ...
 
 
-class EpicsNotConnected(Exception):
-    ...
+class DmRecordNotFound(Exception): ...
 
 
-class DmRecordNotFound(Exception):
-    ...
+class EsafNotFound(DmRecordNotFound): ...
 
 
-class EsafNotFound(DmRecordNotFound):
-    ...
-
-
-class ProposalNotFound(DmRecordNotFound):
-    ...
+class ProposalNotFound(DmRecordNotFound): ...
 
 
 def connect_epics(prefix):
@@ -123,9 +118,7 @@ def connect_epics(prefix):
     while not bss.connected and time.time() < t_timeout:
         time.sleep(POLL_INTERVAL)
     if not bss.connected:
-        raise EpicsNotConnected(
-            f"Did not connect with EPICS {prefix} in {CONNECT_TIMEOUT}s"
-        )
+        raise EpicsNotConnected(f"Did not connect with EPICS {prefix} in {CONNECT_TIMEOUT}s")
     t_connect = time.time() - t0
     logger.debug("connected in %.03fs", t_connect)
     return bss
@@ -178,21 +171,14 @@ def epicsUpdate(prefix):
     proposal_id = bss.proposal.proposal_id.get().strip()
 
     if len(beamline) == 0:
-        bss.status_msg.put(
-            f"undefined: {bss.proposal.beamline_name.pvname}"
-        )
-        raise ValueError(
-            "must set beamline name in "
-            f"{bss.proposal.beamline_name.pvname}"
-        )
+        bss.status_msg.put(f"undefined: {bss.proposal.beamline_name.pvname}")
+        raise ValueError("must set beamline name in " f"{bss.proposal.beamline_name.pvname}")
     elif beamline not in listAllBeamlines():
         bss.status_msg.put(f"unrecognized: {beamline}")
         raise ValueError(f"{beamline} is not recognized")
     if len(cycle) == 0:
         bss.status_msg.put(f"undefined: {bss.esaf.aps_cycle.pvname}")
-        raise ValueError(
-            f"must set APS cycle name in {bss.esaf.aps_cycle.pvname}"
-        )
+        raise ValueError(f"must set APS cycle name in {bss.esaf.aps_cycle.pvname}")
     elif cycle not in listAllRuns():
         bss.status_msg.put(f"unrecognized: {cycle}")
         raise ValueError(f"{cycle} is not recognized")
@@ -209,14 +195,8 @@ def epicsUpdate(prefix):
         bss.esaf.start_date.put(esaf["experimentStartDate"])
         bss.esaf.title.put(esaf["esafTitle"])
 
-        bss.esaf.user_last_names.put(
-            ",".join(
-                [user["lastName"] for user in esaf["experimentUsers"]]
-            )
-        )
-        bss.esaf.user_badges.put(
-            ",".join([user["badge"] for user in esaf["experimentUsers"]])
-        )
+        bss.esaf.user_last_names.put(",".join([user["lastName"] for user in esaf["experimentUsers"]]))
+        bss.esaf.user_badges.put(",".join([user["badge"] for user in esaf["experimentUsers"]]))
         bss.esaf.number_users_in_pvs.put(0)
         for i, user in enumerate(esaf["experimentUsers"]):
             obj = getattr(bss.esaf, f"user{i+1}")
@@ -235,25 +215,15 @@ def epicsUpdate(prefix):
 
         bss.status_msg.put("set Proposal PVs ...")
         bss.proposal.end_date.put(proposal["endTime"])
-        bss.proposal.mail_in_flag.put(
-            proposal.get("mailInFlag") in ("Y", "y")
-        )
-        bss.proposal.proprietary_flag.put(
-            proposal.get("proprietaryFlag") in ("Y", "y")
-        )
+        bss.proposal.mail_in_flag.put(proposal.get("mailInFlag") in ("Y", "y"))
+        bss.proposal.proprietary_flag.put(proposal.get("proprietaryFlag") in ("Y", "y"))
         bss.proposal.raw.put(yaml.dump(proposal))
         bss.proposal.start_date.put(proposal["startTime"])
         bss.proposal.submitted_date.put(proposal["submittedDate"])
         bss.proposal.title.put(proposal["title"])
 
-        bss.proposal.user_last_names.put(
-            ",".join(
-                [user["lastName"] for user in proposal["experimenters"]]
-            )
-        )
-        bss.proposal.user_badges.put(
-            ",".join([user["badge"] for user in proposal["experimenters"]])
-        )
+        bss.proposal.user_last_names.put(",".join([user["lastName"] for user in proposal["experimenters"]]))
+        bss.proposal.user_badges.put(",".join([user["badge"] for user in proposal["experimenters"]]))
         bss.proposal.number_users_in_pvs.put(0)
         for i, user in enumerate(proposal["experimenters"]):
             obj = getattr(bss.proposal, f"user{i+1}")
@@ -320,7 +290,7 @@ def epicsSetup(prefix, beamline, cycle=None):
 
 def getCurrentCycle():
     """Return the name of the current APS run cycle."""
-    return api_bss.getCurrentRun()["name"]
+    return api_bss.current_run["name"]
 
 
 def getCurrentEsafs(sector):
@@ -339,7 +309,7 @@ def getCurrentEsafs(sector):
 
 def getCurrentInfo(beamline):
     """
-    From current year ESAFS, return list of ESAFs & proposals with same people.
+    From current year ESAFs, return list of ESAFs & proposals with same people.
 
     PARAMETERS
 
@@ -355,26 +325,21 @@ def getCurrentInfo(beamline):
         logger.debug("ESAF %s: %s", esaf["esafId"], esaf["esafTitle"])
         esaf_badges = [user["badge"] for user in esaf["experimentUsers"]]
         for run in listRecentRuns():
-            for proposal in api_bss.listProposals(
-                beamlineName=beamline, runName=run
-            ):
-                logger.debug(
-                    "proposal %s: %s", proposal["id"], proposal["title"]
-                )
+            proposals = api_bss.proposals(beamlineName=beamline, runName=run)
+            for proposal in proposals.values():
+                logger.debug("proposal %s: %s", proposal.proposal_id, proposal.title)
                 count = 0
-                for user in proposal["experimenters"]:
-                    if user["badge"] in esaf_badges:
+                for user in proposal._users:
+                    if user.badge in esaf_badges:
                         count += 1
                 if count > 0:
                     matches.append(
                         dict(
                             esaf=esaf,
-                            proposal=proposal,
+                            proposal=proposal.to_dict(),  # to_dict() gets raw, why?
                             num_true=count,
                             num_esaf_badges=len(esaf_badges),
-                            num_proposal_badges=len(
-                                proposal["experimenters"]
-                            ),
+                            num_proposal_badges=len(proposal._users),
                         )
                     )
     return matches
@@ -426,16 +391,9 @@ def getProposal(proposalId, cycle, beamline):
         *str* :
         Name of beam line (as defined by the BSS)
     """
-    # avoid possible dm.DmException
-    if cycle not in listAllRuns():
-        raise DmRecordNotFound(f"cycle '{cycle}' not found")
-
-    if beamline not in listAllBeamlines():
-        raise DmRecordNotFound(f"beamline '{beamline}' not found")
-
-    try:
-        record = api_bss.getProposal(str(proposalId), cycle, beamline)
-    except dm.ObjectNotFound:
+    # The server will validate the request.
+    proposal = api_bss.proposals(beamline, cycle).get(proposalId)
+    if proposal is None:
         # fmt: off
         raise ProposalNotFound(
             f"id={proposalId}"
@@ -443,7 +401,7 @@ def getProposal(proposalId, cycle, beamline):
             f" beamline={beamline}"
         )
         # fmt: on
-    return dict(record.data)
+    return proposal.to_dict()
 
 
 def listESAFs(cycles, sector):
@@ -504,18 +462,15 @@ def listProposals(cycles, beamline):
     proposals = []
     for cycle in cycles:
         try:
-            props = api_bss.listProposals(beamlineName=beamline, runName=cycle)
-            for prop in props:
-                prop = dict(prop)
+            props = api_bss.proposals(beamline, cycle)
+            for prop in props.values():
+                prop = prop.to_dict()
                 prop["cycle"] = cycle
                 proposals.append(prop)
         except Exception as exc:
             logger.error(
-                (
-                    "Received exception from data management: "
-                    " beamlineName=%s, runName=%s"
-                    " exception=%s"
-                ) % (beamline, cycle, exc)
+                ("Received exception from data management: " " beamlineName=%s, runName=%s" " exception=%s")
+                % (beamline, cycle, exc)
             )
     return proposals
 
@@ -536,46 +491,28 @@ def iso2datetime(isodate):
 
 def listAllBeamlines():
     """Return list (from ``dm``) of known beam line names."""
-    if "beamlines" not in _cache_:
-        _cache_["beamlines"] = [
-            entry["name"] for entry in api_bss.listBeamlines()
-        ]
-    return _cache_["beamlines"]
+    return api_bss.beamlines
 
 
 def listAllRuns():
-    """Return a list of all known cycles.  Cache for repeated use."""
-    if "cycles" not in _cache_:
-        _cache_["cycles"] = sorted(
-            [entry["name"] for entry in api_bss.listRuns()]
-        )
-    return _cache_["cycles"]
+    """Return a list of all known cycles (might include future runs, too)."""
+    return api_bss.runs
 
 
 def listRecentRuns(quantity=6):
     """
-    Return a list of the 6 most recent runs (2-year period).
+    Return a list of the 'quantity' most recent runs.
+
+    Sorted in reverse chronological order.
 
     PARAMETERS
 
-    quantity
-        *int* :
-        number of APS run cycles to include, optional (default: 6)
+    quantity : int
+        Number of APS run cycles to include, optional (default: 6, a two year
+        period)
     """
-    # 6 runs is the duration of a user proposal
-    # fmt: off
-    tNow = datetime.datetime.now()
-    runs = [
-        run["name"]
-        for run in listAllRuns()
-        if (
-            datetime.datetime.timestamp(iso2datetime(run["startTime"]))
-            <=
-            datetime.datetime.timestamp(tNow)
-        )
-    ]
-    # fmt: on
-    return sorted(runs, reverse=True)[:quantity]
+    runs = listAllRuns()
+    return sorted(runs[: 1 + runs.index(getCurrentCycle())], reverse=True)[:quantity]
 
 
 def printColumns(items, numColumns=5, width=10):
@@ -599,11 +536,7 @@ def printColumns(items, numColumns=5, width=10):
     if n % numColumns > 0:
         rows += 1
     for base in range(0, rows):
-        row = [
-            items[base + k * rows]
-            for k in range(numColumns)
-            if base + k * rows < n
-        ]
+        row = [items[base + k * rows] for k in range(numColumns) if base + k * rows < n]
         print("".join([f"{s:{width}s}" for s in row]))
 
 
@@ -628,9 +561,7 @@ def printEsafTable(records, title=""):
     table.labels = "id status start end user(s) title".split()
     for item in sorted(records, key=esaf_sorter, reverse=True):
         users = trim(
-            ",".join(
-                [user["lastName"] for user in item["experimentUsers"]]
-            ),
+            ",".join([user["lastName"] for user in item["experimentUsers"]]),
             20,
         )
         table.addRow(
@@ -731,22 +662,15 @@ def get_options():
         version=__version__,
     )
 
-    subcommand = parser.add_subparsers(
-        dest="subcommand", title="subcommand"
-    )
+    subcommand = parser.add_subparsers(dest="subcommand", title="subcommand")
 
     subcommand.add_parser("beamlines", help="print list of beamlines")
 
-    msg = (
-        "print current ESAF(s) and proposal(s)"
-        ",  DEPRECATED: use 'list' instead"
-    )
+    msg = "print current ESAF(s) and proposal(s)" ",  DEPRECATED: use 'list' instead"
     p_sub = subcommand.add_parser("current", help=msg)
     p_sub.add_argument("beamlineName", type=str, help="Beamline name")
 
-    p_sub = subcommand.add_parser(
-        "cycles", help="print APS run cycle names"
-    )
+    p_sub = subcommand.add_parser("cycles", help="print APS run cycle names")
     p_sub.add_argument(
         "-f",
         "--full",
@@ -784,9 +708,7 @@ def get_options():
     )
     p_sub.add_argument("beamlineName", type=str, help="Beamline name")
 
-    p_sub = subcommand.add_parser(
-        "proposal", help="print specific proposal"
-    )
+    p_sub = subcommand.add_parser("proposal", help="print specific proposal")
     p_sub.add_argument("proposalId", type=str, help="proposal ID number")
     p_sub.add_argument("cycle", type=str, help="APS run (cycle) name")
     p_sub.add_argument("beamlineName", type=str, help="Beamline name")
@@ -799,14 +721,10 @@ def get_options():
     p_sub.add_argument("beamlineName", type=str, help="Beamline name")
     p_sub.add_argument("cycle", type=str, help="APS run (cycle) name")
 
-    p_sub = subcommand.add_parser(
-        "update", help="EPICS PVs: update from BSS"
-    )
+    p_sub = subcommand.add_parser("update", help="EPICS PVs: update from BSS")
     p_sub.add_argument("prefix", type=str, help="EPICS PV prefix")
 
-    p_sub = subcommand.add_parser(
-        "report", help="EPICS PVs: report what is in the PVs"
-    )
+    p_sub = subcommand.add_parser("report", help="EPICS PVs: report what is in the PVs")
     p_sub.add_argument("prefix", type=str, help="EPICS PV prefix")
 
     return parser.parse_args()
@@ -829,11 +747,13 @@ def cmd_cycles(args):
         def sorter(entry):
             return entry["startTime"]
 
-        for entry in sorted(
-            listAllRuns(), key=sorter, reverse=args.ascending
-        ):
+        for entry in sorted(listAllRuns(), key=sorter, reverse=args.ascending):
             table.addRow(
-                (entry["name"], entry["startTime"], entry["endTime"],)
+                (
+                    entry["name"],
+                    entry["startTime"],
+                    entry["endTime"],
+                )
             )
         print(str(table))
     else:
@@ -858,18 +778,14 @@ def cmd_current(args):
     if len(records) == 0:
         print(f"No current proposals for {args.beamlineName}")
     else:
-        printProposalTable(
-            records, f"Current Proposal(s): {args.beamlineName} at {tNow}"
-        )
+        printProposalTable(records, f"Current Proposal(s): {args.beamlineName} at {tNow}")
 
     sector = args.beamlineName.split("-")[0]
     records = getCurrentEsafs(sector)
     if len(records) == 0:
         print(f"No current ESAFs for sector {sector}")
     else:
-        printEsafTable(
-            records, f"Current ESAF(s): sector {sector} at {tNow}"
-        )
+        printEsafTable(records, f"Current ESAF(s): sector {sector} at {tNow}")
 
 
 def cmd_esaf(args):
@@ -933,17 +849,13 @@ def cmd_list(args):
         ]
     trouble = [c for c in cycle if c not in listAllRuns()]
     if trouble:
-        raise KeyError(
-            f"Could not find APS run cycle(s): {', '.join(trouble)}"
-        )
+        raise KeyError(f"Could not find APS run cycle(s): {', '.join(trouble)}")
 
     logger.debug("cycle(s): %s", cycle)
 
     printProposalTable(
         listProposals(cycle, args.beamlineName),
-        "Proposal(s): "
-        f" beam line {args.beamlineName}"
-        f",  cycle(s) {args.cycle}",
+        "Proposal(s): " f" beam line {args.beamlineName}" f",  cycle(s) {args.cycle}",
     )
     printEsafTable(
         listESAFs(cycle, sector),
@@ -962,9 +874,7 @@ def cmd_proposal(args):
         Object returned by ``argparse``
     """
     try:
-        proposal = getProposal(
-            args.proposalId, args.cycle, args.beamlineName
-        )
+        proposal = getProposal(args.proposalId, args.cycle, args.beamlineName)
         print(yaml.dump(proposal))
     except DmRecordNotFound as exc:
         print(exc)
