@@ -2,7 +2,6 @@
 General tests of the apsbss module
 """
 
-import datetime
 import pathlib
 import socket
 import subprocess
@@ -253,14 +252,6 @@ def test_apsbss_commands_beamlines(argv):
     args = apsbss.get_options()
     assert args is not None
     assert args.subcommand == sys.argv[1]
-
-
-def test_apsbss_commands_current(argv):
-    sys.argv = argv + ["current", "9-ID-B,C"]
-    args = apsbss.get_options()
-    assert args is not None
-    assert args.subcommand == sys.argv[1]
-    assert args.beamlineName == sys.argv[2]
 
 
 def test_apsbss_commands_runs(argv):

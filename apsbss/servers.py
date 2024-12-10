@@ -174,6 +174,7 @@ class Server:
 
         return results
 
+    # TODO: rename to esaf
     def get_esaf(self, esaf_id):
         """
         Return ESAF as a dictionary.
@@ -190,6 +191,7 @@ class Server:
             raise EsafNotFound(f"{esaf_id=!r}")
         return dict(record.data)
 
+    # TODO: rename to proposal
     def get_proposal(self, proposal_id, beamline, run):
         """
         Return proposal as a dictionary.

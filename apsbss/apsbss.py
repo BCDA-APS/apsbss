@@ -407,10 +407,6 @@ def get_options():
 
     subcommand.add_parser("beamlines", help="print list of beamlines")
 
-    msg = "print current ESAF(s) and proposal(s)" ",  DEPRECATED: use 'list' instead"
-    p_sub = subcommand.add_parser("current", help=msg)
-    p_sub.add_argument("beamlineName", type=str, help="Beamline name")
-
     p_sub = subcommand.add_parser("runs", help="print APS run cycle names")
     p_sub.add_argument(
         "-f",
@@ -502,34 +498,6 @@ def cmd_runs(args):
         printColumns(server.runs)
 
 
-def cmd_current(args):
-    """
-    Handle ``current`` command.
-
-    DEPRECATED: use ``list`` instead
-
-    PARAMETERS
-
-    args
-        *obj* :
-        Object returned by ``argparse``
-    """
-    warnings.warn("Command 'current' is deprecated, use 'list' instead.")
-    records = getCurrentProposals(args.beamlineName)
-    tNow = datetime.datetime.now().isoformat(sep=" ")
-    if len(records) == 0:
-        print(f"No current proposals for {args.beamlineName}")
-    else:
-        printProposalTable(records, f"Current Proposal(s): {args.beamlineName} at {tNow}")
-
-    sector = args.beamlineName.split("-")[0]
-    records = server.current_esafs(sector)
-    if len(records) == 0:
-        print(f"No current ESAFs for sector {sector}")
-    else:
-        printEsafTable(records, f"Current ESAF(s): sector {sector} at {tNow}")
-
-
 def cmd_esaf(args):
     """
     Handle ``esaf`` command.
@@ -564,7 +532,7 @@ def cmd_list(args):
 
     if not len(run) or run in "now current".split():
         run = server.current_run
-    # elif run == "all":
+    # elif run == "all":  # TODO: re-enable
     #     run = server.runs
     elif run in "future next".split():
         runs = server.runs
@@ -639,9 +607,6 @@ def main():
 
     elif args.subcommand == "clear":
         epicsClear(args.prefix)
-
-    elif args.subcommand == "current":
-        cmd_current(args)
 
     elif args.subcommand == "runs":
         cmd_runs(args)
