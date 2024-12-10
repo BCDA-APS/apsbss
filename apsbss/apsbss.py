@@ -51,12 +51,10 @@ APPLICATION
 # The full license is in the file LICENSE.txt, distributed with this software.
 # -----------------------------------------------------------------------------
 
-import datetime
 import logging
 import os
 import sys
 import time
-import warnings
 
 import pyRestTable
 import yaml
