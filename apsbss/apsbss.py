@@ -625,12 +625,10 @@ def cmd_report(args):
         *obj* :
         Object returned by ``argparse``
     """
-    # from ..utils import object_explorer  # FIXME removed from apstools.utils
-    # see: https://github.com/BCDA-APS/apstools/issues/520
+    from apstools.utils import listdevice  # TODO: HEAVY addition for one function
 
-    # bss = connect_epics(args.prefix)
-    # object_explorer(bss)
-    raise NotImplementedError("'report' command not available yet.")
+    bss = connect_epics(args.prefix)
+    listdevice(bss)
 
 
 def main():
