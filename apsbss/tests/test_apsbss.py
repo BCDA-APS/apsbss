@@ -227,19 +227,14 @@ def test_apsbss_commands_no_options(argv):
 
 
 def test_apsbss_commands_beamlines(argv):
-    sys.argv = argv + [
-        "beamlines",
-    ]
+    sys.argv = argv + ["beamlines"]
     args = apsbss.get_options()
     assert args is not None
     assert args.subcommand == sys.argv[1]
 
 
 def test_apsbss_commands_esaf(argv):
-    sys.argv = argv + [
-        "esaf",
-        "12345",
-    ]
+    sys.argv = argv + ["esaf", "12345"]
     args = apsbss.get_options()
     assert args is not None
     assert args.subcommand == sys.argv[1]
@@ -247,7 +242,12 @@ def test_apsbss_commands_esaf(argv):
 
 
 def test_apsbss_commands_proposal(argv):
-    sys.argv = argv + ["proposal", "proposal_number_here", "1995-1", "my_beamline"]
+    sys.argv = argv + [
+        "proposal",
+        "proposal_number_here",
+        "1995-1",
+        "my_beamline",
+    ]
     args = apsbss.get_options()
     assert args is not None
     assert args.subcommand == sys.argv[1]
@@ -257,13 +257,15 @@ def test_apsbss_commands_proposal(argv):
 
 
 def test_apsbss_commands_report(argv):
-    assert True  # TODO:
+    sys.argv = argv + ["report", "IOC:prefix:"]
+    args = apsbss.get_options()
+    assert args is not None
+    assert args.subcommand == sys.argv[1]
+    assert args.prefix == "IOC:prefix:"
 
 
 def test_apsbss_commands_runs(argv):
-    sys.argv = argv + [
-        "runs",
-    ]
+    sys.argv = argv + ["runs"]
     args = apsbss.get_options()
     assert args is not None
     assert args.subcommand == sys.argv[1]

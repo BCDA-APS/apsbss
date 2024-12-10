@@ -12,7 +12,7 @@ from ..core import User
 from ..core import iso2dt
 from ..core import miner
 from ..core import printColumns
-from ..core import trim as core_trim
+from ..core import trim 
 from ._core import TEST_DATA_PATH
 from ._core import yaml_loader
 
@@ -60,8 +60,8 @@ def test_printColumns(capsys):
 
 def test_trim():
     source = "0123456789"
-    assert core_trim(source) == source
-    got = core_trim(source, length=8)
+    assert trim(source) == source
+    got = trim(source, length=8)
     assert got != source
     assert got.endswith("...")
     assert len(got) == 8

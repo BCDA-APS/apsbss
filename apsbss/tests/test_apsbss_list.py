@@ -3,6 +3,7 @@ import sys
 import pytest
 
 from ..apsbss import main
+from ..server_interface import RunNotFound
 from ..server_interface import Server
 from ._core import is_aps_workstation
 
@@ -71,7 +72,7 @@ def test_run_blank(capsys):
         sys.argv = [
             sys.argv[0],
             "list",
-            "8-ID-I",
+            "8-ID-E",
             "--run",
             "",
         ]
@@ -122,9 +123,9 @@ def test_run_not_found():
             "--run",
             "not-a-run",
         ]
-        with pytest.raises(KeyError) as exc:
+        with pytest.raises(RunNotFound) as exc:
             main()
-        assert "Could not find APS run=" in str(exc.value)
+        assert "Could not find run=" in str(exc.value)
 
 
 def test_run_previous(capsys):

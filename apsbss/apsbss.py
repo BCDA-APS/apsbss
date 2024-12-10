@@ -34,16 +34,6 @@ EXAMPLES::
     ~epicsUpdate
 """
 
-# -----------------------------------------------------------------------------
-# :author:    Pete R. Jemian
-# :email:     jemian@anl.gov
-# :copyright: (c) 2017-2025, UChicago Argonne, LLC
-#
-# Distributed under the terms of the Creative Commons Attribution 4.0 International Public License.
-#
-# The full license is in the file LICENSE.txt, distributed with this software.
-# -----------------------------------------------------------------------------
-
 import logging
 import os
 import sys
@@ -53,7 +43,6 @@ import pyRestTable
 import yaml
 
 from .core import printColumns
-from .core import trim
 from .server_interface import Server
 
 CONNECT_TIMEOUT = 5
@@ -249,81 +238,6 @@ def epicsSetup(prefix, beamline, run=None):
     bss.status_msg.put("Done")
 
 
-def printEsafTable(records, title=""):
-    """
-    Print the list of ESAFs as a table.
-
-    PARAMETERS
-
-    records
-        *[obj]* :
-        List of ESAF dictionaries.
-    title
-        *str* :
-        Text to print before the table.
-    """
-
-    def esaf_sorter(prop):
-        return prop["experimentStartDate"]
-
-    table = pyRestTable.Table()
-    table.labels = "id status start end user(s) title".split()
-    for item in sorted(records, key=esaf_sorter, reverse=True):
-        users = trim(
-            ",".join([user["lastName"] for user in item["experimentUsers"]]),
-            20,
-        )
-        table.addRow(
-            (
-                item["esafId"],
-                item["esafStatus"],
-                item["experimentStartDate"].split()[0],
-                item["experimentEndDate"].split()[0],
-                users,
-                trim(item["esafTitle"], 40),
-            )
-        )
-    print(f"{title}\n\n{table}")
-
-
-def printProposalTable(records, title=""):
-    """
-    Print the list of proposals as a table.
-
-    PARAMETERS
-
-    records
-        *[obj]* :
-        List of proposal dictionaries.
-    title
-        *str* :
-        Text to print before the table.
-    """
-
-    def prop_sorter(prop):
-        return prop.startTime
-
-    table = pyRestTable.Table()
-    table.labels = "id run start end user(s) title".split()
-    for item in sorted(records.values(), key=prop_sorter, reverse=True):
-        users = trim(
-            ",".join([user.lastName for user in item._users]),
-            20,
-        )
-        # logger.debug("%s %s %s", item["startTime"], tNow, item["endTime"])
-        table.addRow(
-            (
-                item.proposal_id,
-                item.run,
-                item.startTime,
-                item.endTime,
-                users,
-                trim(item.title),
-            )
-        )
-    print(f"{title}\n\n{table}")
-
-
 def get_options():
     """Handle command line arguments."""
     global parser
@@ -374,15 +288,14 @@ def get_options():
         " or one of these (``past``,  ``prior``, ``previous``)"
         " for the previous run, (``current`` or ``now``)"
         " for the current run, (``future`` or ``next``)"
-        " for the next run."
-        # " or ``recent`` for the past two years."  # TODO: re-enable
+        " for the next run,"
+        " or ``recent`` for the past two years."
     )
     p_sub.add_argument(
         "-r",
         "--run",
         type=str,
         default="now",
-        # TODO: nargs="?",
         help=msg,
     )
     p_sub.add_argument("beamlineName", type=str, help="Beamline name")
@@ -441,43 +354,13 @@ def cmd_list(args):
     run = str(args.run).strip().lower()
     sector = int(args.beamlineName.split("-")[0])
 
-    if not len(run) or run in "now current".split():
-        run = server.current_run
-    # elif run == "all":  # TODO: re-enable
-    #     run = server.runs
-    elif run in "future next".split():
-        runs = server.runs
-        item = runs.index(server.current_run) + 1
-        if item >= len(runs):
-            print("No future run information available at this time.")
-            return
-        run = runs[item]
-    elif run in "past previous prior".split():
-        runs = server.runs
-        item = runs.index(server.current_run) - 1
-        if item < 0:
-            print("No previous run information available.")
-            return
-        run = runs[item]
-    # elif run == "recent":  # TODO re-enable
-    #     run = server.recent_runs()
-
-    if run not in server.runs:
-        raise KeyError(f"Could not find APS {run=!r}")
-
     logger.debug("run(s): %s", run)
 
-    # TODO: refactor into Server class
-    printProposalTable(
-        server.proposals(args.beamlineName, run),
-        "Proposal(s): " f" beam line {args.beamlineName}" f",  run(s) {args.run}",
-    )
+    print(f"Proposal(s): beam line {args.beamlineName}, run(s) {args.run}")
+    print(server._proposal_table(args.beamlineName, args.run))
 
-    # TODO: refactor into Server class
-    printEsafTable(
-        server.esafs(sector, run),
-        f"ESAF(s):  sector {sector},  run(s) {args.run}",
-    )
+    print(f"ESAF(s): sector {sector}, run(s) {args.run}")
+    print(server._esaf_table(sector, args.run))
 
 
 def cmd_proposal(args):
@@ -577,3 +460,13 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# -----------------------------------------------------------------------------
+# :author:    Pete R. Jemian
+# :email:     jemian@anl.gov
+# :copyright: (c) 2017-2025, UChicago Argonne, LLC
+#
+# Distributed under the terms of the Creative Commons Attribution 4.0 International Public License.
+#
+# The full license is in the file LICENSE.txt, distributed with this software.
+# -----------------------------------------------------------------------------

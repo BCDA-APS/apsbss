@@ -15,11 +15,13 @@ Interface to the servers.
 import logging
 
 import dm
+import pyRestTable
 
 from .bss_dm import DM_ScheduleInterface
 from .bss_is import IS_ScheduleSystem
 from .core import DM_APS_DB_WEB_SERVICE_URL
 from .core import iso2dt
+from .core import trim
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +43,9 @@ class Server:
     Common connection to information servers.
 
     .. autosummary::
+        ~_esaf_table
+        ~_proposal_table
+        ~_runs
         ~beamlines
         ~current_esafs
         ~current_esafs_and_proposals
@@ -51,7 +56,6 @@ class Server:
         ~proposal
         ~proposals
         ~recent_runs
-        ~_runs
         ~runs
     """
 
@@ -63,6 +67,135 @@ class Server:
         except Exception as reason:
             logger.info("Did not connect to IS server: %s", reason)
             self.bss_api = DM_ScheduleInterface()
+
+    def _esaf_table(self, sector, runs=None) -> pyRestTable.Table:
+        """
+        Print the list of ESAFS as a table.
+
+        PARAMETERS
+
+        sector : str | int
+            Name of sector.  If ``str``, must be in ``%02d`` format (``02``, not
+            ``2``).
+        runs : str | [str]
+            List of APS runs.  Default: the current run.
+        """
+        runs = self._parse_runs_arg(runs)
+
+        def sorter(prop):
+            return prop["experimentStartDate"]
+
+        table = pyRestTable.Table()
+        table.labels = "id status run start end user(s) title".split()
+        for run in sorted(runs, reverse=True):
+            esafs = self.esafs(sector, run)
+            for item in sorted(esafs, key=sorter, reverse=True):
+                users = trim(
+                    ",".join([user["lastName"] for user in item["experimentUsers"]]),
+                    length=20,
+                )
+                table.addRow(
+                    (
+                        item["esafId"],
+                        item["esafStatus"],
+                        run,
+                        item["experimentStartDate"].split()[0],
+                        item["experimentEndDate"].split()[0],
+                        users,
+                        trim(item["esafTitle"], 40),
+                    )
+                )
+
+        return table
+
+    def _parse_runs_arg(self, runs) -> list:
+        """
+        Parse a 'runs' argument into a list of run names.
+
+        Parameters
+
+        runs : str | [str] | None
+            Name(s) of APS runs.
+
+            * If 'None', then use the current run.
+            * If a list, then all strings in the list must be
+              valid names of APS runs.
+            * If a string, refer to the following table:
+
+              ============  =============================
+              value         meaning
+              ============  =============================
+              ``None``      Use the current run.
+              ""            Use the current run.
+              "current"     Use the current run.
+              "now"         Use the current run.
+              "past"        Use the previous run.
+              "previous"    Use the previous run.
+              "prior"       Use the previous run.
+              "future"      Use the next run.
+              "next"        Use the next run.
+              "recent"      Use the past six (6) runs.
+              ============  =============================
+        """
+        if runs in ("current", "now", "", None):
+            runs = self.current_run
+        elif runs in ("past", "previous", "prior"):
+            rr = sorted(self.runs, reverse=True)
+            runs = rr[1 + rr.index(self.current_run)]
+        elif runs in ("future", "next"):
+            rr = sorted(self.runs, reverse=True)
+            p = rr.index(self.current_run)
+            if p == 0:
+                raise KeyError(f"No runs in the future for run={self.current_run}.")
+            runs = rr[p - 1]
+        elif runs == "recent":
+            runs = self.recent_runs()
+
+        if not isinstance(runs, (list, set, tuple, str)):
+            raise TypeError(f"Must be str or iterable, received: {runs=!r}")
+
+        if not isinstance(runs, (list, set, tuple)):
+            runs = [runs]
+
+        return set(runs)  # ensure 'runs' is unique
+
+    def _proposal_table(self, beamline, runs=None) -> pyRestTable.Table:
+        """
+        Print the list of proposals as a table.
+
+        PARAMETERS
+
+        beamline : str
+            Canonical name of beam line.
+        run : str | [str]
+            List of APS runs.  Default: the current run.
+        """
+        runs = self._parse_runs_arg(runs)
+
+        def sorter(prop):
+            return prop.startTime
+
+        table = pyRestTable.Table()
+        table.labels = "id run start end user(s) title".split()
+        for run in sorted(runs, reverse=True):
+            proposals = self.proposals(beamline, run)
+            for item in sorted(proposals.values(), key=sorter, reverse=True):
+                users = trim(
+                    ",".join([user.lastName for user in item._users]),
+                    20,
+                )
+                table.addRow(
+                    (
+                        item.proposal_id,
+                        item.run,
+                        item.startTime.strftime("%Y-%m-%d"),
+                        item.endTime.strftime("%Y-%m-%d"),
+                        users,
+                        trim(item.title),
+                    )
+                )
+
+        return table
 
     @property
     def beamlines(self) -> list:
@@ -142,39 +275,6 @@ class Server:
         """Return the name of the current APS run (cycle)."""
         return self.bss_api.current_run["name"]
 
-    def esafs(self, sector, run):
-        """
-        Return list of ESAFs for the given sector & run.
-
-        PARAMETERS
-
-        sector : str | int
-            Name of sector.  If ``str``, must be in ``%02d`` format (``02``, not
-            ``2``).
-        run : str
-            List of APS run (cycle).
-        """
-        if isinstance(sector, int):
-            sector = f"{sector:02d}"
-        if len(sector) == 1:
-            sector = "0" + sector
-
-        run_info = self._runs.get(run)
-        if run_info is None:
-            raise RunNotFound(f"Could not find {run=!r}")
-
-        year = int(run.split("-")[0])
-
-        results = []
-
-        esafs = self.esaf_api.listEsafs(sector=sector, year=year)
-        for esaf in esafs:
-            esaf_starts = iso2dt(esaf["experimentStartDate"])
-            if run_info["startTime"] <= esaf_starts <= run_info["endTime"]:
-                results.append(esaf)
-
-        return results
-
     def esaf(self, esaf_id):
         """
         Return ESAF as a dictionary.
@@ -191,7 +291,43 @@ class Server:
             raise EsafNotFound(f"{esaf_id=!r}")
         return dict(record.data)
 
-    def proposal(self, proposal_id, beamline, run):
+    def esafs(self, sector, run=None):
+        """
+        Return list of ESAFs for the given sector & run.
+
+        PARAMETERS
+
+        sector : str | int
+            Name of sector.  If ``str``, must be in ``%02d`` format (``02``, not
+            ``2``).
+        run : str
+            List of APS run.  Default to current run.
+        """
+        if isinstance(sector, int):
+            sector = f"{sector:02d}"
+        if len(sector) == 1:
+            sector = "0" + sector
+
+        run = run or self.current_run
+        if not isinstance(run, str):
+            raise TypeError(f"Not a string: {run=!r}")
+        run_info = self._runs.get(run)
+        if run_info is None:
+            raise RunNotFound(f"Could not find {run=!r}")
+
+        year = int(run.split("-")[0])
+
+        results = []
+
+        esafs = self.esaf_api.listEsafs(sector=sector, year=year)
+        for esaf in esafs:
+            esaf_starts = iso2dt(esaf["experimentStartDate"])
+            if run_info["startTime"] <= esaf_starts <= run_info["endTime"]:
+                results.append(esaf)
+
+        return results
+
+    def proposal(self, proposal_id, beamline, run=None):
         """
         Return proposal as a dictionary.
 
@@ -199,11 +335,15 @@ class Server:
 
         proposalId : str
             Proposal identification number.
-        run : str
-            Canonical name of APS run (cycle).
         beamline : str
             Canonical name of beam line.
+        run : str
+            Canonical name of APS run.  Default: the current run.
         """
+        run = run or self.current_run
+        if not isinstance(run, str):
+            raise TypeError(f"Not a string: {run=!r}")
+
         # The server will validate the request.
         proposal_id = str(proposal_id)
         proposal = self.proposals(beamline, run).get(proposal_id)
@@ -211,8 +351,21 @@ class Server:
             raise ProposalNotFound(f"{proposal_id=!r} {beamline=!r} {run=!r}")
         return proposal
 
-    def proposals(self, beamline, run):
-        """List of all proposals on 'beamline' in 'run'."""
+    def proposals(self, beamline, run=None):
+        """
+        List of all proposals on 'beamline' in 'run'.
+
+        PARAMETERS
+
+        beamline : str
+            Canonical name of beam line.
+        run : str
+            Canonical name of APS run.  Default: the current run.
+        """
+        run = run or self.current_run
+        if not isinstance(run, str):
+            raise TypeError(f"Not a string: {run=!r}")
+
         return self.bss_api.proposals(beamline, run)
 
     def recent_runs(self, nruns=6) -> list:

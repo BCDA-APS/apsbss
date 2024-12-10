@@ -24,13 +24,18 @@ def test_run_not_found():
         ["2011-3", 9, 33],
         ["2020-1", 9, 41],
         ["2020-2", 9, 38],
-        [("2020-2"), 9, 38],
-        # [["2020-1", "2020-2"], 9, 41+38],  # TODO re-enable
+        [["2020-2"], 9, 38],
+        [("2020-1", "2020-2"), 9, 41+38],
     ]
 )
 def test_esafs(run, sector, count):
     if is_aps_workstation():
-        assert len(apsbss.server.esafs(sector, run)) == count
+        if not isinstance(run, str):
+            with pytest.raises(TypeError) as reason:
+                apsbss.server.esafs(sector, run)
+            assert "Not a string: run=" in str(reason)
+        else:
+            assert len(apsbss.server.esafs(sector, run)) == count
 
 
 @pytest.mark.parametrize(
@@ -40,9 +45,14 @@ def test_esafs(run, sector, count):
         ["2020-1", "9-ID-B,C", 12],
         ["2020-2", "9-ID-B,C", 21],
         [("2020-2"), "9-ID-B,C", 21],
-        # [["2020-1", "2020-2"], "9-ID-B,C", 12+21],  # TODO re-enable
+        [["2020-1", "2020-2"], "9-ID-B,C", 12+21],
     ]
 )
 def test_proposals(run, bl, count):
     if is_aps_workstation():
-        assert len(apsbss.server.proposals(bl, run)) == count
+        if not isinstance(run, str):
+            with pytest.raises(TypeError) as reason:
+                apsbss.server.proposals(bl, run)
+            assert "Not a string: run=" in str(reason)
+        else:
+            assert len(apsbss.server.proposals(bl, run)) == count
