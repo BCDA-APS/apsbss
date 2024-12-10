@@ -130,7 +130,7 @@ class ProposalBase(abc.ABC):
         ~users
     """
 
-    def __init__(self, raw) -> None:
+    def __init__(self, raw, run) -> None:
         """
         Create a new instance.
 
@@ -138,9 +138,12 @@ class ProposalBase(abc.ABC):
         ----------
         raw : dict
             Dictionary-like object with raw information from the server.
+        run : str
+            Canonical name of the run with this proposal.
         """
-        self._raw = raw  # dict-like object
         self._cache = {}
+        self._raw = raw  # dict-like object
+        self.run = run
 
     def __repr__(self) -> str:
         """Text representation."""

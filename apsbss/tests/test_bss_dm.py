@@ -37,11 +37,11 @@ def test_ApsDmScheduleInterface():
 
 
 def test_DM_BeamtimeProposal():
-    btr = DM_BeamtimeProposal({})
+    btr = DM_BeamtimeProposal({}, "")
     assert btr._raw == {}
     assert not btr.current
 
-    btr = DM_BeamtimeProposal(yaml_loader(DM_BTR_78243_FILE))
+    btr = DM_BeamtimeProposal(yaml_loader(DM_BTR_78243_FILE), "2022-2")
     assert len(btr._raw) == 9
     assert not btr.current
     assert len(btr.users) == 9

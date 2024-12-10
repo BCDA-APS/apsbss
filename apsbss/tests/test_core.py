@@ -5,9 +5,11 @@ from contextlib import nullcontext as does_not_raise
 
 import pytest
 
+from ..core import DM_APS_DB_WEB_SERVICE_URL
 from ..core import ProposalBase
 from ..core import ScheduleInterfaceBase
 from ..core import User
+from ..core import iso2dt
 from ..core import miner
 from ._core import TEST_DATA_PATH
 from ._core import yaml_loader
@@ -20,6 +22,16 @@ minimal_proposal_dict = {
     "endTime": str(datetime.datetime.now().astimezone()),
     "experimenters": [],
 }
+
+
+def test_url():
+    url = "https://xraydtn01.xray.aps.anl.gov:11236"
+    assert DM_APS_DB_WEB_SERVICE_URL == url
+
+
+def test_iso2dt():
+    dt = datetime.datetime(2020, 6, 30, 12, 31, 45, 67890).astimezone()
+    assert iso2dt("2020-06-30 12:31:45.067890") == dt
 
 
 @pytest.mark.parametrize(
@@ -54,13 +66,13 @@ def test_miner_raises(path, exception, text):
 
 
 def test_ProposalBase():
-    prop = ProposalBase({})
+    prop = ProposalBase({}, "")
     assert prop.to_dict() == {}
     with pytest.raises(KeyError) as reason:
         prop.proposal_id
     assert "id" in str(reason)
 
-    prop = ProposalBase(minimal_proposal_dict)
+    prop = ProposalBase(minimal_proposal_dict, "")
     assert prop.to_dict() == minimal_proposal_dict
     assert prop.proposal_id == 123456
     assert prop.title == "test proposal"
@@ -68,7 +80,7 @@ def test_ProposalBase():
 
     # set the end time into the future so this proposal is current
     minimal_proposal_dict["endTime"] = "2100-01-02 01:02-06:00"
-    prop = ProposalBase(minimal_proposal_dict)
+    prop = ProposalBase(minimal_proposal_dict, "")
     assert prop.current
 
 

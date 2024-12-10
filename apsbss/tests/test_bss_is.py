@@ -38,11 +38,11 @@ def server_available():
 
 
 def test_IS_BeamtimeRequest():
-    btr = IS_BeamtimeRequest({})
+    btr = IS_BeamtimeRequest({}, "")
     assert btr._raw == {}
     assert not btr.current
 
-    btr = IS_BeamtimeRequest(yaml_loader(IS_BTR_77056_FILE))
+    btr = IS_BeamtimeRequest(yaml_loader(IS_BTR_77056_FILE), "2022-1")
     assert len(btr._raw) == 23
     assert not btr.current
     assert miner(btr._raw, "beamtime.proposal.proposalType.display") == "PUP"

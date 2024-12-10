@@ -70,7 +70,7 @@ class EpicsEsafDevice(Device):
         ~clear_users
     """
 
-    aps_cycle = Component(EpicsSignal, "cycle", string=True)
+    aps_run = Component(EpicsSignal, "cycle", string=True)
     description = Component(EpicsSignal, "description", string=True)
     end_date = Component(EpicsSignal, "endDate", string=True)
     esaf_id = Component(EpicsSignal, "id", string=True)

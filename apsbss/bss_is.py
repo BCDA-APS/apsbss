@@ -54,6 +54,20 @@ class IS_RequestNotFound(IS_Exception):
 class IS_BeamtimeRequest(ProposalBase):
     """Content of a single beamtime request (proposal)."""
 
+    def __init__(self, raw, _run) -> None:
+        """
+        Create a new instance.
+
+        Parameters
+        ----------
+        raw : dict
+            Dictionary-like object with raw information from the server.
+        _run : str
+            Ignored.
+        """
+        self._cache = {}
+        self._raw = raw  # dict-like object
+
     def _find_user(self, first, last):
         """Return the dictionary with the specified user."""
         full_name = f"{first} {last}"
@@ -258,12 +272,12 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
 
             prop_dict = {}
             for entry in entries:
-                proposal = IS_BeamtimeRequest(entry)
+                proposal = IS_BeamtimeRequest(entry, run)
                 gupId = proposal.proposal_id
                 activity = self.activities(beamline, run).get(gupId)
                 if activity is not None:
                     entry["activity"] = activity
-                    proposal = IS_BeamtimeRequest(entry)
+                    proposal = IS_BeamtimeRequest(entry, run)
                 prop_dict[gupId] = proposal
 
             self._cache[key] = prop_dict

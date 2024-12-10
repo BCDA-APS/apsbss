@@ -2,8 +2,10 @@
 
 import pytest
 
+from ..servers import EsafNotFound
+from ..servers import ProposalNotFound
+from ..servers import RunNotFound
 from ..servers import Server
-from ..servers import ProposalNotFound, RunNotFound, EsafNotFound
 
 
 def test_Server():
@@ -13,6 +15,22 @@ def test_Server():
     assert len(server.current_run) == 6
     assert 10 < len(server.runs) < 100
     # TODO: more
+
+
+    # proposal = server.get_proposal(78243, "8-ID-I", "2022-2")
+    # assert proposal is not None
+    # assert isinstance(proposal, dict)
+    # assert "dynamics of colloidal suspensions" in proposal["title"]
+
+    # TODO: test the other functions
+    # getCurrentEsafs
+    # getCurrentInfo
+    # getCurrentProposals
+    # getEsaf
+    # getProposal
+    # class DmRecordNotFound(Exception): ...
+    # class EsafNotFound(DmRecordNotFound): ...
+    # class ProposalNotFound(DmRecordNotFound): ...
 
 
 def test_Server_raises():

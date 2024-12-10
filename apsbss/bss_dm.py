@@ -78,7 +78,7 @@ class DM_ScheduleInterface(ScheduleInterfaceBase):
             )
             prop_dict = {}
             for prop in proposals:
-                beamtime = DM_BeamtimeProposal(prop)
+                beamtime = DM_BeamtimeProposal(prop, run)
                 prop_dict[beamtime.proposal_id] = beamtime
             self._cache[key] = prop_dict
         return self._cache[key]

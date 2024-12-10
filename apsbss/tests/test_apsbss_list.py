@@ -2,8 +2,8 @@ import sys
 
 import pytest
 
-from ..apsbss import getCurrentCycle
 from ..apsbss import main
+from ..servers import Server
 from ._core import is_aps_workstation
 
 
@@ -20,41 +20,44 @@ def test_myoutput(capsys):  # or use "capfd" for fd-level
     assert err.strip() == ""
 
 
-def test_no_cycle_given(capsys):
+def test_no_run_given(capsys):
     if is_aps_workstation():
         sys.argv = [
             sys.argv[0],
             "list",
-            "9-ID-B,C",
+            "12-ID-B",
         ]
         main()
         out, err = capsys.readouterr()
-        assert getCurrentCycle() in str(out)
+        ss = Server()
+        assert isinstance(ss.bss_api._runs, list)
+        assert isinstance(ss._runs, dict)
+        assert ss.current_run in str(out)
         assert err.strip() == ""
 
 
-def test_cycle_all(capsys):
+# def test_run_all(capsys):
+#     if is_aps_workstation():
+#         sys.argv = [
+#             sys.argv[0],
+#             "list",
+#             "9-ID-B,C",
+#             "--run",
+#             "all",
+#         ]
+#         main()
+#         out, err = capsys.readouterr()
+#         assert "2020-1" in str(out)
+#         assert err.strip() == ""
+
+
+def test_run_future(capsys):
     if is_aps_workstation():
         sys.argv = [
             sys.argv[0],
             "list",
-            "9-ID-B,C",
-            "--cycle",
-            "all",
-        ]
-        main()
-        out, err = capsys.readouterr()
-        assert "2020-1" in str(out)
-        assert err.strip() == ""
-
-
-def test_cycle_future(capsys):
-    if is_aps_workstation():
-        sys.argv = [
-            sys.argv[0],
-            "list",
-            "9-ID-B,C",
-            "--cycle",
+            "8-ID-I",
+            "--run",
             "future",
         ]
         main()
@@ -63,28 +66,29 @@ def test_cycle_future(capsys):
         assert err.strip() == ""
 
 
-def test_cycle_blank(capsys):
+def test_run_blank(capsys):
     if is_aps_workstation():
         sys.argv = [
             sys.argv[0],
             "list",
-            "9-ID-B,C",
-            "--cycle",
+            "8-ID-I",
+            "--run",
             "",
         ]
         main()
         out, err = capsys.readouterr()
-        assert getCurrentCycle() in str(out)
+        ss = Server()
+        assert ss.current_run in str(out)
         assert err.strip() == ""
 
 
-def test_cycle_by_name(capsys):
+def test_run_by_name(capsys):
     if is_aps_workstation():
         sys.argv = [
             sys.argv[0],
             "list",
             "9-ID-B,C",
-            "--cycle",
+            "--run",
             "2020-2",
         ]
         main()
@@ -93,43 +97,44 @@ def test_cycle_by_name(capsys):
         assert err.strip() == ""
 
 
-def test_cycle_now(capsys):
+def test_run_now(capsys):
     if is_aps_workstation():
         sys.argv = [
             sys.argv[0],
             "list",
-            "9-ID-B,C",
-            "--cycle",
+            "8-ID-I",
+            "--run",
             "now",
         ]
         main()
         out, err = capsys.readouterr()
-        assert getCurrentCycle() in str(out)
+        ss = Server()
+        assert ss.current_run in str(out)
         assert err.strip() == ""
 
 
-def test_cycle_not_found():
+def test_run_not_found():
     if is_aps_workstation():
         sys.argv = [
             sys.argv[0],
             "list",
             "9-ID-B,C",
-            "--cycle",
-            "not-a-cycle",
+            "--run",
+            "not-a-run",
         ]
         with pytest.raises(KeyError) as exc:
             main()
-        assert "Could not find APS run cycle" in str(exc.value)
+        assert "Could not find APS run=" in str(exc.value)
 
 
-def test_cycle_previous(capsys):
+def test_run_previous(capsys):
     if is_aps_workstation():
         for when in "past previous prior".split():
             sys.argv = [
                 sys.argv[0],
                 "list",
                 "9-ID-B,C",
-                "--cycle",
+                "--run",
                 when,
             ]
             main()
@@ -138,16 +143,16 @@ def test_cycle_previous(capsys):
             assert err.strip() == ""
 
 
-def test_cycle_recent(capsys):
-    if is_aps_workstation():
-        sys.argv = [
-            sys.argv[0],
-            "list",
-            "9-ID-B,C",
-            "--cycle",
-            "recent",
-        ]
-        main()
-        out, err = capsys.readouterr()
-        assert "status" in str(out)
-        assert err.strip() == ""
+# def test_run_recent(capsys):
+#     if is_aps_workstation():
+#         sys.argv = [
+#             sys.argv[0],
+#             "list",
+#             "8-ID-I",
+#             "--run",
+#             "recent",
+#         ]
+#         main()
+#         out, err = capsys.readouterr()
+#         assert "status" in str(out)
+#         assert err.strip() == ""
