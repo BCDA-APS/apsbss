@@ -3,21 +3,21 @@ General tests of the apsbss module
 """
 
 import datetime
-import epics
 import pathlib
-import pytest
 import socket
 import subprocess
 import sys
 import time
 import uuid
 
-from ophyd.signal import EpicsSignalBase
+import epics
 import ophyd
+import pytest
+from ophyd.signal import EpicsSignalBase
 
 from .. import apsbss
 from .. import apsbss_makedb
-
+from ..servers import Server
 
 BSS_TEST_IOC_PREFIX = f"tst{uuid.uuid4().hex[:7]}:bss:"
 SRC_PATH = pathlib.Path(__file__).parent.parent
@@ -28,7 +28,10 @@ ophyd.set_cl("caproto")  # switch command layers
 # set default timeout for all EpicsSignal connections & communications
 try:
     EpicsSignalBase.set_defaults(
-        auto_monitor=True, timeout=60, write_timeout=60, connection_timeout=60,
+        auto_monitor=True,
+        timeout=60,
+        write_timeout=60,
+        connection_timeout=60,
     )
 except RuntimeError:
     pass  # ignore if some EPICS object already created
@@ -58,15 +61,7 @@ def bss_PV():
 def test_general():
     assert apsbss.CONNECT_TIMEOUT == 5
     assert apsbss.POLL_INTERVAL == 0.01
-    url = "https://xraydtn01.xray.aps.anl.gov:11236"
-    assert apsbss.DM_APS_DB_WEB_SERVICE_URL == url
-    assert apsbss.api_bss is not None
-    assert apsbss.api_esaf is not None
-
-
-def test_iso2datetime():
-    dt = datetime.datetime(2020, 6, 30, 12, 31, 45, 67890)
-    assert apsbss.iso2datetime("2020-06-30 12:31:45.067890") == dt
+    assert isinstance(apsbss.server, Server)
 
 
 def test_not_at_aps():
@@ -83,21 +78,11 @@ def test_only_at_aps():
     if not using_APS_workstation():
         return
 
-    runs = apsbss.listAllRuns()
+    runs = apsbss.server.runs
     assert len(runs) > 1
-    assert apsbss.getCurrentCycle() in runs
-    assert apsbss.listRecentRuns()[0] in runs
-    assert len(apsbss.listAllBeamlines()) > 1
-
-    # TODO: test the other functions
-    # getCurrentEsafs
-    # getCurrentInfo
-    # getCurrentProposals
-    # getEsaf
-    # getProposal
-    # class DmRecordNotFound(Exception): ...
-    # class EsafNotFound(DmRecordNotFound): ...
-    # class ProposalNotFound(DmRecordNotFound): ...
+    assert apsbss.server.current_run in runs
+    assert apsbss.server.runs[0] in runs
+    assert len(apsbss.server.beamlines) > 1
 
 
 def test_printColumns(capsys):
@@ -146,7 +131,7 @@ def ioc():
 
     cfg = IOC_ProcessConfig()
 
-    cfg.manager = (SRC_PATH / "apsbss_ioc.sh")
+    cfg.manager = SRC_PATH / "apsbss_ioc.sh"
     cfg.ioc_prefix = BSS_TEST_IOC_PREFIX
     cfg.ioc_process = run_process(cfg.command("restart"))
     time.sleep(0.5)  # allow the IOC to start
@@ -189,9 +174,9 @@ def test_EPICS(ioc, bss_PV):
 
     ioc.bss = apsbss.connect_epics(BSS_TEST_IOC_PREFIX)
     assert ioc.bss.connected
-    assert ioc.bss.esaf.aps_cycle.get() == ""
+    assert ioc.bss.esaf.aps_run.get() == ""
 
-    assert ioc.bss.esaf.aps_cycle.connected is True
+    assert ioc.bss.esaf.aps_run.connected is True
 
     if not using_APS_workstation():
         return
@@ -201,7 +186,7 @@ def test_EPICS(ioc, bss_PV):
 
     assert ioc.bss.proposal.beamline_name.get() != "harpo"
     assert ioc.bss.proposal.beamline_name.get() == beamline
-    assert ioc.bss.esaf.aps_cycle.get() == cycle
+    assert ioc.bss.esaf.aps_run.get() == cycle
     assert ioc.bss.esaf.sector.get() == beamline.split("-")[0]
 
     # epicsUpdate
@@ -220,17 +205,15 @@ def test_EPICS(ioc, bss_PV):
     # ===== ====== =================== ==================== ========================================
     esaf_id = "226319"
     proposal_id = "64629"
-    ioc.bss.esaf.aps_cycle.put("2019-2")
+    ioc.bss.esaf.aps_run.put("2019-2")
     ioc.bss.esaf.esaf_id.put(esaf_id)
     ioc.bss.proposal.proposal_id.put(proposal_id)
     apsbss.epicsUpdate(BSS_TEST_IOC_PREFIX)
     assert ioc.bss.esaf.title.get() == "Commission 9ID and USAXS"
-    assert ioc.bss.proposal.title.get().startswith(
-        "2019 National School on Neutron & X-r"
-    )
+    assert ioc.bss.proposal.title.get().startswith("2019 National School on Neutron & X-r")
 
     apsbss.epicsClear(BSS_TEST_IOC_PREFIX)
-    assert ioc.bss.esaf.aps_cycle.get() != ""
+    assert ioc.bss.esaf.aps_run.get() != ""
     assert ioc.bss.esaf.title.get() == ""
     assert ioc.bss.proposal.title.get() == ""
 
@@ -280,9 +263,9 @@ def test_apsbss_commands_current(argv):
     assert args.beamlineName == sys.argv[2]
 
 
-def test_apsbss_commands_cycles(argv):
+def test_apsbss_commands_runs(argv):
     sys.argv = argv + [
-        "cycles",
+        "runs",
     ]
     args = apsbss.get_options()
     assert args is not None
@@ -306,7 +289,7 @@ def test_apsbss_commands_proposal(argv):
     assert args is not None
     assert args.subcommand == sys.argv[1]
     assert args.proposalId == sys.argv[2]
-    assert args.cycle == sys.argv[3]
+    assert args.run == sys.argv[3]
     assert args.beamlineName == sys.argv[4]
 
 
@@ -325,7 +308,7 @@ def test_apsbss_commands_EPICS_setup(argv):
     assert args.subcommand == sys.argv[1]
     assert args.prefix == sys.argv[2]
     assert args.beamlineName == sys.argv[3]
-    assert args.cycle == sys.argv[4]
+    assert args.run == sys.argv[4]
 
 
 def test_apsbss_commands_EPICS_update(argv):

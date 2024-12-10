@@ -1,10 +1,7 @@
 .. _install:
 
-Installation
-============
-
-Installation
-############
+Install
+=======
 
 The ``apsbss`` package is available for installation
 by ``conda``, ``pip``, or from source.
