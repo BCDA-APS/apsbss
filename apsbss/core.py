@@ -165,7 +165,7 @@ class User:
         return (self._raw.get("piFlag") or "n").lower()[0] == "y"
 
 
-class ProposalBase(abc.ABC):
+class ProposalBase:
     """
     Base class for a single beam time request (proposal).
 

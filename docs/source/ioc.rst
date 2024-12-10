@@ -169,7 +169,7 @@ from EPICS base, use the supplied IOC management shell script
     first before trying to start the IOC.
 
 
-Here's an example starter script for the IOC from APS 9-ID-C (USAXS).  
+Here's an example starter script for the IOC from APS 9-ID-C (USAXS).
 This shell script is stored as file `~/bin/ioc9idcbss.sh` with
 executable permissions:
 

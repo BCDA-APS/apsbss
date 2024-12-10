@@ -5,4 +5,3 @@ Common Support
 
 .. automodule:: apsbss.core
     :members:
-

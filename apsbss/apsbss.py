@@ -52,7 +52,8 @@ parser = None
 server = Server()
 
 
-class EpicsNotConnected(Exception): ...
+class EpicsNotConnected(Exception):
+    """No connection to EPICS PV."""
 
 
 def connect_epics(prefix):

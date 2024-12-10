@@ -8,4 +8,3 @@ details are available than the :ref:`direct IS interface <bss_is>`.
 
 .. automodule:: apsbss.bss_dm
     :members:
-

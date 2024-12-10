@@ -46,6 +46,7 @@ describe the future plans.
    -----------
 
    * Add requests to project requirements.
+   * Code style enforced by pre-commit.
    * Increased code coverage of unit testing.
    * Moved report and table generation to new Server class.
    * Refactored (and simplified) IOC report table.

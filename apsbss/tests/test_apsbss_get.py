@@ -25,8 +25,8 @@ def test_run_not_found():
         ["2020-1", 9, 41],
         ["2020-2", 9, 38],
         [["2020-2"], 9, 38],
-        [("2020-1", "2020-2"), 9, 41+38],
-    ]
+        [("2020-1", "2020-2"), 9, 41 + 38],
+    ],
 )
 def test_esafs(run, sector, count):
     if is_aps_workstation():
@@ -45,8 +45,8 @@ def test_esafs(run, sector, count):
         ["2020-1", "9-ID-B,C", 12],
         ["2020-2", "9-ID-B,C", 21],
         [("2020-2"), "9-ID-B,C", 21],
-        [["2020-1", "2020-2"], "9-ID-B,C", 12+21],
-    ]
+        [["2020-1", "2020-2"], "9-ID-B,C", 12 + 21],
+    ],
 )
 def test_proposals(run, bl, count):
     if is_aps_workstation():

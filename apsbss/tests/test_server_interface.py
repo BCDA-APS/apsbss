@@ -12,7 +12,7 @@ from ._core import is_aps_workstation
 def test_Server():
     server = Server()
     assert server is not None
-    
+
     if not is_aps_workstation():
         return
 
@@ -20,7 +20,6 @@ def test_Server():
     assert len(server.current_run) == 6
     assert 10 < len(server.runs) < 100
     # TODO: more
-
 
     # proposal = server.get_proposal(78243, "8-ID-I", "2022-2")
     # assert proposal is not None
@@ -40,7 +39,7 @@ def test_Server():
 
 def test_Server_raises():
     server = Server()
-    
+
     if not is_aps_workstation():
         return
 

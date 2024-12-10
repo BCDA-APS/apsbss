@@ -12,7 +12,7 @@ from ..core import User
 from ..core import iso2dt
 from ..core import miner
 from ..core import printColumns
-from ..core import trim 
+from ..core import trim
 from ._core import TEST_DATA_PATH
 from ._core import yaml_loader
 
@@ -71,7 +71,11 @@ def test_trim():
 @pytest.mark.parametrize(
     "path, exception, text",
     [
-        ["proposal.experimenters.badge", AttributeError, "'list' object has no attribute 'get'"],
+        [
+            "proposal.experimenters.badge",
+            AttributeError,
+            "'list' object has no attribute 'get'",
+        ],
         ["does-not-exist", does_not_raise, "None"],
         ["beamtime.does-not-exist", does_not_raise, "None"],
     ],
@@ -90,7 +94,7 @@ def test_ProposalBase():
     prop = ProposalBase({}, "")
     assert prop.to_dict() == {}
     with pytest.raises(KeyError) as reason:
-        prop.proposal_id
+        _id = prop.proposal_id
     assert "id" in str(reason)
 
     prop = ProposalBase(minimal_proposal_dict, "")

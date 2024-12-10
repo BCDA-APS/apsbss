@@ -26,14 +26,17 @@ def server_available():
     """At times, the IS server is not available."""
     ss = IS_ScheduleSystem(dev=True)  # prepare to connect
     if not CREDS_FILE.exists():
-        warnings.warn(f"IS server credentials file ({CREDS_FILE}) does not exist. Tests skipped.")
+        warnings.warn(
+            f"IS server credentials file ({CREDS_FILE}) does not exist. Tests skipped.",
+            stacklevel=2,
+        )
         return False
     try:
         ss.auth_from_file(CREDS_FILE)
-        ss.current_run
+        _run = ss.current_run
         return True
     except Exception as reason:
-        warnings.warn(f"IS server is not available: {reason}")
+        warnings.warn(f"IS server is not available: {reason}", stacklevel=2)
         return False
 
 

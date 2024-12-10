@@ -11,4 +11,3 @@ provides more proposal details than the :ref:`APS Data Management interface
 
 .. automodule:: apsbss.bss_is
     :members:
-

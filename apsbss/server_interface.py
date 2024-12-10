@@ -26,16 +26,20 @@ from .core import trim
 logger = logging.getLogger(__name__)
 
 
-class ServerException(RuntimeError): ...
+class ServerException(RuntimeError):
+    """Base exception for this module."""
 
 
-class EsafNotFound(ServerException): ...
+class EsafNotFound(ServerException):
+    """ESAF ID not found by server."""
 
 
-class ProposalNotFound(ServerException): ...
+class ProposalNotFound(ServerException):
+    """Proposal ID not found by server."""
 
 
-class RunNotFound(ServerException): ...
+class RunNotFound(ServerException):
+    """Run name not found by server."""
 
 
 class Server:
@@ -287,8 +291,8 @@ class Server:
         esaf_id = str(esaf_id)
         try:
             record = self.esaf_api.getEsaf(int(esaf_id))
-        except dm.ObjectNotFound:
-            raise EsafNotFound(f"{esaf_id=!r}")
+        except dm.ObjectNotFound as exc:
+            raise EsafNotFound(f"{esaf_id=!r}") from exc
         return dict(record.data)
 
     def esafs(self, sector, run=None):
