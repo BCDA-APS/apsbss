@@ -2,10 +2,10 @@
 
 import pytest
 
-from ..servers import EsafNotFound
-from ..servers import ProposalNotFound
-from ..servers import RunNotFound
-from ..servers import Server
+from ..server_interface import EsafNotFound
+from ..server_interface import ProposalNotFound
+from ..server_interface import RunNotFound
+from ..server_interface import Server
 from ._core import is_aps_workstation
 
 

@@ -54,7 +54,7 @@ import yaml
 
 from .core import printColumns
 from .core import trim
-from .servers import Server
+from .server_interface import Server
 
 CONNECT_TIMEOUT = 5
 POLL_INTERVAL = 0.01
@@ -467,10 +467,13 @@ def cmd_list(args):
 
     logger.debug("run(s): %s", run)
 
+    # TODO: refactor into Server class
     printProposalTable(
         server.proposals(args.beamlineName, run),
         "Proposal(s): " f" beam line {args.beamlineName}" f",  run(s) {args.run}",
     )
+
+    # TODO: refactor into Server class
     printEsafTable(
         server.esafs(sector, run),
         f"ESAF(s):  sector {sector},  run(s) {args.run}",

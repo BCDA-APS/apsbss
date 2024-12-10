@@ -3,7 +3,7 @@ import sys
 import pytest
 
 from ..apsbss import main
-from ..servers import Server
+from ..server_interface import Server
 from ._core import is_aps_workstation
 
 

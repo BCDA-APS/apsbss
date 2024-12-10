@@ -16,7 +16,7 @@ from ophyd.signal import EpicsSignalBase
 
 from .. import apsbss
 from .. import apsbss_makedb
-from ..servers import Server
+from ..server_interface import Server
 
 BSS_TEST_IOC_PREFIX = f"tst{uuid.uuid4().hex[:7]}:bss:"
 SRC_PATH = pathlib.Path(__file__).parent.parent

@@ -1,7 +1,7 @@
 import pytest
 
 from .. import apsbss
-from ..servers import RunNotFound
+from ..server_interface import RunNotFound
 from ._core import is_aps_workstation
 
 
