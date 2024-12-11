@@ -41,17 +41,6 @@ class DM_ScheduleInterface(ScheduleInterfaceBase):
             self._cache["beamlines"] = [bl["name"] for bl in beamlines]
         return self._cache["beamlines"]
 
-    # @property
-    # def current_run(self) -> dict:
-    #     """All details about the current run."""
-    #     now = datetime.datetime.now().astimezone()
-    #     for run in self._runs:
-    #         start = datetime.datetime.fromisoformat(run["startTime"])
-    #         end = datetime.datetime.fromisoformat(run["endTime"])
-    #         if start <= now <= end:
-    #             return run
-    #     return {}
-
     def proposals(self, beamline, run) -> dict:
         """
         Get all proposal (beamtime request) details for 'beamline' and 'run'.

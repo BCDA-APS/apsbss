@@ -1,11 +1,14 @@
 """Test the servers module."""
 
+from contextlib import nullcontext as does_not_raise
+
 import pytest
 
 from ..server_interface import EsafNotFound
 from ..server_interface import ProposalNotFound
 from ..server_interface import RunNotFound
 from ..server_interface import Server
+from ..server_interface import ServerException
 from ._core import is_aps_workstation
 
 
@@ -17,40 +20,132 @@ def test_Server():
         return
 
     assert 10 < len(server.beamlines) < 100
+    assert "2-BM-A,B" in server.beamlines
     assert len(server.current_run) == 6
     assert 10 < len(server.runs) < 100
-    # TODO: more
-
-    # proposal = server.get_proposal(78243, "8-ID-I", "2022-2")
-    # assert proposal is not None
-    # assert isinstance(proposal, dict)
-    # assert "dynamics of colloidal suspensions" in proposal["title"]
-
-    # TODO: test the other functions
-    # getCurrentEsafs
-    # getCurrentInfo
-    # getCurrentProposals
-    # getEsaf
-    # getProposal
-    # class DmRecordNotFound(Exception): ...
-    # class EsafNotFound(DmRecordNotFound): ...
-    # class ProposalNotFound(DmRecordNotFound): ...
+    assert "2024-3" in server.runs
 
 
-def test_Server_raises():
+def test_Server_esaf():
+    server = Server()
+    esaf = server.esaf(251426)  # , 8, "2022-1")
+    assert esaf is not None
+    assert isinstance(esaf, dict)
+    # 'esafId', 'description', 'sector', 'esafTitle',
+    # 'experimentStartDate', 'experimentEndDate', 'esafStatus', 'experimentUsers'
+    assert esaf["experimentStartDate"] == "2022-02-01 08:00:00"
+    assert esaf["experimentEndDate"] == "2022-04-28 08:00:00"
+    assert "Align and characterize 8-ID-E experim" in esaf["esafTitle"]
+    assert "Align x-ray optical components" in esaf["description"]
+
+
+def test_Server_proposal():
+    server = Server()
+    proposal = server.proposal(78243, "8-ID-I", "2022-1")
+    assert proposal is not None
+    assert not isinstance(proposal, dict)
+    assert hasattr(proposal, "__dict__")
+    assert hasattr(proposal, "title")
+    assert "dynamics of colloidal suspensions" in proposal.title
+
+
+def test__esaf_table():
+    server = Server()
+    table = server._esaf_table(12, "2024-3")
+    assert len(table.rows) == 23
+    assert len(table.rows[0]) == 7
+    assert table.rows[0][0] == 276993
+    assert table.rows[0][1] == "Approved"
+    assert table.rows[0][2] == "2024-3"
+    assert table.rows[0][3] == "2024-12-16"
+    assert table.rows[0][4] == "2024-12-18"
+    assert table.rows[0][-1] == "Quantifying Electronic and Structural..."
+
+
+@pytest.mark.parametrize(
+    "arg, expected",
+    [
+        [None, "current"],
+        ["", "current"],
+        ["current", "current"],
+        ["now", "current"],
+        ["past", "prior"],
+        ["previous", "prior"],
+        ["prior", "prior"],
+        ["future", "next"],
+        ["next", "next"],
+        ["all", "all"],
+        ["recent", "recent"],
+    ],
+)
+def test__parse_runs_arg(arg, expected):
+    server = Server()
+    if expected == "current":
+        expected = {server.current_run}
+    elif expected == "prior":
+        rr = sorted(server.runs, reverse=True)
+        runs = rr[1 + rr.index(server.current_run)]
+        expected = {runs}
+    elif expected == "next":
+        rr = sorted(server.runs, reverse=True)
+        p = rr.index(server.current_run)
+        if p == 0:
+            raise KeyError(f"No runs in the future for run={server.current_run}.")
+        runs = rr[p - 1]
+        expected = {runs}
+    elif expected == "all":
+        expected = set(server.runs)
+    elif expected == "recent":
+        expected = set(server.recent_runs())
+    assert server._parse_runs_arg(arg) == expected
+
+
+def test__proposal_table():
+    server = Server()
+    table = server._proposal_table("12-ID-B", "2024-3")
+    assert len(table.rows) == 2
+    assert len(table.rows[0]) == 6
+    assert table.rows[0][0] == 1008087
+    assert table.rows[0][1] == "2024-3"
+    assert table.rows[0][2] == "2024-12-11"
+    assert table.rows[0][3] == "2024-12-14"
+    assert table.rows[0][-1] == "Studying biological interactions in b..."
+
+
+@pytest.mark.parametrize(
+    "method, args, context, text",
+    [
+        ["esafs", (8, "1915-1"), RunNotFound, "Could not find run='1915-1'"],
+        ["esaf", ["1"], ServerException, "esaf_id='1'"],
+        ["esaf", ["1"], EsafNotFound, "esaf_id='1'"],
+        [
+            "proposal",
+            (1, "8-ID-I", "2024-3"),
+            ProposalNotFound,
+            "proposal_id=1 beamline='8-ID-I' run='2024-3'",
+        ],
+    ],
+)
+def test_Server_raises(method, args, context, text):
     server = Server()
 
     if not is_aps_workstation():
         return
 
-    with pytest.raises(RunNotFound) as reason:
-        server.esafs(8, "1915-1")
-    assert "Could not find run='1915-1'" in str(reason)
+    with pytest.raises(context) as reason:
+        getattr(server, method)(*args)
+    assert text in str(reason)
 
-    with pytest.raises(EsafNotFound) as reason:
-        server.esaf("1")
-    assert "esaf_id='1'" in str(reason)
 
-    with pytest.raises(ProposalNotFound) as reason:
-        server.proposal(1, "8-ID-I", "2024-3")
-    assert "proposal_id='1' beamline='8-ID-I' run='2024-3'" in str(reason)
+@pytest.mark.parametrize(
+    "method, arg, kwargs",
+    [
+        ["current_esafs", 8, {}],
+        ["current_esafs_and_proposals", "8-ID-I", {}],
+        ["current_proposals", "8-ID-I", {}],
+    ],
+)
+def test_Server_not_raises(method, arg, kwargs):
+    server = Server()
+    with does_not_raise():
+        getattr(server, method)(arg, **kwargs)

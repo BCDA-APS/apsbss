@@ -45,8 +45,7 @@ import yaml
 from .core import printColumns
 from .server_interface import Server
 
-CONNECT_TIMEOUT = 5
-POLL_INTERVAL = 0.01
+CONNECT_TIMEOUT = 3
 logger = logging.getLogger(__name__)
 parser = None
 server = Server()
@@ -56,25 +55,30 @@ class EpicsNotConnected(Exception):
     """No connection to EPICS PV."""
 
 
-def connect_epics(prefix):
+def connect_epics(prefix, n=5):
     """
     Connect with the EPICS database instance.
 
     PARAMETERS
 
-    prefix
-        *str* :
+    prefix : str
         EPICS PV prefix
+    n : int
+        Number of connection events to attempt before raising EpicsNotConnected.
     """
     from .apsbss_ophyd import EpicsBssDevice
 
     t0 = time.time()
-    t_timeout = t0 + CONNECT_TIMEOUT
-    bss = EpicsBssDevice(prefix, name="bss")
-    while not bss.connected and time.time() < t_timeout:
-        time.sleep(POLL_INTERVAL)
-    if not bss.connected:
-        raise EpicsNotConnected(f"Did not connect with EPICS {prefix} in {CONNECT_TIMEOUT}s")
+    while n > 0:
+        bss = EpicsBssDevice(prefix, name="bss")
+        try:
+            bss.wait_for_connection(timeout=CONNECT_TIMEOUT)
+            break
+        except TimeoutError as reason:
+            n -= 1
+            if n == 0 and not bss.connected:
+                msg = f"Did not connect with EPICS {prefix} in {CONNECT_TIMEOUT}s"
+                raise EpicsNotConnected(msg) from reason
     t_connect = time.time() - t0
     logger.debug("connected in %.03fs", t_connect)
     return bss
@@ -124,7 +128,7 @@ def epicsUpdate(prefix):
     beamline = bss.proposal.beamline_name.get()
     # sector = bss.esaf.sector.get()
     esaf_id = bss.esaf.esaf_id.get().strip()
-    proposal_id = bss.proposal.proposal_id.get().strip()
+    proposal_id = int(bss.proposal.proposal_id.get().strip())
 
     if len(beamline) == 0:
         bss.status_msg.put(f"undefined: {bss.proposal.beamline_name.pvname}")
@@ -165,36 +169,36 @@ def epicsUpdate(prefix):
                 break
         bss.esaf.number_users_total.put(len(esaf["experimentUsers"]))
 
-    if len(proposal_id) > 0:
+    if proposal_id not in ("", None):
         bss.status_msg.put(f"get Proposal {proposal_id} from APS ...")
         proposal = server.proposal(proposal_id, beamline, run)
 
         bss.status_msg.put("set Proposal PVs ...")
-        bss.proposal.end_date.put(proposal["endTime"])
-        bss.proposal.mail_in_flag.put(proposal.get("mailInFlag") in ("Y", "y"))
-        bss.proposal.proprietary_flag.put(proposal.get("proprietaryFlag") in ("Y", "y"))
+        bss.proposal.end_date.put(str(proposal.endTime))
+        bss.proposal.mail_in_flag.put(proposal._raw.get("mailInFlag") in ("Y", "y"))
+        bss.proposal.proprietary_flag.put(proposal._raw.get("proprietaryFlag") in ("Y", "y"))
         bss.proposal.raw.put(yaml.dump(proposal))
-        bss.proposal.start_date.put(proposal["startTime"])
-        bss.proposal.submitted_date.put(proposal["submittedDate"])
-        bss.proposal.title.put(proposal["title"])
+        bss.proposal.start_date.put(str(proposal.startTime))
+        bss.proposal.submitted_date.put(proposal._raw["submittedDate"])
+        bss.proposal.title.put(proposal.title)
 
-        bss.proposal.user_last_names.put(",".join([user["lastName"] for user in proposal["experimenters"]]))
-        bss.proposal.user_badges.put(",".join([user["badge"] for user in proposal["experimenters"]]))
+        bss.proposal.user_last_names.put(",".join([user.lastName for user in proposal._users]))
+        bss.proposal.user_badges.put(",".join([user.badge for user in proposal._users]))
         bss.proposal.number_users_in_pvs.put(0)
-        for i, user in enumerate(proposal["experimenters"]):
+        for i, user in enumerate(proposal._users):
             obj = getattr(bss.proposal, f"user{i+1}")
-            obj.badge_number.put(user["badge"])
-            obj.email.put(user["email"])
-            obj.first_name.put(user["firstName"])
-            obj.last_name.put(user["lastName"])
-            obj.institution.put(user["institution"])
-            obj.institution_id.put(str(user["instId"]))
-            obj.user_id.put(str(user["id"]))
-            obj.pi_flag.put(user.get("piFlag") in ("Y", "y"))
+            obj.badge_number.put(user.badge)
+            obj.email.put(user.email)
+            obj.first_name.put(user.firstName)
+            obj.last_name.put(user.lastName)
+            obj.institution.put(user._raw["institution"])
+            obj.institution_id.put(str(user._raw["instId"]))
+            obj.user_id.put(str(user._raw["id"]))
+            obj.pi_flag.put(user.is_pi)
             bss.proposal.number_users_in_pvs.put(i + 1)
             if i == 8:
                 break
-        bss.proposal.number_users_total.put(len(proposal["experimenters"]))
+        bss.proposal.number_users_total.put(len(proposal.users))
 
     bss.status_msg.put("Done")
 
@@ -229,7 +233,10 @@ def epicsSetup(prefix, beamline, run=None):
         sector,
     )
 
+    bss.status_msg.wait_for_connection()
     bss.status_msg.put("clear PVs ...")
+
+    bss.wait_for_connection()
     bss.clear()
 
     bss.status_msg.put("write PVs ...")
@@ -237,6 +244,8 @@ def epicsSetup(prefix, beamline, run=None):
     bss.proposal.beamline_name.put(beamline)
     bss.esaf.sector.put(str(sector))
     bss.status_msg.put("Done")
+
+    return bss
 
 
 def get_options():
@@ -429,38 +438,38 @@ def main():
     """Command-line interface for ``apsbss`` program."""
     args = get_options()
     if args.subcommand == "beamlines":
-        printColumns(server.beamlines, numColumns=4, width=15)
+        printColumns(server.beamlines, numColumns=4, width=15)  # TODO: untested
 
     elif args.subcommand == "clear":
-        epicsClear(args.prefix)
+        epicsClear(args.prefix)  # TODO: untested
 
     elif args.subcommand == "runs":
-        cmd_runs(args)
+        cmd_runs(args)  # TODO: untested
 
     elif args.subcommand == "esaf":
-        cmd_esaf(args)
+        cmd_esaf(args)  # TODO: untested
 
     elif args.subcommand == "list":
         cmd_list(args)
 
-    elif args.subcommand == "proposal":
+    elif args.subcommand == "proposal":  # TODO: untested
         cmd_proposal(args)
 
-    elif args.subcommand == "setup":
+    elif args.subcommand == "setup":  # TODO: untested
         epicsSetup(args.prefix, args.beamlineName, args.run)
 
-    elif args.subcommand == "update":
+    elif args.subcommand == "update":  # TODO: untested
         epicsUpdate(args.prefix)
 
-    elif args.subcommand == "report":
+    elif args.subcommand == "report":  # TODO: untested
         cmd_report(args)
 
     else:
-        parser.print_usage()
+        parser.print_usage()  # TODO: untested
 
 
 if __name__ == "__main__":
-    main()
+    main()  # TODO: untested
 
 # -----------------------------------------------------------------------------
 # :author:    Pete R. Jemian

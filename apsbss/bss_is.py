@@ -169,11 +169,11 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
         self.response = None  # Most-recent response object from web server.
 
     @property
-    def activeBeamlines(self):
+    def activeBeamlines(self):  # TODO: untested
         """Details about all active beamlines in database."""
         return self.webget("beamline/findAllActiveBeamlines")
 
-    def activities(self, beamline, run=None) -> dict:
+    def activities(self, beamline, run=None) -> dict:  # TODO: untested
         """An "activity" describes scheduled beamtime."""
         if run is None:
             run = self.current_run["runName"]
@@ -190,7 +190,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
         return self._cache[key]
 
     @property
-    def authorizedBeamlines(self):
+    def authorizedBeamlines(self):  # TODO: untested
         """Beamlines where these credentials are authorized."""
         return self.webget("userBeamlineAuthorizedEdit/getAuthorizedBeamlines")
 
@@ -208,11 +208,11 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
         self.auth_from_creds(*creds)
 
     @property
-    def beamlines(self):
+    def beamlines(self):  # TODO: untested
         """List of all active beamlines, by name."""
         return sorted([entry["beamlineId"] for entry in self.activeBeamlines])
 
-    def current_proposal(self, beamline: str):
+    def current_proposal(self, beamline: str):  # TODO: untested
         """Return the current (active) proposal or 'None'."""
         for proposal in self.proposals(beamline).values():
             if proposal.current:
@@ -225,7 +225,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
     #     entries = self.webget("run/getCurrentRun")
     #     return entries[0]
 
-    def get_request(self, beamline, proposal_id, run=None):
+    def get_request(self, beamline, proposal_id, run=None):  # TODO: untested
         """Return the request (proposal) by beamline, id, and run."""
         if run is None:
             run = self.current_run["runName"]
@@ -235,7 +235,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
             raise IS_RequestNotFound(f"{beamline=!r}, {proposal_id!r}, {run=!r}")
         return proposal
 
-    def proposals(self, beamline: str, run: str = None) -> dict:
+    def proposals(self, beamline: str, run: str = None) -> dict:  # TODO: untested
         """
         Get all proposal (beamtime request) details for 'beamline' and 'run'.
 
@@ -291,14 +291,14 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
             run_list = {}
             for run in self.webget("run/getAllRuns"):
                 rdict = {"name": run["name"]}
-                for key in "startTime endTime".split():
+                for key in "startTime endTime".split():  # TODO: untested
                     value = datetime.datetime.fromisoformat(run[key]).astimezone()
                     rdict[key] = value
                 run_list.append(rdict)
             self._cache["listRuns"] = run_list
         return self._cache["listRuns"]
 
-    def runsByDateTime(self, dateTime=None):
+    def runsByDateTime(self, dateTime=None):  # TODO: untested
         """
         All details about runs in 'dateTime' (default to now).
 
@@ -318,7 +318,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
             dateTime = dateTime.isoformat(sep="T", timespec="seconds")
         return self.webget(f"run/getRunByDateTime/{dateTime}")
 
-    def runsByRunYear(self, year=None):
+    def runsByRunYear(self, year=None):  # TODO: untested
         """All details about runs in 'year' (default to this year)."""
         if year is None:  # default to current year
             year = datetime.datetime.now().year
@@ -336,17 +336,17 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
         import requests  # The name 'requests' might be used elsewhere.
 
         if self.creds is None:
-            raise IS_MissingAuthentication("Authentication is not set.")
+            raise IS_MissingAuthentication("Authentication is not set.")  # TODO: untested
         uri = f"{self.base}/{api}"
         logger.debug("URI: %r", uri)
 
         # main event: Send the server the URI, get the response
         self.response = requests.get(uri, auth=self.creds)
         if self.response is None:
-            raise IS_Exception(f"None response from server.  {uri=!r}")
+            raise IS_Exception(f"None response from server.  {uri=!r}")  # TODO: untested
         logger.debug("response OK? %s", self.response.ok)
 
-        if not self.response.ok:
+        if not self.response.ok:  # TODO: untested
             raiser = {
                 "Unauthorized": IS_Unauthorized,
                 "Forbidden": IS_NotAllowedToRespond,

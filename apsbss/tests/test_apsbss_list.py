@@ -37,6 +37,7 @@ def test_no_run_given(capsys):
         assert err.strip() == ""
 
 
+# VERY slow test
 # def test_run_all(capsys):
 #     if is_aps_workstation():
 #         sys.argv = [

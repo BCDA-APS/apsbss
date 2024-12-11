@@ -278,6 +278,7 @@ class EpicsBssDevice(Device):
             if show_name:
                 row.insert(0, f"{self.name}.{signal.dotted_name}")
             table.addRow(row)
+        table.rows = sorted(table.rows)
         return table
 
 

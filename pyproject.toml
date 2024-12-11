@@ -1,52 +1,45 @@
 [build-system]
-requires = [
-  "setuptools>=64",
-  "setuptools_scm[toml]>=8",
-]
+requires = ["setuptools>=64", "setuptools_scm[toml]>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "apsbss"
 description = "Get information from APS Beamline Scheduling System."
-authors = [
-  { name="Pete Jemian", email="prjemian@gmail.com" },
-]
-maintainers = [
-  { name="Pete Jemian", email="prjemian@gmail.com" },
-]
+authors = [{ name = "Pete Jemian", email = "prjemian@gmail.com" }]
+maintainers = [{ name = "Pete Jemian", email = "prjemian@gmail.com" }]
 dynamic = ["version"]
 readme = "README.md"
 requires-python = ">=3.9"
 keywords = ["APS", "BSS", "bluesky", "ophyd"]
 # https://packaging.python.org/en/latest/specifications/declaring-project-metadata/?highlight=license
-license = {file = "LICENSE.txt"}
+license = { file = "LICENSE.txt" }
 # https://pypi.org/classifiers/
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Environment :: Console",
-    "Intended Audience :: Science/Research",
-    "License :: Freely Distributable",
-    "License :: Public Domain",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    # https://anaconda.org/aps-anl-tag/aps-dm-api/files
-    # "Programming Language :: Python :: 3.12", # dm does not support yet.
-    "Topic :: Scientific/Engineering",
-    "Topic :: Scientific/Engineering :: Astronomy",
-    "Topic :: Scientific/Engineering :: Bio-Informatics",
-    "Topic :: Scientific/Engineering :: Chemistry",
-    "Topic :: Scientific/Engineering :: Information Analysis",
-    "Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator",
-    "Topic :: Scientific/Engineering :: Mathematics",
-    "Topic :: Scientific/Engineering :: Physics",
-    "Topic :: Software Development :: Embedded Systems",
-    "Topic :: Software Development :: Libraries :: Python Modules",
-    "Topic :: Scientific/Engineering :: Visualization",
-    "Topic :: Software Development",
-    "Topic :: Utilities",
+  "Development Status :: 5 - Production/Stable",
+  "Environment :: Console",
+  "Intended Audience :: Science/Research",
+  "License :: Freely Distributable",
+  "License :: Public Domain",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  # https://anaconda.org/aps-anl-tag/aps-dm-api/files
+  # "Programming Language :: Python :: 3.12", # dm does not support yet.
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Astronomy",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+  "Topic :: Scientific/Engineering :: Chemistry",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Topic :: Scientific/Engineering :: Interface Engine/Protocol Translator",
+  "Topic :: Scientific/Engineering :: Mathematics",
+  "Topic :: Scientific/Engineering :: Physics",
+  "Topic :: Software Development :: Embedded Systems",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Scientific/Engineering :: Visualization",
+  "Topic :: Software Development",
+  "Topic :: Utilities",
 ]
 
 # qt ==5
@@ -62,17 +55,26 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["build", "ipython", "isort", "mypy", "pre-commit", "pytest", "ruff"]
+dev = [
+  "build",
+  "coverage",
+  "ipython",
+  "isort",
+  "mypy",
+  "pre-commit",
+  "pytest",
+  "ruff",
+]
 
 doc = [
-    "ipykernel",
-    "jinja2",
-    "pydata-sphinx-theme",
-    "pygments-ipython-console",
-    "pygments",
-    "sphinx-design",
-    "sphinx-tabs",
-    "sphinx",
+  "ipykernel",
+  "jinja2",
+  "pydata-sphinx-theme",
+  "pygments-ipython-console",
+  "pygments",
+  "sphinx-design",
+  "sphinx-tabs",
+  "sphinx",
 ]
 
 all = ["apsbss[dev,doc]"]
@@ -93,16 +95,7 @@ copyright = "2017-2025, UChicago Argonne, LLC"
 
 [tool.flake8]
 max-line-length = 115
-extend-ignore = [
-  "E226",
-  "E402",
-  "E501",
-  "E741",
-  "F401",
-  "F403",
-  "W503",
-  "W504",
-]
+extend-ignore = ["E226", "E402", "E501", "E741", "F401", "F403", "W503", "W504"]
 
 [tool.isort]
 force_single_line = true
@@ -112,28 +105,28 @@ line_length = 115
 [tool.pytest.ini_options]
 addopts = ["--import-mode=importlib", "-x"]
 include_trailing_comma = true
-junit_family="xunit2"
+junit_family = "xunit2"
 
 [tool.ruff]
 # https://docs.astral.sh/ruff/configuration/
 
 # Exclude a variety of commonly ignored directories.
 exclude = [
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".mypy_cache",
-    ".pytype",
-    ".ruff_cache",
-    ".tox",
-    ".venv",
-    "__pypackages__",
-    "_build",
-    "build",
-    "dist",
-    "venv",
-    ".venv",
-    "docs",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".mypy_cache",
+  ".pytype",
+  ".ruff_cache",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "build",
+  "dist",
+  "venv",
+  ".venv",
+  "docs",
 ]
 
 # Same as Black.
@@ -146,31 +139,31 @@ target-version = "py311"
 [tool.ruff.lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
 select = [
-    # pycodestyle
-    "E",
-    # Pyflakes
-    "F",
-    # pyupgrade
-    # "UP",
-    # flake8-bugbear
-    "B",
-    # flake8-simplify
-    # "SIM",
-    # isort
-    "I",
-    # Warning
-    "W",
-    # pydocstyle
-    "D100",
-    "D101",
-    "D102",
-    "D103",
-    "D104",
-    "D105",
-    "D106",
-    "D107",
-    # ruff
-    # "RUF"
+  # pycodestyle
+  "E",
+  # Pyflakes
+  "F",
+  # pyupgrade
+  # "UP",
+  # flake8-bugbear
+  "B",
+  # flake8-simplify
+  # "SIM",
+  # isort
+  "I",
+  # Warning
+  "W",
+  # pydocstyle
+  "D100",
+  "D101",
+  "D102",
+  "D103",
+  "D104",
+  "D105",
+  "D106",
+  "D107",
+  # ruff
+  # "RUF"
 ]
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
@@ -182,20 +175,20 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 
 [tool.ruff.lint.per-file-ignores]
 "*.ipynb" = [
-    "F405", # symbol may be undefined, or defined from star imports
+  "F405", # symbol may be undefined, or defined from star imports
 ]
 "*.py" = [
-    "D107", # Missing docstring in `__init__`
+  "D107", # Missing docstring in `__init__`
 ]
 "__init__.py" = [
-    "D104", # Missing docstring in public package
+  "D104", # Missing docstring in public package
 ]
 "test_*.py" = [
-    "D100", # Missing docstring in public module
-    "D101", # Missing docstring in public class
-    "D102", # Missing docstring in public method
-    "D103", # Missing docstring in public function
-    "D104", # Missing docstring in public package
+  "D100", # Missing docstring in public module
+  "D101", # Missing docstring in public class
+  "D102", # Missing docstring in public method
+  "D103", # Missing docstring in public function
+  "D104", # Missing docstring in public package
 ]
 
 [tool.ruff.lint.isort]
@@ -215,7 +208,7 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.setuptools]
-package-dir = {"apsbss" = "apsbss"}
+package-dir = { "apsbss" = "apsbss" }
 
 [tool.setuptools.package-data]
 "*" = ["*.yml"]

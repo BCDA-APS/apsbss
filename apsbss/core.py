@@ -367,7 +367,7 @@ class ScheduleInterfaceBase(abc.ABC):
         Returns
         -------
         proposals : dict
-            Dictionary of 'ProposalBase' objects, keyed by proposal number,
+            Dictionary of 'ProposalBase' objects, keyed by proposal ID (str),
             scheduled on 'beamline' for 'run'.
         """
 

@@ -129,16 +129,17 @@ class Server:
               ============  =============================
               value         meaning
               ============  =============================
-              ``None``      Use the current run.
               ""            Use the current run.
+              "all"         Use all runs.
               "current"     Use the current run.
+              "future"      Use the next run.
+              "next"        Use the next run.
               "now"         Use the current run.
               "past"        Use the previous run.
               "previous"    Use the previous run.
               "prior"       Use the previous run.
-              "future"      Use the next run.
-              "next"        Use the next run.
               "recent"      Use the past six (6) runs.
+              ``None``      Use the current run.
               ============  =============================
         """
         if runs in ("current", "now", "", None):
@@ -154,6 +155,8 @@ class Server:
             runs = rr[p - 1]
         elif runs == "recent":
             runs = self.recent_runs()
+        elif runs == "all":
+            runs = self.runs
 
         if not isinstance(runs, (list, set, tuple, str)):
             raise TypeError(f"Must be str or iterable, received: {runs=!r}")
@@ -288,9 +291,8 @@ class Server:
         esaf_id : int
             ESAF number
         """
-        esaf_id = str(esaf_id)
         try:
-            record = self.esaf_api.getEsaf(int(esaf_id))
+            record = self.esaf_api.getEsaf(esaf_id)
         except dm.ObjectNotFound as exc:
             raise EsafNotFound(f"{esaf_id=!r}") from exc
         return dict(record.data)
@@ -337,7 +339,7 @@ class Server:
 
         PARAMETERS
 
-        proposalId : str
+        proposalId : int
             Proposal identification number.
         beamline : str
             Canonical name of beam line.
@@ -349,7 +351,6 @@ class Server:
             raise TypeError(f"Not a string: {run=!r}")
 
         # The server will validate the request.
-        proposal_id = str(proposal_id)
         proposal = self.proposals(beamline, run).get(proposal_id)
         if proposal is None:
             raise ProposalNotFound(f"{proposal_id=!r} {beamline=!r} {run=!r}")

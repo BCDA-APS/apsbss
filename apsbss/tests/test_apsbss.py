@@ -2,27 +2,21 @@
 General tests of the apsbss module
 """
 
-import pathlib
 import socket
-import subprocess
 import sys
-import time
-import uuid
+from contextlib import nullcontext as does_not_raise
 
 import epics
-import ophyd
 import pytest
 from ophyd.signal import EpicsSignalBase
 
 from .. import apsbss
 from .. import apsbss_makedb
+from ..apsbss import connect_epics
+from ..apsbss import epicsSetup
 from ..server_interface import Server
-
-BSS_TEST_IOC_PREFIX = f"tst{uuid.uuid4().hex[:7]}:bss:"
-SRC_PATH = pathlib.Path(__file__).parent.parent
-
-
-ophyd.set_cl("caproto")  # switch command layers
+from ._core import BSS_TEST_IOC_PREFIX
+from ._core import wait_for_IOC
 
 # set default timeout for all EpicsSignal connections & communications
 try:
@@ -57,10 +51,33 @@ def bss_PV():
     return run
 
 
-def test_general():
-    assert apsbss.CONNECT_TIMEOUT == 5
-    assert apsbss.POLL_INTERVAL == 0.01
+def test_connect_epics(ioc):
+    with does_not_raise():
+        ioc.bss = connect_epics(BSS_TEST_IOC_PREFIX)
+        assert ioc.bss.connected
+
+
+def test_epics_setup_clear(ioc):
+    with does_not_raise():
+        ioc.bss = epicsSetup(BSS_TEST_IOC_PREFIX, "12-ID-B", run="2024-3")
+        assert ioc.bss.connected
+
+        wait_for_IOC()
+        assert ioc.bss.status_msg.get(use_monitor=False) == "Done"
+
+
+def test_general(capsys):
+    assert 1 <= apsbss.CONNECT_TIMEOUT <= 10
     assert isinstance(apsbss.server, Server)
+
+    sys.argv = [sys.argv[0], "--help"]
+    with pytest.raises(SystemExit) as reason:
+        apsbss.main()
+    out, err = capsys.readouterr()
+    assert "usage: " in out
+    assert " [-h] [-v]" in out
+    assert len(err) == 0
+    assert "SystemExit(0)" in str(reason)
 
 
 def test_not_at_aps():
@@ -84,64 +101,16 @@ def test_only_at_aps():
     assert len(apsbss.server.beamlines) > 1
 
 
-class IOC_ProcessConfig:
-    bss = None
-    manager = None
-    ioc_name = "test_apsbss"
-    ioc_prefix = None
-    ioc_process = None
-
-    def command(self, cmd):
-        return f"{self.manager} {cmd} {self.ioc_name} {self.ioc_prefix}"
-
-
-def run_process(cmd):
-    return subprocess.Popen(
-        cmd.encode().split(),
-        stdin=subprocess.PIPE,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        shell=False,
-    )
-
-
-@pytest.fixture()
-def ioc():
-    # set up
-
-    cfg = IOC_ProcessConfig()
-
-    cfg.manager = SRC_PATH / "apsbss_ioc.sh"
-    cfg.ioc_prefix = BSS_TEST_IOC_PREFIX
-    cfg.ioc_process = run_process(cfg.command("restart"))
-    time.sleep(0.5)  # allow the IOC to start
-
-    # use
-    yield cfg
-
-    # tear down
-    if cfg.bss is not None:
-        cfg.bss.destroy()
-        cfg.bss = None
-    if cfg.ioc_process is not None:
-        cfg.ioc_process = None
-        run_process(cfg.command("stop"))
-        cfg.manager = None
-
-
 def test_ioc(ioc, bss_PV):
     if not bss_PV.connected:
         assert True  # assert *something*
         return
 
-    from .. import apsbss_ophyd as bio
-
-    ioc.bss = bio.EpicsBssDevice(BSS_TEST_IOC_PREFIX, name="bss")
+    ioc.bss = connect_epics(BSS_TEST_IOC_PREFIX)
     ioc.bss.wait_for_connection(timeout=2)
     assert ioc.bss.connected
     assert ioc.bss.esaf.title.get() == ""
     assert ioc.bss.esaf.description.get() == ""
-    # assert ioc.bss.esaf.aps_run.get() == ""
 
 
 def test_EPICS(ioc, bss_PV):
@@ -149,8 +118,8 @@ def test_EPICS(ioc, bss_PV):
         assert True  # assert *something*
         return
 
-    beamline = "9-ID-B,C"
-    run = "2019-3"
+    beamline = "12-BM-B"
+    run = "2019-2"
 
     ioc.bss = apsbss.connect_epics(BSS_TEST_IOC_PREFIX)
     assert ioc.bss.connected
@@ -163,34 +132,23 @@ def test_EPICS(ioc, bss_PV):
 
     # setup
     apsbss.epicsSetup(BSS_TEST_IOC_PREFIX, beamline, run)
+    wait_for_IOC()
 
-    assert ioc.bss.proposal.beamline_name.get() != "harpo"
-    assert ioc.bss.proposal.beamline_name.get() == beamline
-    assert ioc.bss.esaf.aps_run.get() == run
-    assert ioc.bss.esaf.sector.get() == beamline.split("-")[0]
+    assert ioc.bss.proposal.beamline_name.get(use_monitor=False) != "harpo"
+    assert ioc.bss.proposal.beamline_name.get(use_monitor=False) == beamline
+    assert ioc.bss.esaf.aps_run.get(use_monitor=False) == run
+    assert ioc.bss.esaf.sector.get(use_monitor=False) == beamline.split("-")[0]
 
-    # epicsUpdate
-    # Example ESAF on sector 9
-
-    # ====== ======== ========== ========== ==================== =================================
-    # id     status   start      end        user(s)              title
-    # ====== ======== ========== ========== ==================== =================================
-    # 226319 Approved 2020-05-26 2020-09-28 Ilavsky,Maxey,Kuz... Commission 9ID and USAXS
-    # ====== ======== ========== ========== ==================== =================================
-
-    # ===== ====== =================== ==================== ========================================
-    # id    run    date                user(s)              title
-    # ===== ====== =================== ==================== ========================================
-    # 64629 2019-2 2019-03-01 18:35:02 Ilavsky,Okasinski    2019 National School on Neutron & X-r...
-    # ===== ====== =================== ==================== ========================================
-    esaf_id = "226319"
-    proposal_id = "64629"
+    # ESAF: 210443 XAFS summer school
+    # GUP 64057 XAFS summar school
+    esaf_id = "210443"
+    proposal_id = 64057
     ioc.bss.esaf.aps_run.put("2019-2")
     ioc.bss.esaf.esaf_id.put(esaf_id)
-    ioc.bss.proposal.proposal_id.put(proposal_id)
+    ioc.bss.proposal.proposal_id.put(str(proposal_id))
     apsbss.epicsUpdate(BSS_TEST_IOC_PREFIX)
-    assert ioc.bss.esaf.title.get() == "Commission 9ID and USAXS"
-    assert ioc.bss.proposal.title.get().startswith("2019 National School on Neutron & X-r")
+    assert ioc.bss.esaf.title.get() == "APS/IIT EXAFS Summer School"
+    assert ioc.bss.proposal.title.get() == "APS/IIT EXAFS Summer School"
 
     apsbss.epicsClear(BSS_TEST_IOC_PREFIX)
     assert ioc.bss.esaf.aps_run.get() != ""
