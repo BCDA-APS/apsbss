@@ -2,7 +2,6 @@
 General tests of the apsbss module
 """
 
-import socket
 import sys
 from contextlib import nullcontext as does_not_raise
 
@@ -16,6 +15,7 @@ from ..apsbss import connect_epics
 from ..apsbss import epicsSetup
 from ..server_interface import Server
 from ._core import BSS_TEST_IOC_PREFIX
+from ._core import is_aps_workstation
 from ._core import wait_for_IOC
 
 # set default timeout for all EpicsSignal connections & communications
@@ -36,11 +36,6 @@ def argv():
         "apsbss",
     ]
     return argv
-
-
-def using_APS_workstation():
-    hostname = socket.gethostname()
-    return hostname.lower().endswith(".aps.anl.gov")
 
 
 @pytest.fixture(scope="function")
@@ -82,7 +77,7 @@ def test_general(capsys):
 
 def test_not_at_aps():
     assert True  # test *something*
-    if using_APS_workstation():
+    if is_aps_workstation():
         return
 
 
@@ -91,7 +86,8 @@ def test_not_at_aps():
 
 def test_only_at_aps():
     assert True  # test *something*
-    if not using_APS_workstation():
+
+    if not is_aps_workstation():
         return
 
     runs = apsbss.server.runs
@@ -109,8 +105,8 @@ def test_ioc(ioc, bss_PV):
     ioc.bss = connect_epics(BSS_TEST_IOC_PREFIX)
     ioc.bss.wait_for_connection(timeout=2)
     assert ioc.bss.connected
-    assert ioc.bss.esaf.title.get() == ""
-    assert ioc.bss.esaf.description.get() == ""
+    assert ioc.bss.esaf.title.get(use_monitor=False) == ""
+    assert ioc.bss.esaf.description.get(use_monitor=False) == ""
 
 
 def test_EPICS(ioc, bss_PV):
@@ -123,11 +119,11 @@ def test_EPICS(ioc, bss_PV):
 
     ioc.bss = apsbss.connect_epics(BSS_TEST_IOC_PREFIX)
     assert ioc.bss.connected
-    assert ioc.bss.esaf.aps_run.get() == ""
+    assert ioc.bss.esaf.aps_run.get(use_monitor=False) == ""
 
     assert ioc.bss.esaf.aps_run.connected is True
 
-    if not using_APS_workstation():
+    if not is_aps_workstation():
         return
 
     # setup
@@ -147,8 +143,8 @@ def test_EPICS(ioc, bss_PV):
     ioc.bss.esaf.esaf_id.put(esaf_id)
     ioc.bss.proposal.proposal_id.put(str(proposal_id))
     apsbss.epicsUpdate(BSS_TEST_IOC_PREFIX)
-    assert ioc.bss.esaf.title.get() == "APS/IIT EXAFS Summer School"
-    assert ioc.bss.proposal.title.get() == "APS/IIT EXAFS Summer School"
+    assert ioc.bss.esaf.title.get(use_monitor=False) == "APS/IIT EXAFS Summer School"
+    assert ioc.bss.proposal.title.get(use_monitor=False) == "APS/IIT EXAFS Summer School"
 
     apsbss.epicsClear(BSS_TEST_IOC_PREFIX)
     assert ioc.bss.esaf.aps_run.get(use_monitor=False) != ""
@@ -189,6 +185,9 @@ def test_apsbss_commands_beamlines(argv, capsys):
     args = apsbss.get_options()
     assert args is not None
     assert args.subcommand == sys.argv[1]
+
+    if not is_aps_workstation():
+        return
 
     apsbss.main()
     out, err = capsys.readouterr()
