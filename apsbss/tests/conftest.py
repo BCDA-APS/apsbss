@@ -3,12 +3,13 @@
 import subprocess
 import time
 
+import ophyd
 import pytest
 
 from ._core import BSS_TEST_IOC_PREFIX
 from ._core import SRC_PATH
 
-# ophyd.set_cl("caproto")  # switch command layers
+ophyd.set_cl("caproto")  # switch command layers
 
 IOC_STARTUP_DELAY = 1.0  # seconds
 
