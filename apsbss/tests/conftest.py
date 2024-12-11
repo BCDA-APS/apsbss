@@ -10,7 +10,7 @@ from ._core import SRC_PATH
 
 # ophyd.set_cl("caproto")  # switch command layers
 
-IOC_STARTUP_DELAY = 1.0 # seconds
+IOC_STARTUP_DELAY = 1.0  # seconds
 
 
 class IOC_ProcessConfig:
@@ -40,6 +40,7 @@ def run_process(cmd):
 
 @pytest.fixture()
 def ioc():
+    """docs"""
     # set up
     cfg = IOC_ProcessConfig()
 
