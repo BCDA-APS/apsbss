@@ -170,7 +170,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                     </color>
                 </property>
                 <property name="text">
-                    <string>APS run cycle</string>
+                    <string>APS run</string>
                 </property>
                 <property name="fontScaleMode">
                     <enum>ESimpleLabel::WidthAndHeight</enum>
@@ -200,7 +200,7 @@ QPushButton::menu-indicator {image: url(none.png); width: 0}
                     <enum>caLineEdit::WidthAndHeight</enum>
                 </property>
                 <property name="channel">
-                    <string>$(P)esaf:cycle</string>
+                    <string>$(P)esaf:run</string>
                 </property>
                 <property name="foreground">
                     <color alpha="255">

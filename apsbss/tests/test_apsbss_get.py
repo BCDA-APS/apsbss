@@ -1,47 +1,58 @@
 import pytest
 
 from .. import apsbss
+from ..server_interface import RunNotFound
 from ._core import is_aps_workstation
 
 
-def test_cycle_not_found():
+def test_run_not_found():
     if is_aps_workstation():
-        cycle = "sdfsdjfyg"
-        with pytest.raises(KeyError) as exc:
-            apsbss.listESAFs(cycle, 9)
-        assert f"APS cycle '{cycle}' not found." in str(exc.value)
+        run = "sdfsdjfyg"
+        with pytest.raises(RunNotFound) as exc:
+            apsbss.server.esafs(9, run)
+        assert f"Could not find {run=!r}" in str(exc.value)
 
-        cycle = "not-a-cycle"
-        with pytest.raises(KeyError) as exc:
-            apsbss.listESAFs(cycle, 9)
-        assert f"APS cycle '{cycle}' not found." in str(exc.value)
+        run = "not-a-run"
+        with pytest.raises(RunNotFound) as exc:
+            apsbss.server.esafs(9, run)
+        assert f"Could not find {run=!r}" in str(exc.value)
 
 
 @pytest.mark.parametrize(
-    "cycle, sector, count",
+    "run, sector, count",
     [
         ["2011-3", 9, 33],
         ["2020-1", 9, 41],
         ["2020-2", 9, 38],
-        [("2020-2"), 9, 38],
-        [["2020-1", "2020-2"], 9, 41+38],
-    ]
+        [["2020-2"], 9, 38],
+        [("2020-1", "2020-2"), 9, 41 + 38],
+    ],
 )
-def test_listESAFs(cycle, sector, count):
+def test_esafs(run, sector, count):
     if is_aps_workstation():
-        assert len(apsbss.listESAFs(cycle, sector)) == count
+        if not isinstance(run, str):
+            with pytest.raises(TypeError) as reason:
+                apsbss.server.esafs(sector, run)
+            assert "Not a string: run=" in str(reason)
+        else:
+            assert len(apsbss.server.esafs(sector, run)) == count
 
 
 @pytest.mark.parametrize(
-    "cycle, bl, count",
+    "run, bl, count",
     [
-        ["2011-3", "9-ID-B,C", 0],
+        ["2011-3", "9-ID-B,C", 10],
         ["2020-1", "9-ID-B,C", 12],
         ["2020-2", "9-ID-B,C", 21],
         [("2020-2"), "9-ID-B,C", 21],
-        [["2020-1", "2020-2"], "9-ID-B,C", 12+21],
-    ]
+        [["2020-1", "2020-2"], "9-ID-B,C", 12 + 21],
+    ],
 )
-def test_listProposals(cycle, bl, count):
+def test_proposals(run, bl, count):
     if is_aps_workstation():
-        assert len(apsbss.listProposals(cycle, bl)) == count
+        if not isinstance(run, str):
+            with pytest.raises(TypeError) as reason:
+                apsbss.server.proposals(bl, run)
+            assert "Not a string: run=" in str(reason)
+        else:
+            assert len(apsbss.server.proposals(bl, run)) == count

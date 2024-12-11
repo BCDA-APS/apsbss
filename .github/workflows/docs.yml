@@ -63,7 +63,7 @@ jobs:
       with:
         name: apsbss-docs
         path: ${{ steps.deployment.outputs.artifact }}
-    
+
     - uses: peaceiris/actions-gh-pages@v4
       if: ${{ github.event.inputs.deploy }}
       with:

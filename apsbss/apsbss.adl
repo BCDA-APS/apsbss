@@ -146,7 +146,7 @@ composite {
 			"basic attribute" {
 				clr=14
 			}
-			textix="APS run cycle"
+			textix="APS run"
 			align="horiz. right"
 		}
 		"text entry" {
@@ -157,7 +157,7 @@ composite {
 				height=16
 			}
 			control {
-				chan="$(P)esaf:cycle"
+				chan="$(P)esaf:run"
 				clr=14
 				bclr=50
 			}

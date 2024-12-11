@@ -1,7 +1,7 @@
 .. _apsbss_ioc:
 
-apsbss: IOC Startup and Management
-==================================
+EPICS IOC
+=========
 
 The :ref:`apsbss_application` software
 provides information from the APS Proposal
@@ -22,7 +22,7 @@ Overview
 --------
 
 #. Create the PVs in an EPICS IOC
-#. Initialize PVs with beam line name and APS run cycle number
+#. Initialize PVs with beam line name and APS run number
 #. Set PV with the Proposal ID number
 #. Set PV with the ESAF ID number
 #. Retrieve (& update PVs) information from APS databases
@@ -169,7 +169,7 @@ from EPICS base, use the supplied IOC management shell script
     first before trying to start the IOC.
 
 
-Here's an example starter script for the IOC from APS 9-ID-C (USAXS).  
+Here's an example starter script for the IOC from APS 9-ID-C (USAXS).
 This shell script is stored as file `~/bin/ioc9idcbss.sh` with
 executable permissions:
 
