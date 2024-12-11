@@ -237,7 +237,7 @@ class ProposalBase:
     @property
     def endTime(self) -> datetime.datetime:
         """Return the ending time of this proposal."""
-        return datetime.datetime.fromisoformat(self._raw["endTime"])
+        return iso2dt(self._raw["endTime"])
 
     @property
     def info(self) -> dict:
@@ -287,7 +287,7 @@ class ProposalBase:
     @property
     def startTime(self) -> int:
         """Return the starting time of this proposal."""
-        return datetime.datetime.fromisoformat(self._raw["startTime"])
+        return iso2dt(self._raw["startTime"])
 
     @property
     def title(self) -> int:

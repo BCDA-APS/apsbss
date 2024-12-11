@@ -10,7 +10,6 @@ Schedule info via APS Data Management Interface to IS Service.
     ~DM_ScheduleInterface
 """
 
-import datetime
 import logging
 
 import dm  # APS data management library
@@ -18,6 +17,7 @@ import dm  # APS data management library
 from .core import DM_APS_DB_WEB_SERVICE_URL
 from .core import ProposalBase
 from .core import ScheduleInterfaceBase
+from .core import iso2dt
 
 logger = logging.getLogger(__name__)
 
@@ -76,19 +76,12 @@ class DM_ScheduleInterface(ScheduleInterfaceBase):
     def _runs(self) -> list:
         """List of details of all known runs."""
         if "listRuns" not in self._cache:
-            run_list = []
-            for run in self.api.listRuns():
-                rdict = {"name": run["name"]}
-                for key in "startTime endTime".split():
-                    value = datetime.datetime.fromisoformat(run[key]).astimezone()
-                    rdict[key] = value
-                run_list.append(rdict)
-            self._cache["listRuns"] = run_list
+            self._cache["listRuns"] = [
+                {
+                    "name": run["name"],
+                    "startTime": iso2dt(run["startTime"]),
+                    "endTime": iso2dt(run["endTime"]),
+                }
+                for run in self.api.listRuns()
+            ]
         return self._cache["listRuns"]
-
-    # @property
-    # def runs(self) -> list:
-    #     """List of names of all known runs."""
-    #     if "runs" not in self._cache:
-    #         self._cache["runs"] = [run["name"] for run in self._runs]
-    #     return self._cache["runs"]

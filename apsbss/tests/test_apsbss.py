@@ -151,9 +151,9 @@ def test_EPICS(ioc, bss_PV):
     assert ioc.bss.proposal.title.get() == "APS/IIT EXAFS Summer School"
 
     apsbss.epicsClear(BSS_TEST_IOC_PREFIX)
-    assert ioc.bss.esaf.aps_run.get() != ""
-    assert ioc.bss.esaf.title.get() == ""
-    assert ioc.bss.proposal.title.get() == ""
+    assert ioc.bss.esaf.aps_run.get(use_monitor=False) != ""
+    assert ioc.bss.esaf.title.get(use_monitor=False) == ""
+    assert ioc.bss.proposal.title.get(use_monitor=False) == ""
 
 
 def test_makedb(capsys):
@@ -184,11 +184,21 @@ def test_apsbss_commands_no_options(argv):
     assert args.subcommand is None
 
 
-def test_apsbss_commands_beamlines(argv):
+def test_apsbss_commands_beamlines(argv, capsys):
     sys.argv = argv + ["beamlines"]
     args = apsbss.get_options()
     assert args is not None
     assert args.subcommand == sys.argv[1]
+
+    apsbss.main()
+    out, err = capsys.readouterr()
+    # test that report is beamline names, 4-columns
+    assert len(err) == 0
+    assert 1_000 < len(out) < 2_000
+    assert 10 < len(out.split()) < 100
+    assert "12-ID-B" in out.split()
+    assert 10 < len(out.splitlines()) < 30
+    assert len(out.splitlines()[0].split()) == 4
 
 
 def test_apsbss_commands_esaf(argv):

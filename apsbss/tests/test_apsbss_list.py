@@ -58,7 +58,7 @@ def test_run_future(capsys):
         sys.argv = [
             sys.argv[0],
             "list",
-            "8-ID-I",
+            "8-ID-E,I",
             "--run",
             "future",
         ]

@@ -31,6 +31,7 @@ def server_available():
             stacklevel=2,
         )
         return False
+
     try:
         ss.auth_from_file(CREDS_FILE)
         _run = ss.current_run
@@ -159,7 +160,7 @@ def test_SchedulingServer():
     assert isinstance(run.get("startTime"), datetime.datetime)
     assert isinstance(run.get("endTime"), datetime.datetime)
 
-    run = run["runName"]
+    run = run["name"]
     assert isinstance(run, str)
     assert "-" in run
     # this test might fail during year-end shutdown
@@ -177,15 +178,17 @@ def test_SchedulingServer():
 
 
 @pytest.mark.parametrize(
-    "beamline, run, expected",
+    "beamline, run, nproposals",
     [
-        ["8-ID-E", "2024-3", 0],
-        ["8-ID-I", "2024-3", 0],
-        ["12-ID-E", "2024-3", 0],
+        ["8-ID-E", "2024-3", 0],  # wrong beamline name
+        ["8-ID-I", "2024-3", 0],  # wrong beamline name
+        ["8-ID-E,I", "2024-3", None],  # correct beamline, not authorized
+        ["12-ID-B", "2024-3", None],  # correct beamline, not authorized
+        ["12-ID-E", "2024-3", 0],  # Actually!  Zero proposals.
         ["1-ID-B,C,E", None, 666],  # Not authorized
     ],
 )
-def test_beamlines(beamline, run, expected):
+def test_beamlines(beamline, run, nproposals):
     ss = IS_ScheduleSystem(dev=True)  # prepare to connect
     assert ss is not None
     if not CREDS_FILE.exists() or not is_aps_workstation() or not server_available():
@@ -196,12 +199,11 @@ def test_beamlines(beamline, run, expected):
 
     assert beamline in ss.beamlines
 
-    my_beamlines = [entry["beamline"] for entry in ss.authorizedBeamlines]
-    if beamline in my_beamlines:
-        # expected = 0  # expect to see zero requests when unauthorized
+    if beamline in [entry["beamline"] for entry in ss.authorizedBeamlines]:
         requests = ss.proposals(beamline, run)
-        assert len(requests) == expected
+        assert len(requests) == nproposals
     else:
+        # IS is not authorized to show info for this beamline.
         with pytest.raises(IS_NotAllowedToRespond) as reason:
             ss.proposals(beamline, run)
         # text truncated: "User not authorized for beamline Id :"

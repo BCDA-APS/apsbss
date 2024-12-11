@@ -161,8 +161,8 @@ def test_Server_raises(method, args, context, text):
     "method, arg, kwargs",
     [
         ["current_esafs", 8, {}],
-        ["current_esafs_and_proposals", "8-ID-I", {}],
-        ["current_proposals", "8-ID-I", {}],
+        ["current_esafs_and_proposals", "8-ID-E,I", {}],
+        ["current_proposals", "8-ID-E,I", {}],
     ],
 )
 def test_Server_not_raises(method, arg, kwargs):

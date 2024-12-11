@@ -127,26 +127,28 @@ To learn the beam line names accepted by the system, use this command
 (showing names defined on 2020-07-10)::
 
     $ apsbss beamlines
-    1-BM-B,C       8-ID-I         15-ID-B,C,D    23-BM-B
-    1-ID-B,C,E     9-BM-B,C       16-BM-B        23-ID-B
-    2-BM-A,B       9-ID-B,C       16-BM-D        23-ID-D
-    2-ID-D         10-BM-A,B      16-ID-B        24-ID-C
-    2-ID-E         10-ID-B        16-ID-D        24-ID-E
-    3-ID-B,C,D     11-BM-B        17-BM-B        26-ID-C
-    4-ID-C         11-ID-B        17-ID-B        27-ID-B
-    4-ID-D         11-ID-C        18-ID-D        29-ID-C,D
-    5-BM-C         11-ID-D        19-BM-D        30-ID-B,C
-    5-BM-D         12-BM-B        19-ID-D        31-ID-D
-    5-ID-B,C,D     12-ID-B        20-BM-B        32-ID-B,C
-    6-BM-A,B       12-ID-C,D      20-ID-B,C      33-BM-C
-    6-ID-B,C       13-BM-C        21-ID-D        33-ID-D,E
-    6-ID-D         13-BM-D        21-ID-E        34-ID-C
-    7-BM-B         13-ID-C,D      21-ID-F        34-ID-E
-    7-ID-B,C,D     13-ID-E        21-ID-G        35-ID-B,C,D,E
-    8-BM-B         14-BM-C        22-BM-D
-    8-ID-E         14-ID-B        22-ID-D
+    1-BM-B,C       10-ID-B        17-ID-B        28-ID-B,C      
+    1-ID-B,C,E     11-BM-B        18-ID-D        28-ID-D,E      
+    2-BM-A,B       11-ID-B        19-BM-D        28-ID-F        
+    2-ID-D         11-ID-C        19-ID-E        28-ID-G        
+    2-ID-E         11-ID-D        20-BM-B        29-ID-C,D      
+    3-ID-B,C,D     12-BM-B        20-ID-D,E      30-ID-B,C      
+    4-ID-B,G,H     12-ID-B        21-ID-D        31-ID-D        
+    5-BM-B         12-ID-E        21-ID-F        31-ID-E        
+    5-ID-B,C,D     13-BM-C        21-ID-G        32-ID-B,C      
+    6-BM-A,B       13-BM-D        22-ID-D        33-BM-C        
+    6-ID-B,C       13-ID-C,D      22-ID-E        33-ID-C        
+    6-ID-D         13-ID-E        23-ID-B        34-ID-E        
+    7-BM-B         14-ID-B        23-ID-D        34-ID-F        
+    7-ID-B,C,D     15-ID-B,E      24-ID-C        35-BM-C        
+    8-BM-B         15-ID-C,D      24-ID-E        35-ID-B,C,D,E  
+    8-ID-E,I       16-BM-B,D      25-ID-C        38-AM-A        
+    9-BM-B,C       16-ID-B        25-ID-D,E      
+    9-ID-D         16-ID-D,E      26-ID-C        
+    10-BM-B        17-BM-B        27-ID-B        
 
-For either station at 9-ID, use ``9-ID-B,C``.
+Some names include multiple stations.  For example, use ``8-ID-E,I`` for either
+station at beamline 8-ID.
 
 
 What APS run to use?
