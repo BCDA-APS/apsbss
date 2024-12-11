@@ -28,6 +28,10 @@ def test_Server():
 
 def test_Server_esaf():
     server = Server()
+
+    if not is_aps_workstation():
+        return
+
     esaf = server.esaf(251426)  # , 8, "2022-1")
     assert esaf is not None
     assert isinstance(esaf, dict)
@@ -41,6 +45,10 @@ def test_Server_esaf():
 
 def test_Server_proposal():
     server = Server()
+
+    if not is_aps_workstation():
+        return
+
     proposal = server.proposal(78243, "8-ID-I", "2022-1")
     assert proposal is not None
     assert not isinstance(proposal, dict)
@@ -51,6 +59,10 @@ def test_Server_proposal():
 
 def test__esaf_table():
     server = Server()
+
+    if not is_aps_workstation():
+        return
+
     table = server._esaf_table(12, "2024-3")
     assert len(table.rows) == 23
     assert len(table.rows[0]) == 7
@@ -80,6 +92,10 @@ def test__esaf_table():
 )
 def test__parse_runs_arg(arg, expected):
     server = Server()
+
+    if not is_aps_workstation():
+        return
+
     if expected == "current":
         expected = {server.current_run}
     elif expected == "prior":
@@ -102,6 +118,10 @@ def test__parse_runs_arg(arg, expected):
 
 def test__proposal_table():
     server = Server()
+
+    if not is_aps_workstation():
+        return
+
     table = server._proposal_table("12-ID-B", "2024-3")
     assert len(table.rows) == 2
     assert len(table.rows[0]) == 6
@@ -147,5 +167,9 @@ def test_Server_raises(method, args, context, text):
 )
 def test_Server_not_raises(method, arg, kwargs):
     server = Server()
+
+    if not is_aps_workstation():
+        return
+
     with does_not_raise():
         getattr(server, method)(arg, **kwargs)
