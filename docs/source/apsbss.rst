@@ -376,10 +376,10 @@ See section :ref:`reading_yaml`.
 Update EPICS PVs with Proposal and ESAF
 +++++++++++++++++++++++++++++++++++++++
 
-To update the PVs with Proposal and Information from the APS
-database, first enter the proposal and ESAF ID numbers into
-the GUI (or set the ``9id:bss:proposal:id``, and respectively).
-Note that for this ESAF ID, we had to change the run to `2019-2`.
+To update the PVs with Proposal and Information from the APS database, first
+enter the proposal and ESAF ID numbers into the GUI (or set
+``9id:bss:proposal:id`` and ``9id:bss:esaf:id``, respectively). Note that for
+this ESAF ID, we had to change the run to `2019-2`.
 
 Then, use this command to retrieve the information and update
 the PVs::
