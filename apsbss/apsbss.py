@@ -48,7 +48,7 @@ from .server_interface import Server
 CONNECT_TIMEOUT = 3
 logger = logging.getLogger(__name__)
 parser = None
-server = Server()
+server = Server(creds_file=os.environ.get("APSBSS_CREDS_FILE"))
 
 
 class EpicsNotConnected(Exception):
@@ -175,15 +175,15 @@ def epicsUpdate(prefix):
 
         bss.status_msg.put("set Proposal PVs ...")
         bss.proposal.end_date.put(str(proposal.endTime))
-        bss.proposal.mail_in_flag.put(proposal._raw.get("mailInFlag") in ("Y", "y"))
-        bss.proposal.proprietary_flag.put(proposal._raw.get("proprietaryFlag") in ("Y", "y"))
+        bss.proposal.mail_in_flag.put(proposal.mail_in)
+        bss.proposal.proprietary_flag.put(proposal.proprietary)
         bss.proposal.raw.put(yaml.dump(proposal))
         bss.proposal.start_date.put(str(proposal.startTime))
-        bss.proposal.submitted_date.put(proposal._raw["submittedDate"])
+        bss.proposal.submitted_date.put(proposal.submittedDate)
         bss.proposal.title.put(proposal.title)
 
-        bss.proposal.user_last_names.put(",".join([user.lastName for user in proposal._users]))
-        bss.proposal.user_badges.put(",".join([user.badge for user in proposal._users]))
+        bss.proposal.user_last_names.put(",".join(proposal.lastNames))
+        bss.proposal.user_badges.put(",".join(proposal.badges))
         bss.proposal.number_users_in_pvs.put(0)
         for i, user in enumerate(proposal._users):
             obj = getattr(bss.proposal, f"user{i+1}")
@@ -191,9 +191,9 @@ def epicsUpdate(prefix):
             obj.email.put(user.email)
             obj.first_name.put(user.firstName)
             obj.last_name.put(user.lastName)
-            obj.institution.put(user._raw["institution"])
-            obj.institution_id.put(str(user._raw["instId"]))
-            obj.user_id.put(str(user._raw["id"]))
+            obj.institution.put(user.institution)
+            obj.institution_id.put(user.institution_id)
+            obj.user_id.put(user.user_id)
             obj.pi_flag.put(user.is_pi)
             bss.proposal.number_users_in_pvs.put(i + 1)
             if i == 8:
@@ -311,7 +311,7 @@ def get_options():
     p_sub.add_argument("beamlineName", type=str, help="Beamline name")
 
     p_sub = subcommand.add_parser("proposal", help="print specific proposal")
-    p_sub.add_argument("proposalId", type=str, help="proposal ID number")
+    p_sub.add_argument("proposalId", type=int, help="proposal ID number")
     p_sub.add_argument("run", type=str, help="APS run name")
     p_sub.add_argument("beamlineName", type=str, help="Beamline name")
 
@@ -346,7 +346,7 @@ def cmd_esaf(args):
         esaf = server.esaf(args.esafId)
         print(yaml.dump(esaf))
     except Exception as reason:
-        print(f"DM reported: {reason}")
+        print(f"Exception: {reason}")
 
 
 def cmd_list(args):
@@ -385,9 +385,9 @@ def cmd_proposal(args):
     """
     try:
         proposal = server.proposal(args.proposalId, args.beamlineName, args.run)
-        print(yaml.dump(proposal))
+        print(yaml.dump(proposal.to_dict()))
     except Exception as reason:
-        print(f"DM reported: {reason}")
+        print(f"Exception: {reason}")
 
 
 def cmd_report(args):

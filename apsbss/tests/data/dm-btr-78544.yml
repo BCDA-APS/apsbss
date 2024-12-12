@@ -1,0 +1,55 @@
+activities:
+- duration: 259200
+  endTime: '2022-04-28 08:00:00-05:00'
+  startTime: '2022-04-25 08:00:00-05:00'
+duration: 259200
+endTime: '2022-04-28 08:00:00-05:00'
+experimenters:
+- badge: '258711'
+  email: jwenderott@anl.gov
+  firstName: Jill
+  id: 516067
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Wenderott
+- badge: '301250'
+  email: yanx@anl.gov
+  firstName: Xi
+  id: 516068
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Yan
+- badge: '299214'
+  email: b299214@anl.gov
+  firstName: Hui
+  id: 516069
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Cao
+- badge: '305918'
+  email: yan.li@anl.gov
+  firstName: Yan
+  id: 516070
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Li
+- badge: '85323'
+  email: dufresne@anl.gov
+  firstName: Eric
+  id: 516071
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Dufresne
+  piFlag: Y
+- badge: '44673'
+  email: fong@anl.gov
+  firstName: Dillon
+  id: 516065
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Fong
+id: 78544
+proprietaryFlag: N
+startTime: '2022-04-25 08:00:00-05:00'
+submittedDate: '2022-02-25 11:08:43-06:00'
+title: In-situ X-ray Photon Correlation Spectroscopy Studies of Ionic Devices

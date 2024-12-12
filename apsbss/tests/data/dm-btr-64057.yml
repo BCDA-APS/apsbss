@@ -1,0 +1,29 @@
+activities:
+- duration: 86400
+  endTime: '2019-07-10 08:00:00-05:00'
+  startTime: '2019-07-09 08:00:00-05:00'
+duration: 86400
+endTime: '2019-07-10 08:00:00-05:00'
+experimenters:
+- badge: '85151'
+  email: segre@iit.edu
+  firstName: Carlo
+  id: 420580
+  instId: 3386
+  institution: Illinois Institute of Technology
+  lastName: Segre
+  piFlag: Y
+- badge: '85146'
+  email: bunker@iit.edu
+  firstName: Grant
+  id: 420581
+  instId: 3386
+  institution: Illinois Institute of Technology
+  lastName: Bunker
+id: 64057
+mailInFlag: N
+proprietaryFlag: N
+startTime: '2019-07-09 08:00:00-05:00'
+submittedDate: '2019-02-27 12:26:07-06:00'
+title: APS/IIT EXAFS Summer School
+totalShiftsRequested: 21

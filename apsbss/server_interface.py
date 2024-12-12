@@ -292,7 +292,7 @@ class Server:
             ESAF number
         """
         try:
-            record = self.esaf_api.getEsaf(esaf_id)
+            record = self.esaf_api.getEsaf(esaf_id)  # TODO: refactor a la ProposalBase?
         except dm.ObjectNotFound as exc:
             raise EsafNotFound(f"{esaf_id=!r}") from exc
         return dict(record.data)

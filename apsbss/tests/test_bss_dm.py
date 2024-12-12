@@ -9,7 +9,7 @@ from ._core import TEST_DATA_PATH
 from ._core import is_aps_workstation
 from ._core import yaml_loader
 
-DM_BTR_78243_FILE = TEST_DATA_PATH / "dm-78243-btr.yml"
+DM_BTR_78243_FILE = TEST_DATA_PATH / "dm-btr-78243.yml"
 
 
 def test_ApsDmScheduleInterface():

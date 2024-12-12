@@ -16,6 +16,8 @@ Core components
 import abc
 import datetime
 
+import yaml
+
 DM_APS_DB_WEB_SERVICE_URL = "https://xraydtn01.xray.aps.anl.gov:11236"
 
 
@@ -120,6 +122,9 @@ class User:
         ~fullName
         ~lastName
         ~is_pi
+        ~user_id
+        ~institution
+        ~institution_id
     """
 
     def __init__(self, raw):
@@ -155,14 +160,29 @@ class User:
         return f'{self._raw["firstName"]} {self._raw["lastName"]}'
 
     @property
-    def lastName(self) -> str:
-        """Family name."""
-        return self._raw["lastName"]
+    def institution(self) -> str:
+        """Name of the user's institution."""
+        return self._raw["institution"]
+
+    @property
+    def institution_id(self) -> int:
+        """ID of the user's institution."""
+        return self._raw["instId"]
 
     @property
     def is_pi(self) -> bool:
         """Is this user the principal investigator?"""
         return (self._raw.get("piFlag") or "n").lower()[0] == "y"
+
+    @property
+    def lastName(self) -> str:
+        """Family name."""
+        return self._raw["lastName"]
+
+    @property
+    def user_id(self) -> int:
+        """ID of the user."""
+        return self._raw["id"]
 
 
 class ProposalBase:
@@ -176,16 +196,21 @@ class ProposalBase:
 
     .. rubric:: Property Methods
     .. autosummary::
+        ~badges
         ~current
         ~emails
         ~endTime
         ~info
+        ~lastNames
+        ~mail_in
         ~pi
         ~proposal_id
+        ~proprietary
         ~startTime
         ~title
         ~users
     """
+
 
     def __init__(self, raw, run) -> None:
         """
@@ -218,6 +243,11 @@ class ProposalBase:
             ")"
         )
         # fmt: on
+
+    @property
+    def badges(self) -> list:
+        """List the badges of all users on this proposal."""
+        return [user.badge for user in self._users]
 
     @property
     def current(self) -> bool:
@@ -260,6 +290,16 @@ class ProposalBase:
         return info
 
     @property
+    def lastNames(self) -> list:
+        """List the last names of all users on this proposal."""
+        return [user.lastName for user in self._users]
+
+    @property
+    def mail_in(self) -> bool:
+        """Is this a mail-in proposal?"""
+        return self._raw.get("mailInFlag") in ("Y", "y")
+
+    @property
     def _pi(self) -> User:
         """Return first listed principal investigator or user."""
         found = None
@@ -285,14 +325,28 @@ class ProposalBase:
         return self._raw["id"]
 
     @property
+    def proprietary(self) -> bool:
+        """Is this a proprietary proposal?"""
+        return self._raw.get("proprietaryFlag") in ("Y", "y")
+
+    @property
     def startTime(self) -> int:
         """Return the starting time of this proposal."""
         return iso2dt(self._raw["startTime"])
 
     @property
+    def submittedDate(self) -> datetime.datetime:
+        """Return the submitted date of this proposal."""
+        return iso2dt(self._raw["submittedDate"])
+
+    @property
     def title(self) -> int:
         """Return the proposal title."""
         return self._raw["title"]
+
+    def to_dict(self) -> dict:
+        """Return the proposal content as a dictionary."""
+        return dict(self._raw)
 
     @property
     def _users(self) -> object:
@@ -303,10 +357,6 @@ class ProposalBase:
     def users(self) -> list:
         """Return a list of the names of all experimenters."""
         return [user.fullName for user in self._users]
-
-    def to_dict(self) -> dict:
-        """Return the proposal content as a dictionary."""
-        return dict(self._raw)
 
 
 class ScheduleInterfaceBase(abc.ABC):

@@ -1,0 +1,55 @@
+activities:
+- duration: 518400
+  endTime: '2022-06-20 08:00:00-05:00'
+  startTime: '2022-06-14 08:00:00-05:00'
+duration: 518400
+endTime: '2022-06-20 08:00:00-05:00'
+experimenters:
+- badge: '87715'
+  email: fan.zhang@nist.gov
+  firstName: Fan
+  id: 506321
+  instId: 3668
+  institution: National Institute of Standards and Technology (NIST)
+  lastName: Zhang
+- badge: '86998'
+  email: lyle.levine@nist.gov
+  firstName: Lyle
+  id: 506322
+  instId: 3668
+  institution: National Institute of Standards and Technology (NIST)
+  lastName: Levine
+- badge: '86312'
+  email: ilavsky@anl.gov
+  firstName: Jan
+  id: 506323
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Ilavsky
+- badge: '64065'
+  email: kuzmenko@aps.anl.gov
+  firstName: Ivan
+  id: 506324
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Kuzmenko
+- badge: '85172'
+  email: gglong@anl.gov
+  firstName: Gabrielle
+  id: 506327
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Long
+- badge: '85849'
+  email: andrew.allen@nist.gov
+  firstName: Andrew
+  id: 521796
+  instId: 3668
+  institution: National Institute of Standards and Technology (NIST)
+  lastName: Allen
+  piFlag: Y
+id: 77056
+proprietaryFlag: N
+startTime: '2022-06-14 08:00:00-05:00'
+submittedDate: '2021-10-27 10:45:40-05:00'
+title: USAXS/SAXS/WAXS Characterization at an MBA Storage Ring

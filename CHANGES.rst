@@ -31,8 +31,10 @@ describe the future plans.
    Breaking Changes
    ----------------
 
-   * Standardize on **run** instead of **cycle** as the reference used for the
-     name of an APS operations *run* period.
+   * Proposal ID is now an integer, was previously text.  (ESAF ID is integer,
+     as before.)
+   * Standardize on the name **run** instead of **cycle** as the reference used
+     for the name of an APS operations *run* period.
 
      * Includes EPICS PV: ``record(stringout, "$(P)esaf:run")``
 
