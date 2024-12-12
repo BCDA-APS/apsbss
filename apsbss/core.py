@@ -16,8 +16,6 @@ Core components
 import abc
 import datetime
 
-import yaml
-
 DM_APS_DB_WEB_SERVICE_URL = "https://xraydtn01.xray.aps.anl.gov:11236"
 
 
@@ -210,7 +208,6 @@ class ProposalBase:
         ~title
         ~users
     """
-
 
     def __init__(self, raw, run) -> None:
         """
