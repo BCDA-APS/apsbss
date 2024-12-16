@@ -43,6 +43,7 @@ describe the future plans.
 
    * Add support for direct access to read IS database.
    * Add Server class that chooses between DM or IS interface.
+   * Integer timestamp PVs for ESAF start & end and Proposal start, end, & submitted.
 
    Maintenance
    -----------

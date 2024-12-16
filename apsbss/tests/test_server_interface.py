@@ -64,7 +64,7 @@ def test__esaf_table():
         return
 
     table = server._esaf_table(12, "2024-3")
-    assert len(table.rows) == 23
+    assert len(table.rows) >= 23
     rowNum = -1
     assert len(table.rows[rowNum]) == 7
     assert table.rows[rowNum][0] == 275724

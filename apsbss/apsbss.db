@@ -35,6 +35,7 @@ record(waveform, "$(P)esaf:description") {
 }
 
 record(stringout, "$(P)esaf:endDate")
+record(longout, "$(P)esaf:endDate:timestamp")
 
 record(longout, "$(P)esaf:id")
 
@@ -48,6 +49,7 @@ record(stringout, "$(P)esaf:status")
 record(stringout, "$(P)esaf:sector")
 
 record(stringout, "$(P)esaf:startDate")
+record(longout, "$(P)esaf:startDate:timestamp")
 
 record(waveform, "$(P)esaf:title") {
     field(FTVL, "CHAR")
@@ -143,6 +145,7 @@ record(stringout, "$(P)esaf:user9:lastName")
 record(stringout, "$(P)proposal:beamline")
 
 record(stringout, "$(P)proposal:endDate")
+record(longout, "$(P)proposal:endDate:timestamp")
 
 record(bo, "$(P)proposal:mailInFlag") {
     field(ZNAM, "OFF")
@@ -164,8 +167,10 @@ record(waveform, "$(P)proposal:raw") {
 }
 
 record(stringout, "$(P)proposal:startDate")
+record(longout, "$(P)proposal:startDate:timestamp")
 
 record(stringout, "$(P)proposal:submittedDate")
+record(longout, "$(P)proposal:submittedDate:timestamp")
 
 record(waveform, "$(P)proposal:title") {
     field(FTVL, "CHAR")

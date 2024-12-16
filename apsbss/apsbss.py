@@ -42,6 +42,7 @@ import time
 import pyRestTable
 import yaml
 
+from .core import iso2dt
 from .core import printColumns
 from .server_interface import Server
 
@@ -149,10 +150,14 @@ def epicsUpdate(prefix):
 
         bss.status_msg.put("set ESAF PVs ...")
         bss.esaf.description.put(esaf["description"])
-        bss.esaf.end_date.put(esaf["experimentEndDate"])
+        dt = iso2dt(esaf["experimentEndDate"])
+        bss.esaf.end_date.put(str(dt))
+        bss.esaf.end_date_timestamp.put(round(dt.timestamp()))
         bss.esaf.esaf_status.put(esaf["esafStatus"])
         bss.esaf.raw.put(yaml.dump(esaf))
-        bss.esaf.start_date.put(esaf["experimentStartDate"])
+        dt = iso2dt(esaf["experimentStartDate"])
+        bss.esaf.start_date.put(str(dt))
+        bss.esaf.start_date_timestamp.put(round(dt.timestamp()))
         bss.esaf.title.put(esaf["esafTitle"])
 
         bss.esaf.user_last_names.put(",".join([user["lastName"] for user in esaf["experimentUsers"]]))
@@ -175,11 +180,14 @@ def epicsUpdate(prefix):
 
         bss.status_msg.put("set Proposal PVs ...")
         bss.proposal.end_date.put(str(proposal.endTime))
+        bss.proposal.end_date_timestamp.put(round(proposal.endTime.timestamp()))
         bss.proposal.mail_in_flag.put(proposal.mail_in)
         bss.proposal.proprietary_flag.put(proposal.proprietary)
         bss.proposal.raw.put(yaml.dump(proposal))
         bss.proposal.start_date.put(str(proposal.startTime))
+        bss.proposal.start_date_timestamp.put(round(proposal.startTime.timestamp()))
         bss.proposal.submitted_date.put(str(proposal.submittedDate))
+        bss.proposal.submitted_date_timestamp.put(round(proposal.submittedDate.timestamp()))
         bss.proposal.title.put(proposal.title)
 
         bss.proposal.user_last_names.put(",".join(proposal.lastNames))
