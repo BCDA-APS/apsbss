@@ -1,12 +1,15 @@
 name: apsbss-package
+
+# conda env create -y -n apsbss -f ./environment.yml
+# conda activate apsbss
+# pip install -e .[all]
+
 channels:
-  - apsu
   - conda-forge
-  - aps-anl-tag
-  - defaults
+  - nodefaults
 dependencies:
   - python >=3.9
-  - aps-dm-api
+  - apsu::aps-dm-api
   - bluesky
   - ophyd
   - pip

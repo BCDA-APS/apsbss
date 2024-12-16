@@ -17,23 +17,20 @@ EXAMPLE::
 
 """
 
-# -----------------------------------------------------------------------------
-# :author:    Pete R. Jemian
-# :email:     jemian@anl.gov
-# :copyright: (c) 2017-2021, UChicago Argonne, LLC
-#
-# Distributed under the terms of the Creative Commons Attribution 4.0 International Public License.
-#
-# The full license is in the file LICENSE.txt, distributed with this software.
-# -----------------------------------------------------------------------------
-
 __all__ = [
     "EpicsBssDevice",
 ]
 
 # from ..plans import addDeviceDataAsStream
+import datetime
+
+import pyRestTable
 from bluesky import plan_stubs as bps
-from ophyd import Component, Device, EpicsSignal
+from ophyd import Component
+from ophyd import Device
+from ophyd import EpicsSignal
+
+from .core import trim
 
 
 class EpicsEsafExperimenterDevice(Device):
@@ -68,7 +65,7 @@ class EpicsEsafDevice(Device):
         ~clear_users
     """
 
-    aps_cycle = Component(EpicsSignal, "cycle", string=True)
+    aps_run = Component(EpicsSignal, "run", string=True)
     description = Component(EpicsSignal, "description", string=True)
     end_date = Component(EpicsSignal, "endDate", string=True)
     esaf_id = Component(EpicsSignal, "id", string=True)
@@ -99,11 +96,11 @@ class EpicsEsafDevice(Device):
 
         Do not clear these items:
 
-        * ``aps_cycle``
+        * ``aps_run``
         * ``esaf_id``
         * ``sector``
         """
-        # self.aps_cycle.put("")    # user controls this
+        # self.aps_run.put("")    # user controls this
         self.description.put("")
         self.end_date.put("")
         # self.esaf_id.put("")      # user controls this
@@ -153,8 +150,8 @@ class EpicsProposalExperimenterDevice(Device):
         self.email.put("")
         self.first_name.put("")
         self.last_name.put("")
-        self.user_id.put("")
-        self.institution_id.put("")
+        self.user_id.put(0)
+        self.institution_id.put(0)
         self.institution.put("")
         self.pi_flag.put(0)
 
@@ -176,9 +173,7 @@ class EpicsProposalDevice(Device):
     number_users_in_pvs = Component(EpicsSignal, "users_in_pvs")
     number_users_total = Component(EpicsSignal, "users_total")
     proposal_id = Component(EpicsSignal, "id", string=True)
-    proprietary_flag = Component(
-        EpicsSignal, "proprietaryFlag", string=True
-    )
+    proprietary_flag = Component(EpicsSignal, "proprietaryFlag", string=True)
     raw = Component(EpicsSignal, "raw", string=True, kind="omitted")
     start_date = Component(EpicsSignal, "startDate", string=True)
     submitted_date = Component(EpicsSignal, "submittedDate", string=True)
@@ -238,21 +233,23 @@ class EpicsBssDevice(Device):
 
     .. autosummary::
 
+        ~_table
+        ~addDeviceDataAsStream
         ~clear
     """
 
     esaf = Component(EpicsEsafDevice, "esaf:")
     proposal = Component(EpicsProposalDevice, "proposal:")
 
-    ioc_host = Component(
-        EpicsSignal, "ioc_host", string=True, kind="omitted"
-    )
-    ioc_user = Component(
-        EpicsSignal, "ioc_user", string=True, kind="omitted"
-    )
-    status_msg = Component(
-        EpicsSignal, "status", string=True, kind="omitted"
-    )
+    ioc_host = Component(EpicsSignal, "ioc_host", string=True, kind="omitted")
+    ioc_user = Component(EpicsSignal, "ioc_user", string=True, kind="omitted")
+    status_msg = Component(EpicsSignal, "status", string=True, kind="omitted")
+
+    def addDeviceDataAsStream(self, stream_name=None):
+        """Write the data as a separate stream."""
+        yield from bps.create(name=stream_name or "apsbss")
+        yield from bps.read(self)
+        yield from bps.save()
 
     def clear(self):
         """Clear the proposal and ESAF info."""
@@ -260,8 +257,37 @@ class EpicsBssDevice(Device):
         self.proposal.clear()
         self.status_msg.put("Cleared")
 
-    def addDeviceDataAsStream(self, stream_name=None):
-        """Write the data as a separate stream."""
-        yield from bps.create(name=stream_name or "apsbss")
-        yield from bps.read(self)
-        yield from bps.save()
+    def _table(self, *, show_name=False, length=40):
+        """Make a table of all Component Signal values."""
+        table = pyRestTable.Table()
+        # table.labels = "signal PV value updated".split()
+        table.labels = "PV value updated".split()
+        if show_name:
+            table.labels.insert(0, "name")
+        # .walk_signals() might be changed or removed in a future ophyd version.
+        # At that time, consider using ophyd_registry instead.
+        for signal in self.walk_signals():
+            dt = datetime.datetime.fromtimestamp(signal.item.timestamp).astimezone()
+            if dt.year < 2000:
+                dt = "--"
+            row = [
+                signal.item.pvname,
+                trim(str(signal.item.get()), length=length),
+                dt,
+            ]
+            if show_name:
+                row.insert(0, f"{self.name}.{signal.dotted_name}")
+            table.addRow(row)
+        table.rows = sorted(table.rows)
+        return table
+
+
+# -----------------------------------------------------------------------------
+# :author:    Pete R. Jemian
+# :email:     jemian@anl.gov
+# :copyright: (c) 2017-2025, UChicago Argonne, LLC
+#
+# Distributed under the terms of the Creative Commons Attribution 4.0 International Public License.
+#
+# The full license is in the file LICENSE.txt, distributed with this software.
+# -----------------------------------------------------------------------------

@@ -1,0 +1,29 @@
+description: We will commission beamline and  USAXS instrument. We will perform experiments
+  with safe beamline standards and test samples (all located at beamline and used
+  for this purpose routinely) to evaluate performance of beamline and instrument.
+  We will perform hardware and software development as needed.
+esafId: 226319
+esafStatus: Approved
+esafTitle: Commission 9ID and USAXS
+experimentEndDate: '2020-09-28 08:00:00'
+experimentStartDate: '2020-05-26 08:00:00'
+experimentUsers:
+- badge: '86312'
+  badgeNumber: '86312'
+  email: ilavsky@aps.anl.gov
+  firstName: Jan
+  lastName: Ilavsky
+  piFlag: 'Yes'
+- badge: '53748'
+  badgeNumber: '53748'
+  email: emaxey@aps.anl.gov
+  firstName: Evan
+  lastName: Maxey
+  piFlag: 'No'
+- badge: '64065'
+  badgeNumber: '64065'
+  email: kuzmenko@aps.anl.gov
+  firstName: Ivan
+  lastName: Kuzmenko
+  piFlag: 'No'
+sector: 09

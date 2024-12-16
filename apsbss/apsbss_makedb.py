@@ -13,7 +13,7 @@ This is just a service program to make the ``.db`` file.
 # -----------------------------------------------------------------------------
 # :author:    Pete R. Jemian
 # :email:     jemian@anl.gov
-# :copyright: (c) 2017-2021, UChicago Argonne, LLC
+# :copyright: (c) 2017-2025, UChicago Argonne, LLC
 #
 # Distributed under the terms of the Creative Commons Attribution 4.0 International Public License.
 #
@@ -26,7 +26,7 @@ raw_data = """
 status	stringout
 ioc_host	stringout
 ioc_user	stringout
-esaf:cycle	stringout
+esaf:run	stringout
 esaf:description	waveform	4096
 esaf:endDate	stringout
 esaf:id	stringout

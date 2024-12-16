@@ -1,0 +1,76 @@
+activities:
+- duration: 518400
+  endTime: '2022-04-11 08:00:00-05:00'
+  startTime: '2022-04-05 08:00:00-05:00'
+duration: 518400
+endTime: '2022-04-11 08:00:00-05:00'
+experimenters:
+- badge: '228484'
+  email: qzhang234@anl.gov
+  firstName: Qingteng
+  id: 514711
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Zhang
+- badge: '54313'
+  email: xmlin@anl.gov
+  firstName: Xiao-Min
+  id: 514706
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Lin
+- badge: '80985'
+  email: wchen@anl.gov
+  firstName: Wei
+  id: 514707
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Chen
+- badge: '240011'
+  email: ycao@colorado.edu
+  firstName: Yue
+  id: 514708
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Cao
+- badge: '85323'
+  email: dufresne@anl.gov
+  firstName: Eric
+  id: 514709
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Dufresne
+- badge: '53124'
+  email: sureshn@anl.gov
+  firstName: Suresh
+  id: 514710
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Narayanan
+  piFlag: Y
+- badge: '266939'
+  email: mcherukara@anl.gov
+  firstName: Mathew
+  id: 514712
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Cherukara
+- badge: '206054'
+  email: skrssank@anl.gov
+  firstName: Subramanian
+  id: 514713
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: Sankaranarayanan
+- badge: '313377'
+  email: hohe@uchicago.edu
+  firstName: HongRui
+  id: 514714
+  instId: 3927
+  institution: Argonne National Laboratory
+  lastName: He
+id: 78243
+proprietaryFlag: N
+startTime: '2022-04-05 08:00:00-05:00'
+submittedDate: '2022-02-01 01:14:49-06:00'
+title: Study of intermittency in dynamics of colloidal suspensions

@@ -11,8 +11,8 @@
     Deprecations
     Contributors
 
-Change History
-##############
+History
+#######
 
 The project `milestones <https://github.com/BCDA-APS/apstools/milestones>`_
 describe the future plans.
@@ -21,19 +21,47 @@ describe the future plans.
    2.0.0
    *****
 
-   next release expected by -tba-
+   * next release expected by 2024-12-31
 
    Notice
    ------
 
-   Complete overhaul for APS-U era.
+   * Complete overhaul for APS-U era.
+
+   Breaking Changes
+   ----------------
+
+   * Proposal ID is now an integer, was previously text.  (ESAF ID is integer,
+     as before.)
+   * Standardize on the name **run** instead of **cycle** as the reference used
+     for the name of an APS operations *run* period.
+
+     * Includes EPICS PV: ``record(stringout, "$(P)esaf:run")``
+
+   New Features
+   ------------
+
+   * Add support for direct access to read IS database.
+   * Add Server class that chooses between DM or IS interface.
 
    Maintenance
    -----------
 
-   Update to install and run with Python versions 3.9, 3.10, 3.11.
+   * Add requests to project requirements.
+   * Code style enforced by pre-commit.
+   * Increased code coverage of unit testing.
+   * Moved report and table generation to new Server class.
+   * Refactored (and simplified) IOC report table.
+   * Relocated functions out of apsbss module.
+   * Switch documentation to use pydata sphinx theme.
+   * Update to install and run with Python versions 3.9, 3.10, 3.11.
 
-pyyaml
+   Deprecations
+   -------------
+
+   * Removed all items marked for deprecation.
+
+-------------
 
 1.5.6
 *****
