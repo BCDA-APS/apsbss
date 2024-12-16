@@ -74,6 +74,7 @@ def test__esaf_table():
     assert table.rows[rowNum][4] == "2024-12-19"
     assert table.rows[rowNum][-1] == "12-ID Operations Commissioning"
 
+
 @pytest.mark.parametrize(
     "arg, expected",
     [
