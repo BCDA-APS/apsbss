@@ -170,11 +170,11 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
         self.response = None  # Most-recent response object from web server.
 
     @property
-    def activeBeamlines(self):  # TODO: untested
+    def activeBeamlines(self):
         """Details about all active beamlines in database."""
         return self.webget("beamline/findAllActiveBeamlines")
 
-    def activities(self, beamline, run=None) -> dict:  # TODO: untested
+    def activities(self, beamline, run=None) -> dict:
         """An "activity" describes scheduled beamtime."""
         if run is None:
             run = self.current_run["name"]
@@ -191,7 +191,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
         return self._cache[key]
 
     @property
-    def authorizedBeamlines(self):  # TODO: untested
+    def authorizedBeamlines(self):
         """Beamlines where these credentials are authorized."""
         return self.webget("userBeamlineAuthorizedEdit/getAuthorizedBeamlines")
 
@@ -209,11 +209,11 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
         self.auth_from_creds(*creds)
 
     @property
-    def beamlines(self):  # TODO: untested
+    def beamlines(self):
         """List of all active beamlines, by name."""
         return sorted([entry["beamlineId"] for entry in self.activeBeamlines])
 
-    def current_proposal(self, beamline: str):  # TODO: untested
+    def current_proposal(self, beamline: str):
         """Return the current (active) proposal or 'None'."""
         for proposal in self.proposals(beamline).values():
             if proposal.current:
@@ -226,7 +226,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
     #     entries = self.webget("run/getCurrentRun")
     #     return entries[0]
 
-    def get_request(self, beamline, proposal_id, run=None):  # TODO: untested
+    def get_request(self, beamline, proposal_id, run=None):
         """Return the request (proposal) by beamline, id, and run."""
         if run is None:
             run = self.current_run["name"]
@@ -236,7 +236,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
             raise IS_RequestNotFound(f"{beamline=!r}, {proposal_id!r}, {run=!r}")
         return proposal
 
-    def proposals(self, beamline: str, run: str = None) -> dict:  # TODO: untested
+    def proposals(self, beamline: str, run: str = None) -> dict:
         """
         Get all proposal (beamtime request) details for 'beamline' and 'run'.
 
@@ -300,7 +300,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
             ]
         return self._cache["listRuns"]
 
-    def runsByDateTime(self, dateTime=None):  # TODO: untested
+    def runsByDateTime(self, dateTime=None):
         """
         All details about runs in 'dateTime' (default to now).
 
@@ -320,7 +320,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
             dateTime = dateTime.isoformat(sep="T", timespec="seconds")
         return self.webget(f"run/getRunByDateTime/{dateTime}")
 
-    def runsByRunYear(self, year=None):  # TODO: untested
+    def runsByRunYear(self, year=None):
         """All details about runs in 'year' (default to this year)."""
         if year is None:  # default to current year
             year = datetime.datetime.now().year
@@ -338,17 +338,17 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
         import requests  # The name 'requests' might be used elsewhere.
 
         if self.creds is None:
-            raise IS_MissingAuthentication("Authentication is not set.")  # TODO: untested
+            raise IS_MissingAuthentication("Authentication is not set.")
         uri = f"{self.base}/{api}"
         logger.debug("URI: %r", uri)
 
         # main event: Send the server the URI, get the response
         self.response = requests.get(uri, auth=self.creds)
         if self.response is None:
-            raise IS_Exception(f"None response from server.  {uri=!r}")  # TODO: untested
+            raise IS_Exception(f"None response from server.  {uri=!r}")
         logger.debug("response OK? %s", self.response.ok)
 
-        if not self.response.ok:  # TODO: untested
+        if not self.response.ok:
             raiser = {
                 "Unauthorized": IS_Unauthorized,
                 "Forbidden": IS_NotAllowedToRespond,

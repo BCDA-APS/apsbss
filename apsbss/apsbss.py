@@ -443,38 +443,38 @@ def main():
     """Command-line interface for ``apsbss`` program."""
     args = get_options()
     if args.subcommand == "beamlines":
-        printColumns(server.beamlines, numColumns=4, width=15)  # TODO: untested
+        printColumns(server.beamlines, numColumns=4, width=15)
 
     elif args.subcommand == "clear":
-        epicsClear(args.prefix)  # TODO: untested
+        epicsClear(args.prefix)
 
     elif args.subcommand == "runs":
-        cmd_runs(args)  # TODO: untested
+        cmd_runs(args)
 
     elif args.subcommand == "esaf":
-        cmd_esaf(args)  # TODO: untested
+        cmd_esaf(args)
 
     elif args.subcommand == "list":
         cmd_list(args)
 
-    elif args.subcommand == "proposal":  # TODO: untested
+    elif args.subcommand == "proposal":
         cmd_proposal(args)
 
-    elif args.subcommand == "setup":  # TODO: untested
+    elif args.subcommand == "setup":
         epicsSetup(args.prefix, args.beamlineName, args.run)
 
-    elif args.subcommand == "update":  # TODO: untested
+    elif args.subcommand == "update":
         epicsUpdate(args.prefix)
 
-    elif args.subcommand == "report":  # TODO: untested
+    elif args.subcommand == "report":
         cmd_report(args)
 
     else:
-        parser.print_usage()  # TODO: untested
+        parser.print_usage()
 
 
 if __name__ == "__main__":
-    main()  # TODO: untested
+    main()
 
 # -----------------------------------------------------------------------------
 # :author:    Pete R. Jemian
