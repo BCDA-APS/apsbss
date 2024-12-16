@@ -68,6 +68,7 @@ class EpicsEsafDevice(Device):
     aps_run = Component(EpicsSignal, "run", string=True)
     description = Component(EpicsSignal, "description", string=True)
     end_date = Component(EpicsSignal, "endDate", string=True)
+    end_date_timestamp = Component(EpicsSignal, "endDate:timestamp")
     esaf_id = Component(EpicsSignal, "id", string=True)
     esaf_status = Component(EpicsSignal, "status", string=True)
     number_users_in_pvs = Component(EpicsSignal, "users_in_pvs")
@@ -75,6 +76,7 @@ class EpicsEsafDevice(Device):
     raw = Component(EpicsSignal, "raw", string=True, kind="omitted")
     sector = Component(EpicsSignal, "sector", string=True)
     start_date = Component(EpicsSignal, "startDate", string=True)
+    start_date_timestamp = Component(EpicsSignal, "startDate:timestamp")
     title = Component(EpicsSignal, "title", string=True)
     user_last_names = Component(EpicsSignal, "users", string=True)
     user_badges = Component(EpicsSignal, "userBadges", string=True)
@@ -103,10 +105,12 @@ class EpicsEsafDevice(Device):
         # self.aps_run.put("")    # user controls this
         self.description.put("")
         self.end_date.put("")
+        self.end_date_timestamp.put(0)
         # self.esaf_id.put("")      # user controls this
         self.esaf_status.put("")
         # self.sector.put("")
         self.start_date.put("")
+        self.start_date_timestamp.put(0)
         self.title.put("")
         self.user_last_names.put("")
         self.user_badges.put("")
@@ -169,6 +173,7 @@ class EpicsProposalDevice(Device):
     beamline_name = Component(EpicsSignal, "beamline", string=True)
 
     end_date = Component(EpicsSignal, "endDate", string=True)
+    end_date_timestamp = Component(EpicsSignal, "endDate:timestamp")
     mail_in_flag = Component(EpicsSignal, "mailInFlag", string=True)
     number_users_in_pvs = Component(EpicsSignal, "users_in_pvs")
     number_users_total = Component(EpicsSignal, "users_total")
@@ -176,7 +181,9 @@ class EpicsProposalDevice(Device):
     proprietary_flag = Component(EpicsSignal, "proprietaryFlag", string=True)
     raw = Component(EpicsSignal, "raw", string=True, kind="omitted")
     start_date = Component(EpicsSignal, "startDate", string=True)
+    start_date_timestamp = Component(EpicsSignal, "startDate:timestamp")
     submitted_date = Component(EpicsSignal, "submittedDate", string=True)
+    submitted_date_timestamp = Component(EpicsSignal, "submittedDate:timestamp")
     title = Component(EpicsSignal, "title", string=True)
     user_badges = Component(EpicsSignal, "userBadges", string=True)
     user_last_names = Component(EpicsSignal, "users", string=True)
@@ -203,11 +210,14 @@ class EpicsProposalDevice(Device):
         """
         # self.beamline_name.put("")    # user controls this
         self.end_date.put("")
+        self.end_date_timestamp.put(0)
         self.mail_in_flag.put(0)
         # self.proposal_id.put(-1)      # user controls this
         self.proprietary_flag.put(0)
         self.start_date.put("")
+        self.start_date_timestamp.put(0)
         self.submitted_date.put("")
+        self.submitted_date_timestamp.put(0)
         self.title.put("")
         self.user_last_names.put("")
         self.user_badges.put("")

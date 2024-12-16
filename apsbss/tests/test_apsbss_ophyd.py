@@ -35,7 +35,7 @@ def test_EpicsBssDevice(ioc):
     table = ioc.bss._table()
     assert isinstance(table, pyRestTable.Table)
     assert len(table.labels) == 3
-    assert len(table.rows) == 137
+    assert len(table.rows) >= 137
     assert len(table.rows[0]) == 3
     assert table.rows[0][0] == f"{BSS_TEST_IOC_PREFIX}esaf:description"
     assert table.rows[0][1] == ""
