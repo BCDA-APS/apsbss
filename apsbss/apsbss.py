@@ -288,18 +288,17 @@ def get_options():
         help="full report by ascending names (default is descending)",
     )
 
-    p_sub = subcommand.add_parser("esaf", help="print specific ESAF")
-    p_sub.add_argument("esafId", type=int, help="ESAF ID number")
-
-    p_sub = subcommand.add_parser("list", help="list by run")
+    p_sub = subcommand.add_parser(
+        "list",
+        help="print proposals and ESAFs for beamline and run",
+    )
     msg = (
         "APS run name."
-        "  One of the names returned by ``apsbss runs``"
-        " or one of these (``past``,  ``prior``, ``previous``)"
-        " for the previous run, (``current`` or ``now``)"
-        " for the current run, (``future`` or ``next``)"
-        " for the next run,"
-        " or ``recent`` for the past two years."
+        "  One of the names returned by 'apsbss runs'"
+        " or one of these ('past',  'prior', 'previous')"
+        " for the previous run, ('current' or 'now')"
+        " for the current run, ('future' or 'next')"
+        " for the next run, or 'recent' for the past two years."
     )
     p_sub.add_argument(
         "-r",
@@ -310,10 +309,16 @@ def get_options():
     )
     p_sub.add_argument("beamlineName", type=str, help="Beamline name")
 
-    p_sub = subcommand.add_parser("proposal", help="print specific proposal")
+    p_sub = subcommand.add_parser(
+        "proposal",
+        help="print specific proposal for beamline and run",
+    )
     p_sub.add_argument("proposalId", type=int, help="proposal ID number")
     p_sub.add_argument("run", type=str, help="APS run name")
     p_sub.add_argument("beamlineName", type=str, help="Beamline name")
+
+    p_sub = subcommand.add_parser("esaf", help="print specific ESAF")
+    p_sub.add_argument("esafId", type=int, help="ESAF ID number")
 
     p_sub = subcommand.add_parser("clear", help="EPICS PVs: clear")
     p_sub.add_argument("prefix", type=str, help="EPICS PV prefix")
@@ -364,12 +369,12 @@ def cmd_list(args):
     run = str(args.run).strip().lower()
     sector = int(args.beamlineName.split("-")[0])
 
-    logger.debug("run(s): %s", run)
+    logger.debug("run: %s", run)
 
-    print(f"Proposal(s): beam line {args.beamlineName}, run(s) {args.run}")
+    print(f"Proposal(s): beam line {args.beamlineName}, run: {args.run}")
     print(server._proposal_table(args.beamlineName, args.run))
 
-    print(f"ESAF(s): sector {sector}, run(s) {args.run}")
+    print(f"ESAF(s): sector {sector}, run: {args.run}")
     print(server._esaf_table(sector, args.run))
 
 
@@ -418,15 +423,15 @@ def cmd_runs(args):
         table = pyRestTable.Table()
         table.labels = "run start end".split()
 
-        def sorter(entry):
-            return entry["startTime"]
+        def sorter(run):
+            return run["startTime"]
 
-        for entry in sorted(server._runs, key=sorter, reverse=args.ascending):
+        for run in sorted(server._runs.values(), key=sorter, reverse=args.ascending):
             table.addRow(
                 (
-                    entry["name"],
-                    entry["startTime"],
-                    entry["endTime"],
+                    run["name"],
+                    run["startTime"],
+                    run["endTime"],
                 )
             )
         print(str(table))

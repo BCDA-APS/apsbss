@@ -4,8 +4,9 @@
 
 .. _apsbss_application:
 
+======
 apsbss
-------
+======
 
 Provide information from APS Proposal and ESAF (experiment safety approval
 form) databases as PVs at each beam line so that this information
@@ -16,7 +17,7 @@ is used to access the APS databases as read-only.
 *No information is written back to the APS
 databases from this software.*
 
-.. [#] ``dm``: https://anaconda.org/search?q=aps-dm-api
+.. [#] ``dm``: https://anaconda.org/apsu/aps-dm-api
 
 .. sidebar:: PVs for experiment metadata
 
@@ -26,7 +27,7 @@ databases from this software.*
 	This design allows the local instrument team to override
 	any values read from the APS databases, if that is needed.
 
-Given:
+Given: [#]_
 
 * a beam line name (such as ``9-ID-B,C``)
 * APS run name (such as ``2019-2``) to locate a specific proposal ID
@@ -47,9 +48,366 @@ These PVs are loaded on demand by the local instrument team at the beam line.
 See the :ref:`apsbss_ioc` section for details about
 managing the EPICS PVs.
 
+.. [#] Example uses a beamline name and APS run from before APSU.  This beamline
+   name is no longer in use.  See :ref:`subcommand.beamlines`.
 
 Overview
-++++++++
+========
+
+The ``apsbss`` command-line application provide its features through
+subcommands. Running ``apsbss`` without a subcommand will show the usage
+response (which lists the available commands): [#]_
+
+.. code-block:: bash
+
+    $ apsbss
+    usage: apsbss [-h] [-v] {beamlines,runs,esaf,list,proposal,clear,setup,update,report} ...
+
+The ``-v`` option prints the program version.  The ``-h`` option prints the help message:
+
+.. code-block:: bash
+
+    $ apsbss -h
+    usage: apsbss [-h] [-v] {beamlines,runs,esaf,list,proposal,clear,setup,update,report} ...
+
+    Retrieve specific records from the APS Proposal and ESAF databases.
+
+    options:
+      -h, --help            show this help message and exit
+      -v, --version         print version number and exit
+
+    subcommand:
+      {beamlines,runs,list,proposal,esaf,clear,setup,update,report}
+        beamlines           print list of beamlines
+        runs                print APS run names
+        list                print proposals and ESAFs for beamline and run
+        proposal            print specific proposal for beamline and run
+        esaf                print specific ESAF
+        clear               EPICS PVs: clear
+        setup               EPICS PVs: setup
+        update              EPICS PVs: update from BSS
+        report              EPICS PVs: report what is in the PVs
+
+.. [#] Here and below, the initial ``$`` in the example is the command prompt
+    from the Linux bash shell.  Do not type that.
+
+Subcommands
+===========
+
+See :ref:`beamtime_source_docs` for the source code documentation of each of these
+  subcommands.
+
+.. _subcommand.beamlines:
+
+beamlines
+---------
+
+List the names of beamlines defined.
+
+.. code-block:: bash
+
+    usage: apsbss beamlines [-h]
+
+    options:
+      -h, --help  show this help message and exit
+
+That list as of 2024-12:
+
+.. code-block:: bash
+
+    $ apsbss beamlines
+    1-BM-B,C       10-ID-B        17-ID-B        28-ID-B,C
+    1-ID-B,C,E     11-BM-B        18-ID-D        28-ID-D,E
+    2-BM-A,B       11-ID-B        19-BM-D        28-ID-F
+    2-ID-D         11-ID-C        19-ID-E        28-ID-G
+    2-ID-E         11-ID-D        20-BM-B        29-ID-C,D
+    3-ID-B,C,D     12-BM-B        20-ID-D,E      30-ID-B,C
+    4-ID-B,G,H     12-ID-B        21-ID-D        31-ID-D
+    5-BM-B         12-ID-E        21-ID-F        31-ID-E
+    5-ID-B,C,D     13-BM-C        21-ID-G        32-ID-B,C
+    6-BM-A,B       13-BM-D        22-ID-D        33-BM-C
+    6-ID-B,C       13-ID-C,D      22-ID-E        33-ID-C
+    6-ID-D         13-ID-E        23-ID-B        34-ID-E
+    7-BM-B         14-ID-B        23-ID-D        34-ID-F
+    7-ID-B,C,D     15-ID-B,E      24-ID-C        35-BM-C
+    8-BM-B         15-ID-C,D      24-ID-E        35-ID-B,C,D,E
+    8-ID-E,I       16-BM-B,D      25-ID-C        38-AM-A
+    9-BM-B,C       16-ID-B        25-ID-D,E
+    9-ID-D         16-ID-D,E      26-ID-C
+    10-BM-B        17-BM-B        27-ID-B
+
+
+Some names include multiple stations.  For example, use ``8-ID-E,I`` for either
+station at beamline 8-ID.
+
+.. raw:: html
+
+    <details>
+    <summary>Pre-APSU Beamlines</summary>
+    <pre>
+    Names defined on 2020-07-10:
+
+    $ apsbss beamlines
+    1-BM-B,C       8-ID-I         15-ID-B,C,D    23-BM-B
+    1-ID-B,C,E     9-BM-B,C       16-BM-B        23-ID-B
+    2-BM-A,B       9-ID-B,C       16-BM-D        23-ID-D
+    2-ID-D         10-BM-A,B      16-ID-B        24-ID-C
+    2-ID-E         10-ID-B        16-ID-D        24-ID-E
+    3-ID-B,C,D     11-BM-B        17-BM-B        26-ID-C
+    4-ID-C         11-ID-B        17-ID-B        27-ID-B
+    4-ID-D         11-ID-C        18-ID-D        29-ID-C,D
+    5-BM-C         11-ID-D        19-BM-D        30-ID-B,C
+    5-BM-D         12-BM-B        19-ID-D        31-ID-D
+    5-ID-B,C,D     12-ID-B        20-BM-B        32-ID-B,C
+    6-BM-A,B       12-ID-C,D      20-ID-B,C      33-BM-C
+    6-ID-B,C       13-BM-C        21-ID-D        33-ID-D,E
+    6-ID-D         13-BM-D        21-ID-E        34-ID-C
+    7-BM-B         13-ID-C,D      21-ID-F        34-ID-E
+    7-ID-B,C,D     13-ID-E        21-ID-G        35-ID-B,C,D,E
+    8-BM-B         14-BM-C        22-BM-D
+    8-ID-E         14-ID-B        22-ID-D
+    </pre>
+    </details>
+
+runs
+----
+
+List the names of APS runs defined.
+
+.. code-block:: bash
+
+    usage: apsbss runs [-h] [-f] [-a]
+
+    options:
+      -h, --help       show this help message and exit
+      -f, --full       full report including dates (default is compact)
+      -a, --ascending  full report by ascending names (default is descending)
+
+That list, as of 2024-12:
+
+.. code-block:: bash
+
+    $ apsbss runs
+    2008-3    2011-2    2014-1    2016-3    2019-2
+    2009-1    2011-3    2014-2    2017-1    2019-3
+    2009-2    2012-1    2014-3    2017-2    2020-1
+    2009-3    2012-2    2015-1    2017-3    2020-2
+    2010-1    2012-3    2015-2    2018-1
+    2010-2    2013-1    2015-3    2018-2
+    2010-3    2013-2    2016-1    2018-3
+    2011-1    2013-3    2016-2    2019-1
+
+Pick the run of interest.  Here, we pick ``2020-2``.
+
+To print the full report (including start and end of each run):
+
+.. code-block:: bash
+
+    $ apsbss runs --full
+    ====== =================== ===================
+    run    start               end
+    ====== =================== ===================
+    2020-2 2020-06-09 07:00:00 2020-10-01 07:00:00
+    2020-1 2020-01-28 08:00:00 2020-06-09 07:00:00
+    2019-3 2019-09-24 07:00:00 2020-01-28 08:00:00
+    2019-2 2019-05-21 07:00:00 2019-09-24 07:00:00
+    ...    ...                 ...
+    2009-1 2009-01-21 08:00:00 2009-05-20 07:00:00
+    2008-3 2008-09-24 07:00:00 2009-01-21 08:00:00
+    ====== =================== ===================
+
+list
+----
+
+List the proposals for a specific beamline and run.
+
+.. code-block:: bash
+
+    $ apsbss list -h
+    usage: apsbss list [-h] [-r RUN] beamlineName
+
+    positional arguments:
+      beamlineName       Beamline name
+
+    options:
+      -h, --help         show this help message and exit
+      -r RUN, --run RUN  APS run name. One of the names returned by 'apsbss runs' or one of these ('past', 'prior', 'previous') for the previous run,
+                        ('current' or 'now') for the current run, ('future' or 'next') for the next run, or 'recent' for the past two years.
+
+Such as:
+
+.. code-block:: bash
+
+    $ apsbss list -r 2024-3 19-ID-D
+    Proposal(s): beam line 19-ID-D, run: 2024-3
+    == === ===== === ======= =====
+    id run start end user(s) title
+    == === ===== === ======= =====
+    == === ===== === ======= =====
+
+    ESAF(s): sector 19, run(s) 2024-3
+    ====== ======== ====== ========== ========== ==================== ========================================
+    id     status   run    start      end        user(s)              title
+    ====== ======== ====== ========== ========== ==================== ========================================
+    276922 Approved 2024-3 2024-11-22 2024-12-19 Wieghold,Mercado ... 19-ID-A,C,D Technical Commissioning
+    276575 Approved 2024-3 2024-10-31 2024-12-19 Wieghold,Lai,Luo,... 19-ID-C,D,E Operations Commissioning
+    276558 Approved 2024-3 2024-10-25 2024-12-19 Lai,Guerrero,Luo,... 19-ID-A Temporary Technical Commissio...
+    275933 Approved 2024-3 2024-10-24 2024-12-19 Wieghold,Luo,Mase... 19-ID-A Operations Commissioning
+    ====== ======== ====== ========== ========== ==================== ========================================
+
+Note: No proposals for this beamline in run 2024-3.  New beamline commissioning
+started during this run.
+
+proposal
+--------
+
+List the proposal details for a specific beamline and run.
+
+.. code-block:: bash
+
+    $ apsbss proposal -h
+    usage: apsbss proposal [-h] proposalId run beamlineName
+
+    positional arguments:
+      proposalId    proposal ID number
+      run           APS run name
+      beamlineName  Beamline name
+
+    options:
+      -h, --help    show this help message and exit
+
+Note the run name here is required (not an option).  Such as:
+
+.. code-block:: bash
+
+    $ apsbss proposal 78674 2022-2 12-ID-B
+    activities:
+    - duration: 108000
+      endTime: '2022-07-20 14:00:00-05:00'
+      startTime: '2022-07-19 08:00:00-05:00'
+    duration: 108000
+    endTime: '2022-07-20 14:00:00-05:00'
+    experimenters:
+    - badge: '87100'
+      email: ychoi@anl.gov
+      firstName: Yongseong
+      id: 516580
+      instId: 3927
+      institution: Argonne National Laboratory
+      lastName: Choi
+    id: 78674
+    mailInFlag: N
+    proprietaryFlag: N
+    startTime: '2022-07-19 08:00:00-05:00'
+    submittedDate: '2022-03-01 10:16:27-06:00'
+    title: National School on Neutron and X-ray Scattering, experimental tutorials, 12-ID-B
+    totalShiftsRequested: 12
+
+esaf
+----
+
+.. code-block:: bash
+
+    $ apsbss esaf 258638
+    description: In the practical sessions for X-ray summer school student, we will demonstrate
+      and practice on surface X-ray diffraction and coherent Bragg rod measurements and
+      data processing. We will only ex-situ measure a few representative oxide or 2D materials
+      thin films for the practical session. No other chemicals are included. No need to
+      use the chemical room at 433 E030.
+    esafId: 258638
+    esafStatus: Approved
+    esafTitle: National School on Neutron and X-ray Scattering, experimental tutorials,
+      12-ID-D
+    experimentEndDate: '2022-07-22 16:00:00'
+    experimentStartDate: '2022-07-21 08:00:00'
+    experimentUsers:
+    - badge: '87100'
+      badgeNumber: '87100'
+      email: ychoi@anl.gov
+      firstName: Yongseong
+      lastName: Choi
+      piFlag: 'Yes'
+    - badge: '1234567890'
+      badgeNumber: '1234567890'
+      email: r.e.searcher@example.org
+      firstName: R.E.
+      lastName: Searcher
+      piFlag: 'No'
+    - other experimentUsers omitted here
+    sector: '12'
+
+EPICS-related subcommands
+-------------------------
+
+These commands are for use of a local EPICS database to cache details locally at
+the beamline.
+
+clear
+++++++++++++
+
+To clear the information from the EPICS PVs, use this command:
+
+.. code-block:: bash
+
+    $ apsbss clear 9id:bss:
+    clear EPICS 9id:bss:
+    connected in 0.104s
+    cleared in 0.011s
+
+setup
+++++++++++++
+
+To configure ``9id:bss:`` PVs for beam line ``9-ID-B,C`` and run ``2020-2``, use
+this command:
+
+.. code-block:: bash
+
+    $ apsbss setup 9id:bss: 9-ID-B,C 2020-2
+    connected in 0.143s
+    setup EPICS 9id:bss: 9-ID-B,C run=2020-2 sector=9
+
+Or you could enter them into the appropriate boxes on the GUI.
+
+update
+++++++++++++
+
+To update the EPICS PVs with Proposal and Information from the APS database,
+first enter the proposal and ESAF ID numbers into the GUI (or set
+``9id:bss:proposal:id`` and ``9id:bss:esaf:id``, respectively). Note that for
+this ESAF ID, we had to change the run to `2019-2`.
+
+Then, use this command to retrieve the information and update the PVs:
+
+.. code-block:: bash
+
+    $ apsbss update 9id:bss:
+    update EPICS 9id:bss:
+    connected in 0.105s
+
+If there is a problem with the update process, it should be
+reported in the `status` PV (such as `9id:bss:status`).
+
+.. figure:: ./_static//ui_error_status.png
+   :width: 95%
+
+   Image of ``apsbss.ui`` screen GUI in caQtDM showing
+   `update` command error due to missing beam line name.
+
+report
+++++++++++++
+
+To view all the information in the EPICS PVs, use this command:
+
+.. code-block:: bash
+
+    $ apsbss report 9id:bss:
+    clear EPICS 9id:bss:
+
+Since this content is rather large, it is available
+for download: :download:`apsbss report <./_static//apsbss_report.txt>`
+
+Demonstration
+=============
 
 We'll demonstrate ``apsbss`` with information for APS beam
 line 9-ID, using PV prefix ``9id:bss:``.
@@ -107,7 +465,7 @@ This button executes the command line: ``apsbss clear 9id:bss:``
 
 
 Initialize PVs for beam line and APC run
-++++++++++++++++++++++++++++++++++++++++++++++
+----------------------------------------
 
 After creating the PVs in an IOC, the next step is to
 initialize them with the beam line name and the APS
@@ -119,37 +477,10 @@ PV prefix to be used.  The examples above are for
 beam line 9-ID.  The PV prefix in these examples
 is ``9id:bss:``.
 
+.. _beamlines:
 
 What beam line name to use?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To learn the beam line names accepted by the system, use this command
-(showing names defined on 2020-07-10)::
-
-    $ apsbss beamlines
-    1-BM-B,C       10-ID-B        17-ID-B        28-ID-B,C
-    1-ID-B,C,E     11-BM-B        18-ID-D        28-ID-D,E
-    2-BM-A,B       11-ID-B        19-BM-D        28-ID-F
-    2-ID-D         11-ID-C        19-ID-E        28-ID-G
-    2-ID-E         11-ID-D        20-BM-B        29-ID-C,D
-    3-ID-B,C,D     12-BM-B        20-ID-D,E      30-ID-B,C
-    4-ID-B,G,H     12-ID-B        21-ID-D        31-ID-D
-    5-BM-B         12-ID-E        21-ID-F        31-ID-E
-    5-ID-B,C,D     13-BM-C        21-ID-G        32-ID-B,C
-    6-BM-A,B       13-BM-D        22-ID-D        33-BM-C
-    6-ID-B,C       13-ID-C,D      22-ID-E        33-ID-C
-    6-ID-D         13-ID-E        23-ID-B        34-ID-E
-    7-BM-B         14-ID-B        23-ID-D        34-ID-F
-    7-ID-B,C,D     15-ID-B,E      24-ID-C        35-BM-C
-    8-BM-B         15-ID-C,D      24-ID-E        35-ID-B,C,D,E
-    8-ID-E,I       16-BM-B,D      25-ID-C        38-AM-A
-    9-BM-B,C       16-ID-B        25-ID-D,E
-    9-ID-D         16-ID-D,E      26-ID-C
-    10-BM-B        17-BM-B        27-ID-B
-
-Some names include multiple stations.  For example, use ``8-ID-E,I`` for either
-station at beamline 8-ID.
-
 
 What APS run to use?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -219,7 +550,9 @@ Write the beam line name and run to the PVs
 
 To configure ``9id:bss:`` PVs for beam line
 ``9-ID-B,C`` and run ``2020-2``,
-use this command::
+use this command:
+
+.. code-block:: bash
 
     $ apsbss setup 9id:bss: 9-ID-B,C 2020-2
     connected in 0.143s
@@ -376,88 +709,15 @@ See section :ref:`reading_yaml`.
 Update EPICS PVs with Proposal and ESAF
 +++++++++++++++++++++++++++++++++++++++
 
-To update the PVs with Proposal and Information from the APS database, first
-enter the proposal and ESAF ID numbers into the GUI (or set
-``9id:bss:proposal:id`` and ``9id:bss:esaf:id``, respectively). Note that for
-this ESAF ID, we had to change the run to `2019-2`.
+Reference
+=========
 
-Then, use this command to retrieve the information and update
-the PVs::
-
-    $ apsbss update 9id:bss:
-    update EPICS 9id:bss:
-    connected in 0.105s
-
-If there is a problem with the update process, it should be
-reported in the `status` PV (such as `9id:bss:status`).
-
-.. figure:: ./_static//ui_error_status.png
-   :width: 95%
-
-   Image of ``apsbss.ui`` screen GUI in caQtDM showing
-   `update` command error due to missing beam line name.
-
-
-Clear the EPICS PVs
-+++++++++++++++++++
-
-To clear the information from the PVs, use this command::
-
-    $ apsbss clear 9id:bss:
-    clear EPICS 9id:bss:
-    connected in 0.104s
-    cleared in 0.011s
-
-
-Report information in the EPICS PVs
-+++++++++++++++++++++++++++++++++++
-
-To view all the information in the PVs, use this command::
-
-    $ apsbss report 9id:bss:
-    clear EPICS 9id:bss:
-
-Since this content is rather large, it is available
-for download: :download:`apsbss report <./_static//apsbss_report.txt>`
-
-
-Example - ``apsbss`` command line
-+++++++++++++++++++++++++++++++++
-
-Before using the command-line interface, find out what
-the *apsbss* application expects::
-
-    $ apsbss  -h
-    usage: apsbss [-h] [-v]
-                  {beamlines,current,runs,esaf,list,proposal,clear,setup,update,report}
-                  ...
-
-    Retrieve specific records from the APS Proposal and ESAF databases.
-
-    optional arguments:
-      -h, --help            show this help message and exit
-      -v, --version         print version number and exit
-
-    subcommand:
-      {beamlines,current,runs,esaf,proposal,clear,setup,update,report}
-        beamlines           print list of beamlines
-        current             print current ESAF(s) and proposal(s), DEPRECATED: use 'list' instead
-        runs                print APS run names
-        esaf                print specific ESAF
-        list                list by run
-        proposal            print specific proposal
-        clear               EPICS PVs: clear
-        setup               EPICS PVs: setup
-        update              EPICS PVs: update from BSS
-        report              EPICS PVs: report what is in the PVs
-
-See :ref:`beamtime_source_docs` for the source code documentation
-of each of these subcommands.
+.. TODO: Move to some other place.  Standalone files?
 
 .. _apsbss_epics_gui_screens:
 
 Displays for MEDM & caQtDM
-++++++++++++++++++++++++++
+---------------------------
 
 Display screen files are provided for viewing some of the EPICS PVs
 using either MEDM (``apsbss.adl``) or caQtDM (``apsbss.ui``).
@@ -485,7 +745,7 @@ Here's an example starter script for caQtDM from APS 9-ID-C (USAXS):
 
 
 IOC Management
-++++++++++++++
+---------------------------
 
 The EPICS PVs are provided by running an instance of ``apsbss.db``
 either in an existing EPICS IOC or using the ``softIoc`` application
@@ -501,7 +761,7 @@ for the management of the EPICS IOC.
 .. _reading_yaml:
 
 Reading YAML in Python
-++++++++++++++++++++++
+---------------------------
 
 It's easy to read a YAML string and convert it into a
 Python structure.  Take the example ESAF information shown
@@ -552,7 +812,7 @@ from EPICS and convert it back into a Python structure.
 
 
 Downloads
-+++++++++
+---------
 
 * EPICS database: :download:`apsbss.db <../../apsbss/apsbss.db>`
 * EPICS IOC shell script :download:`apsbss_ioc.sh <../../apsbss/apsbss_ioc.sh>`
@@ -560,6 +820,6 @@ Downloads
 * caQtDM screen: :download:`apsbss.ui <../../apsbss/apsbss.ui>`
 
 Source code documentation
-+++++++++++++++++++++++++
+---------------------------
 
 See :ref:`beamtime_source_docs` for the source code documentation.
