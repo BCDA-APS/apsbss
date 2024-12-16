@@ -13,10 +13,10 @@ from ..bss_is import IS_NotAllowedToRespond
 from ..bss_is import IS_ScheduleSystem
 from ..bss_is import IS_Unauthorized
 from ..core import User
+from ..core import is_xsd_workstation
 from ..core import miner
 from ._core import CREDS_FILE
 from ._core import TEST_DATA_PATH
-from ._core import is_aps_workstation
 from ._core import yaml_loader
 
 IS_BTR_77056_FILE = TEST_DATA_PATH / "is-btr-77056.yml"
@@ -78,7 +78,7 @@ def test_IS_BeamtimeRequest():
     assert info["Proposal Title"] == btr.title
     assert info["Proposal PUP"] == 57504
     assert "capillary gas flow detector system;" in info["Equipment"]
-    if is_aps_workstation():
+    if is_xsd_workstation():
         # timezones are different in github CI testing
         assert info["Start time"] == "2022-05-24 08:00:00-05:00"
         assert info["End time"] == "2022-10-01 00:00:00-05:00"
@@ -115,7 +115,7 @@ def test_SchedulingServer_credentials():
         ss.webget("run/getAllRuns")
     assert "Authentication is not set." in str(reason)
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     # These tests only work at APS
@@ -150,7 +150,7 @@ def test_SchedulingServer_credentials():
 def test_SchedulingServer():
     ss = IS_ScheduleSystem(dev=True)  # prepare to connect
     assert ss is not None
-    if not CREDS_FILE.exists() or not is_aps_workstation() or not server_available():
+    if not CREDS_FILE.exists() or not is_xsd_workstation() or not server_available():
         return  # Can't test anything here.
 
     ss.auth_from_file(CREDS_FILE)
@@ -193,7 +193,7 @@ def test_SchedulingServer():
 def test_beamlines(beamline, run, nproposals):
     ss = IS_ScheduleSystem(dev=True)  # prepare to connect
     assert ss is not None
-    if not CREDS_FILE.exists() or not is_aps_workstation() or not server_available():
+    if not CREDS_FILE.exists() or not is_xsd_workstation() or not server_available():
         return  # Can't test anything here.
 
     ss.auth_from_file(CREDS_FILE)

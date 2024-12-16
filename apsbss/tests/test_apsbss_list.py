@@ -3,9 +3,9 @@ import sys
 import pytest
 
 from ..apsbss import main
+from ..core import is_xsd_workstation
 from ..server_interface import RunNotFound
 from ..server_interface import Server
-from ._core import is_aps_workstation
 
 
 def test_myoutput(capsys):  # or use "capfd" for fd-level
@@ -22,7 +22,7 @@ def test_myoutput(capsys):  # or use "capfd" for fd-level
 
 
 def test_no_run_given(capsys):
-    if is_aps_workstation():
+    if is_xsd_workstation():
         sys.argv = [
             sys.argv[0],
             "list",
@@ -39,7 +39,7 @@ def test_no_run_given(capsys):
 
 # VERY slow test
 # def test_run_all(capsys):
-#     if is_aps_workstation():
+#     if is_xsd_workstation():
 #         sys.argv = [
 #             sys.argv[0],
 #             "list",
@@ -54,7 +54,7 @@ def test_no_run_given(capsys):
 
 
 def test_run_future(capsys):
-    if is_aps_workstation():
+    if is_xsd_workstation():
         sys.argv = [
             sys.argv[0],
             "list",
@@ -69,7 +69,7 @@ def test_run_future(capsys):
 
 
 def test_run_blank(capsys):
-    if is_aps_workstation():
+    if is_xsd_workstation():
         sys.argv = [
             sys.argv[0],
             "list",
@@ -85,7 +85,7 @@ def test_run_blank(capsys):
 
 
 def test_run_by_name(capsys):
-    if is_aps_workstation():
+    if is_xsd_workstation():
         sys.argv = [
             sys.argv[0],
             "list",
@@ -100,7 +100,7 @@ def test_run_by_name(capsys):
 
 
 def test_run_now(capsys):
-    if is_aps_workstation():
+    if is_xsd_workstation():
         sys.argv = [
             sys.argv[0],
             "list",
@@ -116,7 +116,7 @@ def test_run_now(capsys):
 
 
 def test_run_not_found():
-    if is_aps_workstation():
+    if is_xsd_workstation():
         sys.argv = [
             sys.argv[0],
             "list",
@@ -130,7 +130,7 @@ def test_run_not_found():
 
 
 def test_run_previous(capsys):
-    if is_aps_workstation():
+    if is_xsd_workstation():
         for when in "past previous prior".split():
             sys.argv = [
                 sys.argv[0],
@@ -146,7 +146,7 @@ def test_run_previous(capsys):
 
 
 # def test_run_recent(capsys):
-#     if is_aps_workstation():
+#     if is_xsd_workstation():
 #         sys.argv = [
 #             sys.argv[0],
 #             "list",

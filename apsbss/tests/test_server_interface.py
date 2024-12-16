@@ -4,19 +4,19 @@ from contextlib import nullcontext as does_not_raise
 
 import pytest
 
+from ..core import is_xsd_workstation
 from ..server_interface import EsafNotFound
 from ..server_interface import ProposalNotFound
 from ..server_interface import RunNotFound
 from ..server_interface import Server
 from ..server_interface import ServerException
-from ._core import is_aps_workstation
 
 
 def test_Server():
     server = Server()
     assert server is not None
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     assert 10 < len(server.beamlines) < 100
@@ -29,7 +29,7 @@ def test_Server():
 def test_Server_esaf():
     server = Server()
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     esaf = server.esaf(251426)  # , 8, "2022-1")
@@ -46,7 +46,7 @@ def test_Server_esaf():
 def test_Server_proposal():
     server = Server()
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     proposal = server.proposal(78243, "8-ID-I", "2022-1")
@@ -60,7 +60,7 @@ def test_Server_proposal():
 def test__esaf_table():
     server = Server()
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     table = server._esaf_table(12, "2024-3")
@@ -94,7 +94,7 @@ def test__esaf_table():
 def test__parse_runs_arg(arg, expected):
     server = Server()
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     if expected == "current":
@@ -120,7 +120,7 @@ def test__parse_runs_arg(arg, expected):
 def test__proposal_table():
     server = Server()
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     table = server._proposal_table("12-ID-B", "2024-3")
@@ -150,7 +150,7 @@ def test__proposal_table():
 def test_Server_raises(method, args, context, text):
     server = Server()
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     with pytest.raises(context) as reason:
@@ -169,7 +169,7 @@ def test_Server_raises(method, args, context, text):
 def test_Server_not_raises(method, arg, kwargs):
     server = Server()
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     with does_not_raise():

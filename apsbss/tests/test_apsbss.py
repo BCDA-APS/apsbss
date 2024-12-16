@@ -13,9 +13,9 @@ from .. import apsbss
 from .. import apsbss_makedb
 from ..apsbss import connect_epics
 from ..apsbss import epicsSetup
+from ..core import is_xsd_workstation
 from ..server_interface import Server
 from ._core import BSS_TEST_IOC_PREFIX
-from ._core import is_aps_workstation
 from ._core import wait_for_IOC
 
 # set default timeout for all EpicsSignal connections & communications
@@ -77,7 +77,7 @@ def test_general(capsys):
 
 def test_not_at_aps():
     assert True  # test *something*
-    if is_aps_workstation():
+    if is_xsd_workstation():
         return
 
 
@@ -87,7 +87,7 @@ def test_not_at_aps():
 def test_only_at_aps():
     assert True  # test *something*
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     runs = apsbss.server.runs
@@ -123,7 +123,7 @@ def test_EPICS(ioc, bss_PV):
 
     assert ioc.bss.esaf.aps_run.connected is True
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     # setup
@@ -186,7 +186,7 @@ def test_apsbss_commands_beamlines(argv, capsys):
     assert args is not None
     assert args.subcommand == sys.argv[1]
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     apsbss.main()
