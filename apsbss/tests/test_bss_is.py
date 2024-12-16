@@ -19,7 +19,7 @@ from ._core import TEST_DATA_PATH
 from ._core import is_aps_workstation
 from ._core import yaml_loader
 
-IS_BTR_77056_FILE = TEST_DATA_PATH / "is-77056-btr.yml"
+IS_BTR_77056_FILE = TEST_DATA_PATH / "is-btr-77056.yml"
 
 
 def server_available():

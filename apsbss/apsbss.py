@@ -179,7 +179,7 @@ def epicsUpdate(prefix):
         bss.proposal.proprietary_flag.put(proposal.proprietary)
         bss.proposal.raw.put(yaml.dump(proposal))
         bss.proposal.start_date.put(str(proposal.startTime))
-        bss.proposal.submitted_date.put(proposal.submittedDate)
+        bss.proposal.submitted_date.put(str(proposal.submittedDate))
         bss.proposal.title.put(proposal.title)
 
         bss.proposal.user_last_names.put(",".join(proposal.lastNames))

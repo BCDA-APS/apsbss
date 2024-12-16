@@ -211,14 +211,14 @@ def test_apsbss_commands_esaf(argv):
 def test_apsbss_commands_proposal(argv):
     sys.argv = argv + [
         "proposal",
-        "proposal_number_here",
+        "1",
         "1995-1",
         "my_beamline",
     ]
     args = apsbss.get_options()
     assert args is not None
     assert args.subcommand == sys.argv[1]
-    assert args.proposalId == sys.argv[2]
+    assert args.proposalId == int(sys.argv[2])
     assert args.run == sys.argv[3]
     assert args.beamlineName == sys.argv[4]
 

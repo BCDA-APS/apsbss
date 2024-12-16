@@ -150,8 +150,8 @@ class EpicsProposalExperimenterDevice(Device):
         self.email.put("")
         self.first_name.put("")
         self.last_name.put("")
-        self.user_id.put("")
-        self.institution_id.put("")
+        self.user_id.put(0)
+        self.institution_id.put(0)
         self.institution.put("")
         self.pi_flag.put(0)
 

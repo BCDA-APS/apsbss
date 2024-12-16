@@ -65,14 +65,14 @@ def test__esaf_table():
 
     table = server._esaf_table(12, "2024-3")
     assert len(table.rows) == 23
-    assert len(table.rows[0]) == 7
-    assert table.rows[0][0] == 276993
-    assert table.rows[0][1] == "Approved"
-    assert table.rows[0][2] == "2024-3"
-    assert table.rows[0][3] == "2024-12-16"
-    assert table.rows[0][4] == "2024-12-18"
-    assert table.rows[0][-1] == "Quantifying Electronic and Structural..."
-
+    rowNum = -1
+    assert len(table.rows[rowNum]) == 7
+    assert table.rows[rowNum][0] == 275724
+    assert table.rows[rowNum][1] == "Approved"
+    assert table.rows[rowNum][2] == "2024-3"
+    assert table.rows[rowNum][3] == "2024-10-08"
+    assert table.rows[rowNum][4] == "2024-12-19"
+    assert table.rows[rowNum][-1] == "12-ID Operations Commissioning"
 
 @pytest.mark.parametrize(
     "arg, expected",
