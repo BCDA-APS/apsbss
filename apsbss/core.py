@@ -4,6 +4,8 @@ Core components
 
 .. autosummary::
 
+    ~DM_APS_DB_WEB_SERVICE_URL
+    ~is_xsd_workstation
     ~iso2dt
     ~miner
     ~printColumns
@@ -15,8 +17,32 @@ Core components
 
 import abc
 import datetime
+import os
+import socket
 
-DM_APS_DB_WEB_SERVICE_URL = "https://xraydtn01.xray.aps.anl.gov:11236"
+
+def _get_web_service_url():
+    """CATs get a different server than XSD."""
+    xsd_url = "https://xraydtn01.xray.aps.anl.gov:11236"
+    url = os.environ.get("DM_APS_DB_WEB_SERVICE_URL", xsd_url)
+    return url
+
+
+DM_APS_DB_WEB_SERVICE_URL = _get_web_service_url()
+"""
+APS Data Management web service URL.
+
+.. index:: DM_APS_DB_WEB_SERVICE_URL
+
+.. tip::  APS CAT members may need to define the ``DM_APS_DB_WEB_SERVICE_URL``
+   environment variable to either ``https://catdtn01.xray.aps.anl.gov:11236``
+   or ``https://catdtn02.xray.aps.anl.gov:11236``, whichever responds.
+"""
+
+
+def is_xsd_workstation():
+    """Is this workstation on the APS network?"""
+    return socket.getfqdn().endswith(".xray.aps.anl.gov")
 
 
 def iso2dt(isodate) -> datetime.datetime:

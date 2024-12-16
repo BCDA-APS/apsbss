@@ -5,8 +5,8 @@ import datetime
 from ..bss_dm import DM_BeamtimeProposal
 from ..bss_dm import DM_ScheduleInterface
 from ..core import User
+from ..core import is_xsd_workstation
 from ._core import TEST_DATA_PATH
-from ._core import is_aps_workstation
 from ._core import yaml_loader
 
 DM_BTR_78243_FILE = TEST_DATA_PATH / "dm-btr-78243.yml"
@@ -16,7 +16,7 @@ def test_ApsDmScheduleInterface():
     ss = DM_ScheduleInterface()
     assert ss is not None
 
-    if not is_aps_workstation():
+    if not is_xsd_workstation():
         return
 
     run = ss.current_run

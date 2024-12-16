@@ -1,12 +1,12 @@
 import pytest
 
 from .. import apsbss
+from ..core import is_xsd_workstation
 from ..server_interface import RunNotFound
-from ._core import is_aps_workstation
 
 
 def test_run_not_found():
-    if is_aps_workstation():
+    if is_xsd_workstation():
         run = "sdfsdjfyg"
         with pytest.raises(RunNotFound) as exc:
             apsbss.server.esafs(9, run)
@@ -29,7 +29,7 @@ def test_run_not_found():
     ],
 )
 def test_esafs(run, sector, count):
-    if is_aps_workstation():
+    if is_xsd_workstation():
         if not isinstance(run, str):
             with pytest.raises(TypeError) as reason:
                 apsbss.server.esafs(sector, run)
@@ -49,7 +49,7 @@ def test_esafs(run, sector, count):
     ],
 )
 def test_proposals(run, bl, count):
-    if is_aps_workstation():
+    if is_xsd_workstation():
         if not isinstance(run, str):
             with pytest.raises(TypeError) as reason:
                 apsbss.server.proposals(bl, run)
