@@ -545,7 +545,7 @@ class Run:
         return iso2dt(self._raw["endTime"])
 
     @property
-    def run_id(self) -> int | None:
+    def run_id(self) -> int:
         """Run identifier, if provided from server, or None."""
         return self._raw.get("runId")
 
