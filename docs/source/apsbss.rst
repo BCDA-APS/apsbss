@@ -280,21 +280,21 @@ Such as:
 .. code-block:: bash
 
     $ apsbss now 19-ID-D
-Proposal(s): beam line 19-ID-D, 2024-12-17 12:08:19.891573-06:00
-== === ===== === ======= =====
-id run start end user(s) title
-== === ===== === ======= =====
-== === ===== === ======= =====
+    Proposal(s): beam line 19-ID-D, 2024-12-17 12:08:19.891573-06:00
+    == === ===== === ======= =====
+    id run start end user(s) title
+    == === ===== === ======= =====
+    == === ===== === ======= =====
 
-ESAF(s): sector 19, 2024-12-17 12:08:19.891573-06:00
-====== ======== ====== ========== ========== ==================== ========================================
-id     status   run    start      end        user(s)              title
-====== ======== ====== ========== ========== ==================== ========================================
-276922 Approved 2024-3 2024-11-22 2024-12-19 Wieghold,Mercado ... 19-ID-A,C,D Technical Commissioning
-276575 Approved 2024-3 2024-10-31 2024-12-19 Wieghold,Lai,Luo,... 19-ID-C,D,E Operations Commissioning
-276558 Approved 2024-3 2024-10-25 2024-12-19 Lai,Guerrero,Luo,... 19-ID-A Temporary Technical Commissio...
-275933 Approved 2024-3 2024-10-24 2024-12-19 Wieghold,Luo,Mase... 19-ID-A Operations Commissioning
-====== ======== ====== ========== ========== ==================== ========================================
+    ESAF(s): sector 19, 2024-12-17 12:08:19.891573-06:00
+    ====== ======== ====== ========== ========== ==================== ========================================
+    id     status   run    start      end        user(s)              title
+    ====== ======== ====== ========== ========== ==================== ========================================
+    276922 Approved 2024-3 2024-11-22 2024-12-19 Wieghold,Mercado ... 19-ID-A,C,D Technical Commissioning
+    276575 Approved 2024-3 2024-10-31 2024-12-19 Wieghold,Lai,Luo,... 19-ID-C,D,E Operations Commissioning
+    276558 Approved 2024-3 2024-10-25 2024-12-19 Lai,Guerrero,Luo,... 19-ID-A Temporary Technical Commissio...
+    275933 Approved 2024-3 2024-10-24 2024-12-19 Wieghold,Luo,Mase... 19-ID-A Operations Commissioning
+    ====== ======== ====== ========== ========== ==================== ========================================
 
 To get details on a specific proposal or ESAF, see the subcommand for each.
 

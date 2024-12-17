@@ -331,7 +331,7 @@ class Esaf:
         return dict(self._raw)
 
     @property
-    def _users(self) -> object:
+    def _users(self) -> list:
         """Return a list of all users, as 'User' objects."""
         return [User(u) for u in self._raw["experimentUsers"]]
 
@@ -504,7 +504,7 @@ class ProposalBase:
         return dict(self._raw)
 
     @property
-    def _users(self) -> object:
+    def _users(self) -> list:
         """Return a list of all users, as 'User' objects."""
         return [User(u) for u in self._raw["experimenters"]]
 
