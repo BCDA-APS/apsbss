@@ -57,13 +57,13 @@ def test_Server_proposal():
     assert "dynamics of colloidal suspensions" in proposal.title
 
 
-def test__esaf_table():
+def test_esaf_table():
     server = Server()
 
     if not is_xsd_workstation():
         return
 
-    table = server._esaf_table(12, "2024-3")
+    table = server.esaf_table(server.esafs(12, "2024-3"))
     assert len(table.rows) >= 23
     rowNum = -1
     assert len(table.rows[rowNum]) == 7
@@ -91,7 +91,7 @@ def test__esaf_table():
         ["recent", "recent"],
     ],
 )
-def test__parse_runs_arg(arg, expected):
+def test_parse_runs_arg(arg, expected):
     server = Server()
 
     if not is_xsd_workstation():
@@ -114,16 +114,16 @@ def test__parse_runs_arg(arg, expected):
         expected = set(server.runs)
     elif expected == "recent":
         expected = set(server.recent_runs())
-    assert server._parse_runs_arg(arg) == expected
+    assert server.parse_runs_arg(arg) == expected
 
 
-def test__proposal_table():
+def test_proposal_table():
     server = Server()
 
     if not is_xsd_workstation():
         return
 
-    table = server._proposal_table("12-ID-B", "2024-3")
+    table = server.proposal_table(server.proposals("12-ID-B", "2024-3"))
     assert len(table.rows) == 2
     assert len(table.rows[0]) == 6
     assert table.rows[0][0] == 1008087

@@ -4,6 +4,7 @@ import datetime
 
 from ..bss_dm import DM_BeamtimeProposal
 from ..bss_dm import DM_ScheduleInterface
+from ..core import Run
 from ..core import User
 from ..core import is_xsd_workstation
 from ._core import TEST_DATA_PATH
@@ -20,12 +21,11 @@ def test_ApsDmScheduleInterface():
         return
 
     run = ss.current_run
-    assert isinstance(run, dict)
-    assert isinstance(run.get("name"), str)
-    assert isinstance(run.get("startTime"), datetime.datetime)
-    assert isinstance(run.get("endTime"), datetime.datetime)
+    assert isinstance(run, Run)
+    assert isinstance(run.startDate, datetime.datetime)
+    assert isinstance(run.endDate, datetime.datetime)
 
-    run = run["name"]
+    run = str(run)
     assert isinstance(run, str)
     assert "-" in run
 
