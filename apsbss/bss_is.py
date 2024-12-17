@@ -24,6 +24,7 @@ import datetime
 import logging
 
 from .core import ProposalBase
+from .core import Run
 from .core import ScheduleInterfaceBase
 from .core import User
 from .core import iso2dt
@@ -76,7 +77,7 @@ class IS_BeamtimeRequest(ProposalBase):
         return all_matches
 
     @property
-    def endTime(self) -> datetime.datetime:
+    def endDate(self) -> datetime.datetime:
         """Return the ending time of this proposal."""
         iso = miner(self._raw, "activity.endTime")
         if iso is None:
@@ -91,8 +92,8 @@ class IS_BeamtimeRequest(ProposalBase):
         info["Proposal GUP"] = self.proposal_id
         info["Proposal Title"] = self.title
 
-        info["Start time"] = str(self.startTime)
-        info["End time"] = str(self.endTime)
+        info["Start time"] = str(self.startDate)
+        info["End time"] = str(self.endDate)
 
         pi = self._pi
         info["Users"] = [str(u) for u in self._users]
@@ -121,7 +122,7 @@ class IS_BeamtimeRequest(ProposalBase):
         return miner(self._raw, "run.runName")
 
     @property
-    def startTime(self) -> datetime.datetime:
+    def startDate(self) -> datetime.datetime:
         """Return the starting time of this proposal."""
         iso = miner(self._raw, "activity.startTime")
         if iso is None:
@@ -177,7 +178,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
     def activities(self, beamline, run=None) -> dict:
         """An "activity" describes scheduled beamtime."""
         if run is None:
-            run = self.current_run["name"]
+            run = str(self.current_run)
 
         key = f"activities-{beamline!r}-{run!r}"
         if key not in self._cache:
@@ -229,7 +230,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
     def get_request(self, beamline, proposal_id, run=None):
         """Return the request (proposal) by beamline, id, and run."""
         if run is None:
-            run = self.current_run["name"]
+            run = str(self.current_run)
 
         proposal = self.proposals(beamline).get(proposal_id)
         if proposal is None:
@@ -262,7 +263,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
             proposals) from 'beamline'.
         """
         if run is None:
-            run = self.current_run["name"]
+            run = str(self.current_run)
 
         key = f"proposals-{beamline!r}-{run!r}"
         if key not in self._cache:
@@ -289,15 +290,7 @@ class IS_ScheduleSystem(ScheduleInterfaceBase):
     def _runs(self) -> list:
         """Details about all known runs in database."""
         if "listRuns" not in self._cache:
-            self._cache["listRuns"] = [
-                {
-                    "name": run["runName"],
-                    "id": run["runId"],
-                    "startTime": iso2dt(run["startTime"]),
-                    "endTime": iso2dt(run["endTime"]),
-                }
-                for run in self.webget("run/getAllRuns")
-            ]
+            self._cache["listRuns"] = [Run(run) for run in self.webget("run/getAllRuns")]
         return self._cache["listRuns"]
 
     def runsByDateTime(self, dateTime=None):

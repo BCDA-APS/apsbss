@@ -20,6 +20,7 @@ import pyRestTable
 from .bss_dm import DM_ScheduleInterface
 from .bss_is import IS_ScheduleSystem
 from .core import DM_APS_DB_WEB_SERVICE_URL
+from .core import Esaf
 from .core import iso2dt
 from .core import trim
 
@@ -47,8 +48,6 @@ class Server:
     Common connection to information servers.
 
     .. autosummary::
-        ~_esaf_table
-        ~_proposal_table
         ~_runs
         ~beamlines
         ~current_esafs
@@ -56,8 +55,12 @@ class Server:
         ~current_proposals
         ~current_run
         ~esaf
+        ~esaf_table
         ~esafs
+        ~find_run
+        ~parse_runs_arg
         ~proposal
+        ~proposal_table
         ~proposals
         ~recent_runs
         ~runs
@@ -72,47 +75,43 @@ class Server:
             logger.info("Did not connect to IS server: %s", reason)
             self.bss_api = DM_ScheduleInterface()
 
-    def _esaf_table(self, sector, runs=None) -> pyRestTable.Table:
+    # TODO: refactor to accept a list of ESAFs
+    def esaf_table(self, esafs: list) -> pyRestTable.Table:
         """
         Print the list of ESAFS as a table.
 
         PARAMETERS
 
-        sector : str | int
-            Name of sector.  If ``str``, must be in ``%02d`` format (``02``, not
-            ``2``).
-        runs : str | [str]
-            List of APS runs.  Default: the current run.
+        esafs : [Esaf]
+            List of Esaf objects.
         """
-        runs = self._parse_runs_arg(runs)
 
-        def sorter(prop):
-            return prop["experimentStartDate"]
+        def sorter(item):
+            return item.startDate
 
         table = pyRestTable.Table()
         table.labels = "id status run start end user(s) title".split()
-        for run in sorted(runs, reverse=True):
-            esafs = self.esafs(sector, run)
-            for item in sorted(esafs, key=sorter, reverse=True):
-                users = trim(
-                    ",".join([user["lastName"] for user in item["experimentUsers"]]),
-                    length=20,
+
+        for item in sorted(esafs, key=sorter, reverse=True):
+            users = trim(
+                ",".join(item.lastNames),
+                length=20,
+            )
+            table.addRow(
+                (
+                    item.esaf_id,
+                    item.status,
+                    item.run,
+                    item.startDate.strftime("%Y-%m-%d"),
+                    item.endDate.strftime("%Y-%m-%d"),
+                    users,
+                    trim(item.title, 40),
                 )
-                table.addRow(
-                    (
-                        item["esafId"],
-                        item["esafStatus"],
-                        run,
-                        item["experimentStartDate"].split()[0],
-                        item["experimentEndDate"].split()[0],
-                        users,
-                        trim(item["esafTitle"], 40),
-                    )
-                )
+            )
 
         return table
 
-    def _parse_runs_arg(self, runs) -> list:
+    def parse_runs_arg(self, runs) -> list:
         """
         Parse a 'runs' argument into a list of run names.
 
@@ -166,41 +165,36 @@ class Server:
 
         return set(runs)  # ensure 'runs' is unique
 
-    def _proposal_table(self, beamline, runs=None) -> pyRestTable.Table:
+    def proposal_table(self, proposals: dict) -> pyRestTable.Table:
         """
         Print the list of proposals as a table.
 
         PARAMETERS
 
-        beamline : str
-            Canonical name of beam line.
-        run : str | [str]
-            List of APS runs.  Default: the current run.
+        proposals : [ProposalBase]
+            Dictionary of ProposalBase objects.
         """
-        runs = self._parse_runs_arg(runs)
 
         def sorter(prop):
-            return prop.startTime
+            return prop.startDate
 
         table = pyRestTable.Table()
         table.labels = "id run start end user(s) title".split()
-        for run in sorted(runs, reverse=True):
-            proposals = self.proposals(beamline, run)
-            for item in sorted(proposals.values(), key=sorter, reverse=True):
-                users = trim(
-                    ",".join([user.lastName for user in item._users]),
-                    20,
+        for item in sorted(proposals.values(), key=sorter, reverse=True):
+            users = trim(
+                ",".join(item.lastNames),
+                20,
+            )
+            table.addRow(
+                (
+                    item.proposal_id,
+                    item.run,
+                    item.startDate.strftime("%Y-%m-%d"),
+                    item.endDate.strftime("%Y-%m-%d"),
+                    users,
+                    trim(item.title),
                 )
-                table.addRow(
-                    (
-                        item.proposal_id,
-                        item.run,
-                        item.startTime.strftime("%Y-%m-%d"),
-                        item.endTime.strftime("%Y-%m-%d"),
-                        users,
-                        trim(item.title),
-                    )
-                )
+            )
 
         return table
 
@@ -247,11 +241,11 @@ class Server:
             ppp = self.proposals(beamline, run)
             if len(ppp) > 0:
                 proposals += list(ppp.values())
-        esafs = {e["esafId"]: e for e in esafs}
+        esafs = {e.esaf_id: e for e in esafs}
         proposals = {p.proposal_id: p for p in proposals}
 
         # match people by badge number
-        esaf_badges = {k: sorted([u["badge"] for u in e["experimentUsers"]]) for k, e in esafs.items()}
+        esaf_badges = {k: sorted([u.badge for u in e._users]) for k, e in esafs.items()}
         proposal_badges = {k: sorted([u.badge for u in p._users]) for k, p in proposals.items()}
         matches = {}
         for proposal_id, pbadge in proposal_badges.items():
@@ -280,7 +274,7 @@ class Server:
     @property
     def current_run(self) -> str:
         """Return the name of the current APS run."""
-        return self.bss_api.current_run["name"]
+        return str(self.bss_api.current_run)
 
     def esaf(self, esaf_id):
         """
@@ -324,14 +318,28 @@ class Server:
         year = int(run.split("-")[0])
 
         results = []
-
-        esafs = self.esaf_api.listEsafs(sector=sector, year=year)
-        for esaf in esafs:
-            esaf_starts = iso2dt(esaf["experimentStartDate"])
-            if run_info["startTime"] <= esaf_starts <= run_info["endTime"]:
+        for raw in self.esaf_api.listEsafs(sector=sector, year=year):
+            esaf = Esaf(raw, run)
+            if run_info.startDate <= esaf.startDate <= run_info.endDate:
                 results.append(esaf)
 
         return results
+
+    def find_run(self, target_date):
+        """Find the run that contains the target date."""
+        if isinstance(target_date, str):
+            target_date = iso2dt(target_date)
+
+        run = None
+        for r in self._runs.values():
+            if r.startDate <= target_date <= r.endDate:
+                run = str(r)
+                break
+
+        if run is None:
+            raise ValueError(f"Run not found for date: {target_date}")
+
+        return run
 
     def proposal(self, proposal_id, beamline, run=None):
         """
@@ -390,7 +398,7 @@ class Server:
     @property
     def _runs(self) -> dict:
         """Return dictionary of run details."""
-        return {r["name"]: r for r in self.bss_api._runs}
+        return {str(r): r for r in self.bss_api._runs}
 
     @property
     def runs(self) -> list:

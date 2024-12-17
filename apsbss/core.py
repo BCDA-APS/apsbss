@@ -2,17 +2,31 @@
 Core components
 ===============
 
-.. autosummary::
+Structures are defined here provide some consistency in how common terms are
+named within this project.  (For common terms, such as starting date & time, the
+server uses different names depending on which  interface is in use.)
 
+Here, date & time are represented as ``datetime.datetime`` objects, including
+time zone.
+
+.. rubric:: Attributes
+.. autosummary::
     ~DM_APS_DB_WEB_SERVICE_URL
+
+.. rubric:: Classes
+.. autosummary::
+    ~Esaf
+    ~ProposalBase
+    ~ScheduleInterfaceBase
+    ~User
+
+.. rubric:: Functions
+.. autosummary::
     ~is_xsd_workstation
     ~iso2dt
     ~miner
     ~printColumns
-    ~ProposalBase
-    ~ScheduleInterfaceBase
     ~trim
-    ~User
 """
 
 import abc
@@ -209,6 +223,124 @@ class User:
         return self._raw["id"]
 
 
+class Esaf:
+    """
+    Experiment Safety Assessment Form scheduling details.
+
+    .. autosummary::
+        ~to_dict
+
+    .. rubric:: Property Methods
+    .. autosummary::
+        ~_pi
+        ~_users
+        ~description
+        ~endDate
+        ~esaf_id
+        ~lastNames
+        ~pi
+        ~sector
+        ~startDate
+        ~status
+        ~title
+        ~users
+    """
+
+    def __init__(self, raw, run) -> None:
+        """
+        Create a new instance.
+
+        Parameters
+        ----------
+        raw : dict
+            Dictionary-like object with raw information from the server.
+        run : str
+            Canonical name of the run with this proposal.
+        """
+        self._cache = {}
+        self._raw = raw  # dict-like object
+        self.run = run
+
+    @property
+    def badges(self) -> list:
+        """List the badges of all users on this ESAF."""
+        return [user.badge for user in self._users]
+
+    @property
+    def description(self) -> str:
+        """Return the ESAF description."""
+        return self._raw["description"]
+
+    @property
+    def endDate(self) -> datetime.datetime:
+        """Return the ending date&time of this ESAF."""
+        return iso2dt(self._raw["experimentEndDate"])
+
+    @property
+    def esaf_id(self) -> int:
+        """Return ESAF identifier."""
+        return self._raw["esafId"]
+
+    @property
+    def lastNames(self) -> list:
+        """List the last names of all users on this proposal."""
+        return [user.lastName for user in self._users]
+
+    @property
+    def _pi(self) -> User:
+        """Return first listed principal investigator or user."""
+        found = None
+        if "PI" not in self._cache:
+            default = None
+            for user in self._users:
+                if default is None:
+                    default = user  # Otherwise, pick the first one.
+                if user.is_pi:
+                    found = user
+                    break
+            self._cache["PI"] = found or default
+        return self._cache["PI"]
+
+    @property
+    def pi(self) -> str:
+        """Return the full name and email of the principal investigator."""
+        return str(self._pi)
+
+    @property
+    def sector(self) -> str:
+        """Return the sector of this ESAF."""
+        return self._raw["sector"]
+
+    @property
+    def startDate(self) -> datetime.datetime:
+        """Return the starting date&time of this ESAF."""
+        return iso2dt(self._raw["experimentStartDate"])
+
+    @property
+    def status(self) -> str:
+        """Return the ESAF approval status."""
+        return self._raw["esafStatus"]
+
+    @property
+    def title(self) -> str:
+        """Return the ESAF title."""
+        return self._raw["esafTitle"]
+
+    def to_dict(self) -> dict:
+        """Return the ESAF content as a dictionary."""
+        return dict(self._raw)
+
+    @property
+    def _users(self) -> object:
+        """Return a list of all users, as 'User' objects."""
+        return [User(u) for u in self._raw["experimentUsers"]]
+
+    @property
+    def users(self) -> list:
+        """Return a list of the names of all experimenters."""
+        return [user.fullName for user in self._users]
+
+
 class ProposalBase:
     """
     Base class for a single beam time request (proposal).
@@ -223,14 +355,14 @@ class ProposalBase:
         ~badges
         ~current
         ~emails
-        ~endTime
+        ~endDate
         ~info
         ~lastNames
         ~mail_in
         ~pi
         ~proposal_id
         ~proprietary
-        ~startTime
+        ~startDate
         ~title
         ~users
     """
@@ -277,19 +409,19 @@ class ProposalBase:
         """Is this proposal scheduled now?"""
         now = datetime.datetime.now().astimezone()
         try:
-            return self.startTime <= now <= self.endTime
+            return self.startDate <= now <= self.endDate
         except Exception:
             # Can't determine one of the terms.
             return False
 
     @property
-    def emails(self) -> datetime.datetime:
+    def emails(self) -> list:
         """Return a list of the names of all experimenters."""
         return [user.email for user in self._users]
 
     @property
-    def endTime(self) -> datetime.datetime:
-        """Return the ending time of this proposal."""
+    def endDate(self) -> datetime.datetime:
+        """Return the ending date&time of this proposal."""
         return iso2dt(self._raw["endTime"])
 
     @property
@@ -299,8 +431,8 @@ class ProposalBase:
         info["Proposal GUP"] = self.proposal_id
         info["Proposal Title"] = self.title
 
-        info["Start time"] = str(self.startTime)
-        info["End time"] = str(self.endTime)
+        info["Start time"] = str(self.startDate)
+        info["End time"] = str(self.endDate)
 
         info["Users"] = [str(u) for u in self._users]
 
@@ -353,8 +485,8 @@ class ProposalBase:
         return self._raw.get("proprietaryFlag") in ("Y", "y")
 
     @property
-    def startTime(self) -> int:
-        """Return the starting time of this proposal."""
+    def startDate(self) -> datetime.datetime:
+        """Return the starting date&time of this proposal."""
         return iso2dt(self._raw["startTime"])
 
     @property
@@ -380,6 +512,47 @@ class ProposalBase:
     def users(self) -> list:
         """Return a list of the names of all experimenters."""
         return [user.fullName for user in self._users]
+
+
+class Run:
+    """
+    Details about an APS run (cycle).
+
+    .. rubric:: Property Methods
+    .. autosummary::
+        ~startDate
+        ~endDate
+    """
+
+    def __init__(self, raw) -> None:
+        """
+        Create a new instance.
+
+        Parameters
+        ----------
+        raw : dict
+            Dictionary-like object with raw information from the server.
+        """
+        self._raw = raw  # dict-like object
+
+    def __repr__(self) -> str:
+        """Text representation of the object."""
+        return self._raw.get("name") or self._raw.get("runName")
+
+    @property
+    def endDate(self) -> datetime.datetime:
+        """Return the ending date&time of this run."""
+        return iso2dt(self._raw["endTime"])
+
+    @property
+    def run_id(self) -> int | None:
+        """Run identifier, if provided from server, or None."""
+        return self._raw.get("runId")
+
+    @property
+    def startDate(self) -> datetime.datetime:
+        """Return the starting date&time of this run."""
+        return iso2dt(self._raw["startTime"])
 
 
 class ScheduleInterfaceBase(abc.ABC):
@@ -413,8 +586,8 @@ class ScheduleInterfaceBase(abc.ABC):
         """All details about the current run."""
         now = datetime.datetime.now().astimezone()
         for run in self._runs:
-            start = run["startTime"]
-            end = run["endTime"]
+            start = run.startDate
+            end = run.endDate
             if start <= now <= end:
                 return run
         return {}
@@ -450,21 +623,12 @@ class ScheduleInterfaceBase(abc.ABC):
         """
         Details (from server) about all known runs.
 
-        The returned value of is a list of dictionaries where each dict contains
-        the details of a single run.
-
-        =========   =================   ===============================
-        key         type                description
-        =========   =================   ===============================
-        name        str                 name of the run
-        startTime   datetime.datetime   when run starts (with timezone)
-        endTime     datetime.datetime   when run ends (with timezone)
-        =========   =================   ===============================
+        The returned value of is a list of Run objects.
         """
 
     @property
     def runs(self) -> list:
         """List of names of all known runs."""
         if "runs" not in self._cache:
-            self._cache["runs"] = [run["name"] for run in self._runs]
+            self._cache["runs"] = [str(run) for run in self._runs]
         return self._cache["runs"]
