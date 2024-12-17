@@ -12,6 +12,7 @@ from ..bss_is import IS_MissingAuthentication
 from ..bss_is import IS_NotAllowedToRespond
 from ..bss_is import IS_ScheduleSystem
 from ..bss_is import IS_Unauthorized
+from ..core import Run
 from ..core import User
 from ..core import is_xsd_workstation
 from ..core import miner
@@ -157,12 +158,11 @@ def test_SchedulingServer():
     assert len(ss.runs) > 40  # more than 40 runs in the database
 
     run = ss.current_run
-    assert isinstance(run, dict)
-    assert isinstance(run.get("name"), str)
-    assert isinstance(run.get("startTime"), datetime.datetime)
-    assert isinstance(run.get("endTime"), datetime.datetime)
+    assert isinstance(run, Run)
+    assert isinstance(run.startDate, datetime.datetime)
+    assert isinstance(run.endDate, datetime.datetime)
 
-    run = run["name"]
+    run = str(run)
     assert isinstance(run, str)
     assert "-" in run
     # this test might fail during year-end shutdown

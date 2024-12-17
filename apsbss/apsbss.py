@@ -9,17 +9,17 @@ This code provides the command-line application: ``apsbss``
 
 EXAMPLES::
 
-    apsbss current
-    apsbss esaf 226319
-    apsbss proposal 66083 2020-2 9-ID-B,C
+    apsbss now 19-ID-D
+    apsbss esaf 276575
+    apsbss proposal 1010753 2024-3 12-ID-B
 
 .. rubric:: Application
 .. autosummary::
 
     ~cmd_esaf
     ~cmd_list
+    ~cmd_now
     ~cmd_proposal
-    ~cmd_report
     ~cmd_runs
     ~get_options
     ~main
@@ -30,10 +30,12 @@ EXAMPLES::
 
     ~connect_epics
     ~epicsClear
+    ~epicsReport
     ~epicsSetup
     ~epicsUpdate
 """
 
+import datetime
 import logging
 import os
 import sys
@@ -105,6 +107,65 @@ def epicsClear(prefix):
     t_clear = time.time() - t0
     logger.debug("cleared in %.03fs", t_clear)
     bss.status_msg.put("Done")
+
+
+def epicsReport(args):
+    """
+    Subcommand ``report``: EPICS PVs: report the PV values.
+
+    PARAMETERS
+
+    args
+        *obj* :
+        Object returned by ``argparse``
+    """
+    bss = connect_epics(args.prefix)
+    print(bss._table(length=30))
+
+
+def epicsSetup(prefix, beamline, run=None):
+    """
+    Define the beamline name and APS run in the EPICS database.
+    Connect with the EPICS database instance.
+
+    PARAMETERS
+
+    prefix
+        *str* :
+        EPICS PV prefix
+    beamline
+        *str* :
+        Name of beam line (as defined by the BSS)
+    run
+        *str* :
+        Name of APS run (as defined by the BSS).
+        optional: default is current APS run name.
+    """
+    bss = connect_epics(prefix)
+
+    run = run or server.current_run
+    sector = int(beamline.split("-")[0])
+    logger.debug(
+        "setup EPICS %s %s run=%s sector=%s",
+        prefix,
+        beamline,
+        run,
+        sector,
+    )
+
+    bss.status_msg.wait_for_connection()
+    bss.status_msg.put("clear PVs ...")
+
+    bss.wait_for_connection()
+    bss.clear()
+
+    bss.status_msg.put("write PVs ...")
+    bss.esaf.aps_run.put(run)
+    bss.proposal.beamline_name.put(beamline)
+    bss.esaf.sector.put(str(sector))
+    bss.status_msg.put("Done")
+
+    return bss
 
 
 def epicsUpdate(prefix):
@@ -179,13 +240,13 @@ def epicsUpdate(prefix):
         proposal = server.proposal(proposal_id, beamline, run)
 
         bss.status_msg.put("set Proposal PVs ...")
-        bss.proposal.end_date.put(str(proposal.endTime))
-        bss.proposal.end_date_timestamp.put(round(proposal.endTime.timestamp()))
+        bss.proposal.end_date.put(str(proposal.endDate))
+        bss.proposal.end_date_timestamp.put(round(proposal.endDate.timestamp()))
         bss.proposal.mail_in_flag.put(proposal.mail_in)
         bss.proposal.proprietary_flag.put(proposal.proprietary)
         bss.proposal.raw.put(yaml.dump(proposal))
-        bss.proposal.start_date.put(str(proposal.startTime))
-        bss.proposal.start_date_timestamp.put(round(proposal.startTime.timestamp()))
+        bss.proposal.start_date.put(str(proposal.startDate))
+        bss.proposal.start_date_timestamp.put(round(proposal.startDate.timestamp()))
         bss.proposal.submitted_date.put(str(proposal.submittedDate))
         bss.proposal.submitted_date_timestamp.put(round(proposal.submittedDate.timestamp()))
         bss.proposal.title.put(proposal.title)
@@ -209,51 +270,6 @@ def epicsUpdate(prefix):
         bss.proposal.number_users_total.put(len(proposal.users))
 
     bss.status_msg.put("Done")
-
-
-def epicsSetup(prefix, beamline, run=None):
-    """
-    Define the beamline name and APS run in the EPICS database.
-    Connect with the EPICS database instance.
-
-    PARAMETERS
-
-    prefix
-        *str* :
-        EPICS PV prefix
-    beamline
-        *str* :
-        Name of beam line (as defined by the BSS)
-    run
-        *str* :
-        Name of APS run (as defined by the BSS).
-        optional: default is current APS run name.
-    """
-    bss = connect_epics(prefix)
-
-    run = run or server.current_run
-    sector = int(beamline.split("-")[0])
-    logger.debug(
-        "setup EPICS %s %s run=%s sector=%s",
-        prefix,
-        beamline,
-        run,
-        sector,
-    )
-
-    bss.status_msg.wait_for_connection()
-    bss.status_msg.put("clear PVs ...")
-
-    bss.wait_for_connection()
-    bss.clear()
-
-    bss.status_msg.put("write PVs ...")
-    bss.esaf.aps_run.put(run)
-    bss.proposal.beamline_name.put(beamline)
-    bss.esaf.sector.put(str(sector))
-    bss.status_msg.put("Done")
-
-    return bss
 
 
 def get_options():
@@ -318,6 +334,12 @@ def get_options():
     p_sub.add_argument("beamlineName", type=str, help="Beamline name")
 
     p_sub = subcommand.add_parser(
+        "now",
+        help="print information of proposals & ESAFs running now",
+    )
+    p_sub.add_argument("beamlineName", type=str, help="Beamline name")
+
+    p_sub = subcommand.add_parser(
         "proposal",
         help="print specific proposal for beamline and run",
     )
@@ -347,7 +369,7 @@ def get_options():
 
 def cmd_esaf(args):
     """
-    Handle ``esaf`` command.
+    Subcommand ``esaf``: print list of beamlines.
 
     PARAMETERS
 
@@ -364,7 +386,7 @@ def cmd_esaf(args):
 
 def cmd_list(args):
     """
-    Handle ``list`` command.
+    Subcommand ``list``: print proposals and ESAFs for beamline and run
 
     PARAMETERS
 
@@ -374,21 +396,61 @@ def cmd_list(args):
 
     New in release 1.3.9
     """
-    run = str(args.run).strip().lower()
-    sector = int(args.beamlineName.split("-")[0])
+    beamline = args.beamlineName
+    runs = server.parse_runs_arg(str(args.run).strip().lower())
+    sector = int(beamline.split("-")[0])
 
-    logger.debug("run: %s", run)
+    logger.debug("run(s): %s", runs)
 
-    print(f"Proposal(s): beam line {args.beamlineName}, run: {args.run}")
-    print(server._proposal_table(args.beamlineName, args.run))
+    for run in sorted(runs, reverse=True):
+        esafs = server.esafs(sector, run)
+        proposals = server.proposals(beamline, run)
 
-    print(f"ESAF(s): sector {sector}, run: {args.run}")
-    print(server._esaf_table(sector, args.run))
+    print(f"Proposal(s): beam line {beamline}, run(s): {', '.join(runs)}")
+    print(server.proposal_table(proposals))
+
+    print(f"ESAF(s): sector {sector}, run(s): {', '.join(runs)}")
+    print(server.esaf_table(esafs))
+
+
+def cmd_now(args):
+    """
+    Subcommand ``now``: print information of proposals & ESAFs running now.
+
+    PARAMETERS
+
+    args
+        *obj* :
+        Object returned by ``argparse``
+
+    New in release 2.0.0
+    """
+    beamline = args.beamlineName
+    targetDate = datetime.datetime.now().astimezone()
+    run = server.find_run(targetDate)
+    sector = beamline.split("-")[0]
+    esafs = [
+        esaf
+        for esaf in server.esafs(sector, run)
+        # formatting comment
+        if esaf.startDate <= targetDate <= esaf.endDate
+    ]
+    props = {
+        prop.proposal_id: prop
+        for prop in server.proposals(beamline, run).values()
+        if prop.startDate <= targetDate <= prop.endDate
+    }
+
+    print(f"Proposal(s): beam line {beamline}, {targetDate}")
+    print(server.proposal_table(props))
+
+    print(f"ESAF(s): sector {sector}, {targetDate}")
+    print(server.esaf_table(esafs))
 
 
 def cmd_proposal(args):
     """
-    Handle ``proposal`` command.
+    Subcommand ``proposal``: print specific proposal for beamline and run.
 
     PARAMETERS
 
@@ -403,23 +465,9 @@ def cmd_proposal(args):
         print(f"Exception: {reason}")
 
 
-def cmd_report(args):
-    """
-    Handle ``report`` command.
-
-    PARAMETERS
-
-    args
-        *obj* :
-        Object returned by ``argparse``
-    """
-    bss = connect_epics(args.prefix)
-    print(bss._table(length=30))
-
-
 def cmd_runs(args):
     """
-    Handle ``runs`` command.
+    Subcommand ``runs``: print APS run names.
 
     PARAMETERS
 
@@ -432,16 +480,10 @@ def cmd_runs(args):
         table.labels = "run start end".split()
 
         def sorter(run):
-            return run["startTime"]
+            return run.startDate
 
         for run in sorted(server._runs.values(), key=sorter, reverse=args.ascending):
-            table.addRow(
-                (
-                    run["name"],
-                    run["startTime"],
-                    run["endTime"],
-                )
-            )
+            table.addRow((str(run), run.startDate, run.endDate))
         print(str(table))
     else:
         printColumns(server.runs)
@@ -465,6 +507,9 @@ def main():
     elif args.subcommand == "list":
         cmd_list(args)
 
+    elif args.subcommand == "now":
+        cmd_now(args)
+
     elif args.subcommand == "proposal":
         cmd_proposal(args)
 
@@ -475,7 +520,7 @@ def main():
         epicsUpdate(args.prefix)
 
     elif args.subcommand == "report":
-        cmd_report(args)
+        epicsReport(args)
 
     else:
         parser.print_usage()

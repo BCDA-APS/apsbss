@@ -16,8 +16,8 @@ import dm  # APS data management library
 
 from .core import DM_APS_DB_WEB_SERVICE_URL
 from .core import ProposalBase
+from .core import Run
 from .core import ScheduleInterfaceBase
-from .core import iso2dt
 
 logger = logging.getLogger(__name__)
 
@@ -76,12 +76,5 @@ class DM_ScheduleInterface(ScheduleInterfaceBase):
     def _runs(self) -> list:
         """List of details of all known runs."""
         if "listRuns" not in self._cache:
-            self._cache["listRuns"] = [
-                {
-                    "name": run["name"],
-                    "startTime": iso2dt(run["startTime"]),
-                    "endTime": iso2dt(run["endTime"]),
-                }
-                for run in self.api.listRuns()
-            ]
+            self._cache["listRuns"] = [Run(run) for run in self.api.listRuns()]
         return self._cache["listRuns"]
