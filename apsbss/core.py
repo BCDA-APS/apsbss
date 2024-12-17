@@ -450,16 +450,7 @@ class ScheduleInterfaceBase(abc.ABC):
         """
         Details (from server) about all known runs.
 
-        The returned value of is a list of dictionaries where each dict contains
-        the details of a single run.
-
-        =========   =================   ===============================
-        key         type                description
-        =========   =================   ===============================
-        name        str                 name of the run
-        startTime   datetime.datetime   when run starts (with timezone)
-        endTime     datetime.datetime   when run ends (with timezone)
-        =========   =================   ===============================
+        The returned value of is a list of Run objects.
         """
 
     @property
