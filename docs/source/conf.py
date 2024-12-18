@@ -14,7 +14,7 @@ import apsbss  # noqa
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-root_path = pathlib.Path(apsbss.__file__).parent.parent
+root_path = pathlib.Path(__file__).parent.parent.parent
 
 with open(root_path / "pyproject.toml", "rb") as fp:
     toml = tomllib.load(fp)
@@ -23,7 +23,7 @@ metadata = toml["project"]
 gh_org = "BCDA-APS"
 project = metadata["name"]
 copyright = toml["tool"]["copyright"]["copyright"]
-author = ", ".join([a["name"] for a in metadata["authors"]])
+author = metadata["authors"][0]["name"]
 description = metadata["description"]
 rst_prolog = f".. |author| replace:: {author}"
 github_url = f"https://github.com/{gh_org}/{project}"
