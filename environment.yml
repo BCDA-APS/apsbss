@@ -1,0 +1,21 @@
+name: apsbss-package
+
+# conda env create -y -n apsbss -f ./environment.yml
+# conda activate apsbss
+# pip install -e .[all]
+
+channels:
+  - conda-forge
+  - nodefaults
+dependencies:
+  - python >=3.9
+  - apsu::aps-dm-api
+  - bluesky
+  - ophyd
+  - pip
+  - pyRestTable
+  - pyyaml
+  - spec2nexus
+  - whoosh
+  # - pip:
+  #   - prompt-toolkit==1.0.15

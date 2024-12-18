@@ -1,0 +1,31 @@
+# local developer files
+dev_*.*
+
+# analysis of unt test code coverage
+.coverage
+
+db/
+log/
+pid/
+security/
+__pycache__/
+*.pyc
+*.egg-info
+*.tar.gz
+*.whl
+docs/build/
+.settings/
+build/
+.ipynb_checkpoints/
+.pydevproject
+issue*.py
+build_log.txt
+
+.ipython_*.log*
+.logs/
+.vscode/
+20*.dat
+
+# bird droppings from IT
+.log
+.loglogin
