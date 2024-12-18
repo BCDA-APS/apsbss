@@ -23,7 +23,7 @@ metadata = toml["project"]
 gh_org = "BCDA-APS"
 project = metadata["name"]
 copyright = toml["tool"]["copyright"]["copyright"]
-author = ", ".join([a["name"] for a in metadata["authors"]])
+author = metadata["authors"][0]["name"]
 description = metadata["description"]
 rst_prolog = f".. |author| replace:: {author}"
 github_url = f"https://github.com/{gh_org}/{project}"
@@ -42,6 +42,7 @@ extensions = """
     sphinx.ext.mathjax
     sphinx.ext.todo
     sphinx.ext.viewcode
+    sphinx_design
 """.split()
 
 templates_path = ["_templates"]

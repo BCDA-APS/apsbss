@@ -1,4 +1,4 @@
-.. _beamtime_source_docs:
+.. _api:
 
 API
 ===
