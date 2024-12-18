@@ -1,69 +1,426 @@
 
+<!DOCTYPE html>
 
-<!doctype html>
 
-<html>
+<html lang="en" data-content_root="./" >
+
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>apsbss &#8212; apsbss 1.5.6 documentation</title>
-    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="_static/bizstyle.css" />
-    
-    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-    <script src="_static/jquery.js"></script>
-    <script src="_static/underscore.js"></script>
-    <script src="_static/doctools.js"></script>
-    <script src="_static/bizstyle.js"></script>
+    <title>apsbss &#8212; apsbss 0.1</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=939d27c4"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'apsbss';</script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="apsbss: IOC Startup and Management" href="apsbss_ioc.html" />
-    <link rel="prev" title="Installation" href="install.html" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <!--[if lt IE 9]>
-    <script src="_static/css3-mediaqueries.js"></script>
-    <![endif]-->
-  </head><body>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             accesskey="I">index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="apsbss_ioc.html" title="apsbss: IOC Startup and Management"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="install.html" title="Installation"
-             accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">apsbss 1.5.6 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">apsbss</a></li> 
-      </ul>
-    </div>  
+    <link rel="next" title="EPICS IOC" href="ioc.html" />
+    <link rel="prev" title="Install" href="install.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="0.1" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
 
-    <div class="document">
-      <div class="documentwrapper">
-        <div class="bodywrapper">
-          <div class="body" role="main">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">apsbss 0.1</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="install.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    apsbss
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="ioc.html">
+    EPICS IOC
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changes.html">
+    History
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="license.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
             
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BCDA-APS/apsbss" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="install.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    apsbss
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="ioc.html">
+    EPICS IOC
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changes.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="license.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BCDA-APS/apsbss" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">apsbss</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
   <section id="apsbss">
-<span id="apsbss-application"></span><span id="index-0"></span><h1>apsbss<a class="headerlink" href="#apsbss" title="Permalink to this headline">¶</a></h1>
+<span id="apsbss-application"></span><span id="index-0"></span><h1>apsbss<a class="headerlink" href="#apsbss" title="Link to this heading">#</a></h1>
 <p>Provide information from APS Proposal and ESAF (experiment safety approval
 form) databases as PVs at each beam line so that this information
 (metadata) may be added to new data files.  The <code class="docutils literal notranslate"><span class="pre">aps-dm-api</span></code>
-(<code class="docutils literal notranslate"><span class="pre">dm</span></code> for short) package <a class="footnote-reference brackets" href="#id2" id="id1">1</a>
+(<code class="docutils literal notranslate"><span class="pre">dm</span></code> for short) package <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
 is used to access the APS databases as read-only.</p>
 <p><em>No information is written back to the APS
 databases from this software.</em></p>
-<dl class="footnote brackets">
-<dt class="label" id="id2"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
-<dd><p><code class="docutils literal notranslate"><span class="pre">dm</span></code>: <a class="reference external" href="https://anaconda.org/search?q=aps-dm-api">https://anaconda.org/search?q=aps-dm-api</a></p>
-</dd>
-</dl>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><code class="docutils literal notranslate"><span class="pre">dm</span></code>: <a class="reference external" href="https://anaconda.org/apsu/aps-dm-api">https://anaconda.org/apsu/aps-dm-api</a></p>
+</aside>
+</aside>
 <aside class="sidebar">
 <p class="sidebar-title">PVs for experiment metadata</p>
 <p>This information retreived from the APS databases is stored in PVs
@@ -72,10 +429,10 @@ client as metadata (SPEC, area detector, Bluesky, GUI screens, logging, other).
 This design allows the local instrument team to override
 any values read from the APS databases, if that is needed.</p>
 </aside>
-<p>Given:</p>
+<p>Given: <a class="footnote-reference brackets" href="#id4" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a></p>
 <ul class="simple">
 <li><p>a beam line name (such as <code class="docutils literal notranslate"><span class="pre">9-ID-B,C</span></code>)</p></li>
-<li><p>APS run cycle name (such as <code class="docutils literal notranslate"><span class="pre">2019-2</span></code>) to locate a specific proposal ID</p></li>
+<li><p>APS run name (such as <code class="docutils literal notranslate"><span class="pre">2019-2</span></code>) to locate a specific proposal ID</p></li>
 <li><p>proposal ID number (such as <code class="docutils literal notranslate"><span class="pre">66083</span></code>)</p></li>
 <li><p>ESAF ID number (such as <code class="docutils literal notranslate"><span class="pre">226319</span></code>)</p></li>
 </ul>
@@ -90,81 +447,100 @@ any values read from the APS databases, if that is needed.</p>
 <li><p>is experiment mail-in?</p></li>
 </ul>
 <p>These PVs are loaded on demand by the local instrument team at the beam line.
-See the <a class="reference internal" href="apsbss_ioc.html#apsbss-ioc"><span class="std std-ref">apsbss: IOC Startup and Management</span></a> section for details about
+See the <a class="reference internal" href="ioc.html#apsbss-ioc"><span class="std std-ref">EPICS IOC</span></a> section for details about
 managing the EPICS PVs.</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id4" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
+<p>Example uses a beamline name and APS run from before APSU.  This beamline
+name is no longer in use.  See <a class="reference internal" href="#subcommand-beamlines"><span class="std std-ref">beamlines</span></a>.</p>
+</aside>
+</aside>
 <section id="overview">
-<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
-<p>We’ll demonstrate <code class="docutils literal notranslate"><span class="pre">apsbss</span></code> with information for APS beam
-line 9-ID, using PV prefix <code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code>.</p>
-<ol class="arabic simple">
-<li><p>Create the PVs in an EPICS IOC (see section <a class="reference internal" href="apsbss_ioc.html#apsbss-ioc"><span class="std std-ref">apsbss: IOC Startup and Management</span></a>)</p></li>
-<li><p>Initialize PVs with beam line name and APS run cycle number</p></li>
-<li><p>Set PVs with the Proposal and ESAF ID numbers</p></li>
-<li><p>Retrieve (&amp; update PVs) information from APS databases</p></li>
-</ol>
-<p><strong>Enter beam line and APS run (cycle) info</strong></p>
-<figure class="align-default" id="id3">
-<a class="reference internal image-reference" href="_images/ui_initialized.png"><img alt="_images/ui_initialized.png" src="_images/ui_initialized.png" style="width: 95%;" /></a>
-<figcaption>
-<p><span class="caption-text">Image of <code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code> screen GUI in caQtDM showing PV prefix
-(<code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code>), APS run cycle <code class="docutils literal notranslate"><span class="pre">2019-2</span></code> and beam line <code class="docutils literal notranslate"><span class="pre">9-ID-B,C</span></code>.</span><a class="headerlink" href="#id3" title="Permalink to this image">¶</a></p>
-<div class="legend">
-<ul class="simple">
-<li><p>beam line name PV: <code class="docutils literal notranslate"><span class="pre">9id:bss:proposal:beamline</span></code></p></li>
-<li><p>APS run cycle PV: <code class="docutils literal notranslate"><span class="pre">9id:bss:esaf:cycle</span></code></p></li>
-</ul>
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">apsbss</span></code> command-line application provide its features through
+subcommands. Running <code class="docutils literal notranslate"><span class="pre">apsbss</span></code> without a subcommand will show the usage
+response (which lists the available commands): <a class="footnote-reference brackets" href="#id6" id="id5" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss
+usage:<span class="w"> </span>apsbss<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span><span class="w"> </span><span class="o">[</span>-v<span class="o">]</span><span class="w"> </span><span class="o">{</span>beamlines,runs,esaf,list,now,proposal,clear,setup,update,report<span class="o">}</span><span class="w"> </span>...
+</pre></div>
 </div>
-</figcaption>
-</figure>
-<p><strong>Enter Proposal and ESAF ID numbers</strong></p>
-<p>Note we had to use the APS run cycle of <cite>2019-2</cite>
-to match what is in the proposal’s information.</p>
-<figure class="align-default" id="id4">
-<a class="reference internal image-reference" href="_images/ui_id_entered.png"><img alt="_images/ui_id_entered.png" src="_images/ui_id_entered.png" style="width: 95%;" /></a>
-<figcaption>
-<p><span class="caption-text">Image of <code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code> screen GUI in caQtDM with Proposal
-and ESAF ID numbers added.</span><a class="headerlink" href="#id4" title="Permalink to this image">¶</a></p>
-<div class="legend">
-<ul class="simple">
-<li><p>proposal ID number PV: <code class="docutils literal notranslate"><span class="pre">9id:bss:proposal:id</span></code></p></li>
-<li><p>ESAF ID number PV: <code class="docutils literal notranslate"><span class="pre">9id:bss:esaf:id</span></code></p></li>
-</ul>
+<p>The <code class="docutils literal notranslate"><span class="pre">-v</span></code> option prints the program version.  The <code class="docutils literal notranslate"><span class="pre">-h</span></code> option prints the help message:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>-h
+usage:<span class="w"> </span>apsbss<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span><span class="w"> </span><span class="o">[</span>-v<span class="o">]</span><span class="w"> </span><span class="o">{</span>beamlines,runs,esaf,list,now,proposal,clear,setup,update,report<span class="o">}</span><span class="w"> </span>...
+
+Retrieve<span class="w"> </span>specific<span class="w"> </span>records<span class="w"> </span>from<span class="w"> </span>the<span class="w"> </span>APS<span class="w"> </span>Proposal<span class="w"> </span>and<span class="w"> </span>ESAF<span class="w"> </span>databases.
+
+options:
+<span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">            </span>show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+<span class="w">  </span>-v,<span class="w"> </span>--version<span class="w">         </span>print<span class="w"> </span>version<span class="w"> </span>number<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+
+subcommand:
+<span class="w">  </span><span class="o">{</span>beamlines,runs,list,proposal,esaf,clear,setup,update,report<span class="o">}</span>
+<span class="w">    </span>beamlines<span class="w">           </span>print<span class="w"> </span>list<span class="w"> </span>of<span class="w"> </span>beamlines
+<span class="w">    </span>runs<span class="w">                </span>print<span class="w"> </span>APS<span class="w"> </span>run<span class="w"> </span>names
+<span class="w">    </span>list<span class="w">                </span>print<span class="w"> </span>proposals<span class="w"> </span>and<span class="w"> </span>ESAFs<span class="w"> </span><span class="k">for</span><span class="w"> </span>beamline<span class="w"> </span>and<span class="w"> </span>run
+<span class="w">    </span>now<span class="w">                 </span>print<span class="w"> </span>information<span class="w"> </span>of<span class="w"> </span>proposals<span class="w"> </span><span class="p">&amp;</span><span class="w"> </span>ESAFs<span class="w"> </span>running<span class="w"> </span>now
+<span class="w">    </span>proposal<span class="w">            </span>print<span class="w"> </span>specific<span class="w"> </span>proposal<span class="w"> </span><span class="k">for</span><span class="w"> </span>beamline<span class="w"> </span>and<span class="w"> </span>run
+<span class="w">    </span>esaf<span class="w">                </span>print<span class="w"> </span>specific<span class="w"> </span>ESAF
+<span class="w">    </span>search<span class="w">              </span>print<span class="w"> </span>proposals<span class="w"> </span>and<span class="w"> </span>ESAFs<span class="w"> </span><span class="k">for</span><span class="w"> </span>beamline<span class="w"> </span>and<span class="w"> </span>run<span class="w"> </span>matching<span class="w"> </span>the<span class="w"> </span>query
+<span class="w">    </span>clear<span class="w">               </span>EPICS<span class="w"> </span>PVs:<span class="w"> </span>clear
+<span class="w">    </span>setup<span class="w">               </span>EPICS<span class="w"> </span>PVs:<span class="w"> </span>setup
+<span class="w">    </span>update<span class="w">              </span>EPICS<span class="w"> </span>PVs:<span class="w"> </span>update<span class="w"> </span>from<span class="w"> </span>BSS
+<span class="w">    </span>report<span class="w">              </span>EPICS<span class="w"> </span>PVs:<span class="w"> </span>report<span class="w"> </span>what<span class="w"> </span>is<span class="w"> </span><span class="k">in</span><span class="w"> </span>the<span class="w"> </span>PVs
+</pre></div>
 </div>
-</figcaption>
-</figure>
-<p><strong>Update PVs from APS databases</strong></p>
-<p>In the GUI, press the button labeled <code class="docutils literal notranslate"><span class="pre">get</span> <span class="pre">Proposal</span> <span class="pre">and</span> <span class="pre">ESAF</span> <span class="pre">info</span></code>.
-This button executes the command line: <code class="docutils literal notranslate"><span class="pre">apsbss</span> <span class="pre">update</span> <span class="pre">9id:bss:</span></code></p>
-<p>Here’s a view of the GUI after running the update.  The
-information shown in the GUI is only part of the PVs,
-presented in a compact format. A full report of the
-information received, including PV names, is available for
-<a class="reference download internal" download="" href="_downloads/468f3778f39e56d262f4b42c224eaf9b/apsbss_report.txt"><code class="xref download docutils literal notranslate"><span class="pre">download</span></code></a>.</p>
-<figure class="align-default" id="id5">
-<a class="reference internal image-reference" href="_images/ui_updated.png"><img alt="_images/ui_updated.png" src="_images/ui_updated.png" style="width: 95%;" /></a>
-<figcaption>
-<p><span class="caption-text">Image of <code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code> screen GUI in caQtDM showing Proposal
-and ESAF information.</span><a class="headerlink" href="#id5" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
-<p>To clear the PVs, in the GUI, press the button labeled <code class="docutils literal notranslate"><span class="pre">clear</span> <span class="pre">PVs</span></code>.
-This button executes the command line: <code class="docutils literal notranslate"><span class="pre">apsbss</span> <span class="pre">clear</span> <span class="pre">9id:bss:</span></code></p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">3</a><span class="fn-bracket">]</span></span>
+<p>Here and below, the initial <code class="docutils literal notranslate"><span class="pre">$</span></code> in the example is the command prompt
+from the Linux bash shell.  Do not type that.</p>
+</aside>
+</aside>
 </section>
-<section id="initialize-pvs-for-beam-line-and-apc-run-cycle">
-<h2>Initialize PVs for beam line and APC run cycle<a class="headerlink" href="#initialize-pvs-for-beam-line-and-apc-run-cycle" title="Permalink to this headline">¶</a></h2>
-<p>After creating the PVs in an IOC, the next step is to
-initialize them with the beam line name and the APS
-run cycle name.  Both of these must match exactly
-with values known in the data management (<code class="docutils literal notranslate"><span class="pre">dm</span></code>) system.</p>
-<p>For any of these commands, you must know the EPICS
-PV prefix to be used.  The examples above are for
-beam line 9-ID.  The PV prefix in these examples
-is <code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code>.</p>
-<section id="what-beam-line-name-to-use">
-<h3>What beam line name to use?<a class="headerlink" href="#what-beam-line-name-to-use" title="Permalink to this headline">¶</a></h3>
-<p>To learn the beam line names accepted by the system, use this command
-(showing names defined on 2020-07-10):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss beamlines
+<section id="subcommands">
+<h2>Subcommands<a class="headerlink" href="#subcommands" title="Link to this heading">#</a></h2>
+<p>See <a class="reference internal" href="api/index.html#api"><span class="std std-ref">API</span></a> for the source code documentation of each of these subcommands.</p>
+<section id="beamlines">
+<span id="subcommand-beamlines"></span><h3>beamlines<a class="headerlink" href="#beamlines" title="Link to this heading">#</a></h3>
+<p>List the names of beamlines defined.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>usage:<span class="w"> </span>apsbss<span class="w"> </span>beamlines<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span>
+
+options:
+<span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">  </span>show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+</pre></div>
+</div>
+<p>That list as of 2024-12:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>beamlines
+<span class="m">1</span>-BM-B,C<span class="w">       </span><span class="m">10</span>-ID-B<span class="w">        </span><span class="m">17</span>-ID-B<span class="w">        </span><span class="m">28</span>-ID-B,C
+<span class="m">1</span>-ID-B,C,E<span class="w">     </span><span class="m">11</span>-BM-B<span class="w">        </span><span class="m">18</span>-ID-D<span class="w">        </span><span class="m">28</span>-ID-D,E
+<span class="m">2</span>-BM-A,B<span class="w">       </span><span class="m">11</span>-ID-B<span class="w">        </span><span class="m">19</span>-BM-D<span class="w">        </span><span class="m">28</span>-ID-F
+<span class="m">2</span>-ID-D<span class="w">         </span><span class="m">11</span>-ID-C<span class="w">        </span><span class="m">19</span>-ID-E<span class="w">        </span><span class="m">28</span>-ID-G
+<span class="m">2</span>-ID-E<span class="w">         </span><span class="m">11</span>-ID-D<span class="w">        </span><span class="m">20</span>-BM-B<span class="w">        </span><span class="m">29</span>-ID-C,D
+<span class="m">3</span>-ID-B,C,D<span class="w">     </span><span class="m">12</span>-BM-B<span class="w">        </span><span class="m">20</span>-ID-D,E<span class="w">      </span><span class="m">30</span>-ID-B,C
+<span class="m">4</span>-ID-B,G,H<span class="w">     </span><span class="m">12</span>-ID-B<span class="w">        </span><span class="m">21</span>-ID-D<span class="w">        </span><span class="m">31</span>-ID-D
+<span class="m">5</span>-BM-B<span class="w">         </span><span class="m">12</span>-ID-E<span class="w">        </span><span class="m">21</span>-ID-F<span class="w">        </span><span class="m">31</span>-ID-E
+<span class="m">5</span>-ID-B,C,D<span class="w">     </span><span class="m">13</span>-BM-C<span class="w">        </span><span class="m">21</span>-ID-G<span class="w">        </span><span class="m">32</span>-ID-B,C
+<span class="m">6</span>-BM-A,B<span class="w">       </span><span class="m">13</span>-BM-D<span class="w">        </span><span class="m">22</span>-ID-D<span class="w">        </span><span class="m">33</span>-BM-C
+<span class="m">6</span>-ID-B,C<span class="w">       </span><span class="m">13</span>-ID-C,D<span class="w">      </span><span class="m">22</span>-ID-E<span class="w">        </span><span class="m">33</span>-ID-C
+<span class="m">6</span>-ID-D<span class="w">         </span><span class="m">13</span>-ID-E<span class="w">        </span><span class="m">23</span>-ID-B<span class="w">        </span><span class="m">34</span>-ID-E
+<span class="m">7</span>-BM-B<span class="w">         </span><span class="m">14</span>-ID-B<span class="w">        </span><span class="m">23</span>-ID-D<span class="w">        </span><span class="m">34</span>-ID-F
+<span class="m">7</span>-ID-B,C,D<span class="w">     </span><span class="m">15</span>-ID-B,E<span class="w">      </span><span class="m">24</span>-ID-C<span class="w">        </span><span class="m">35</span>-BM-C
+<span class="m">8</span>-BM-B<span class="w">         </span><span class="m">15</span>-ID-C,D<span class="w">      </span><span class="m">24</span>-ID-E<span class="w">        </span><span class="m">35</span>-ID-B,C,D,E
+<span class="m">8</span>-ID-E,I<span class="w">       </span><span class="m">16</span>-BM-B,D<span class="w">      </span><span class="m">25</span>-ID-C<span class="w">        </span><span class="m">38</span>-AM-A
+<span class="m">9</span>-BM-B,C<span class="w">       </span><span class="m">16</span>-ID-B<span class="w">        </span><span class="m">25</span>-ID-D,E
+<span class="m">9</span>-ID-D<span class="w">         </span><span class="m">16</span>-ID-D,E<span class="w">      </span><span class="m">26</span>-ID-C
+<span class="m">10</span>-BM-B<span class="w">        </span><span class="m">17</span>-BM-B<span class="w">        </span><span class="m">27</span>-ID-B
+</pre></div>
+</div>
+<p>Some names include multiple stations.  For example, use <code class="docutils literal notranslate"><span class="pre">8-ID-E,I</span></code> for either
+station at beamline 8-ID.</p>
+<details>
+<summary>Pre-APSU Beamlines</summary>
+<pre>
+Names defined on 2020-07-10:
+
+$ apsbss beamlines
 1-BM-B,C       8-ID-I         15-ID-B,C,D    23-BM-B
 1-ID-B,C,E     9-BM-B,C       16-BM-B        23-ID-B
 2-BM-A,B       9-ID-B,C       16-BM-D        23-ID-D
@@ -183,96 +559,411 @@ is <code class="docutils literal notranslate"><span class="pre">9id:bss:</span><
 7-ID-B,C,D     13-ID-E        21-ID-G        35-ID-B,C,D,E
 8-BM-B         14-BM-C        22-BM-D
 8-ID-E         14-ID-B        22-ID-D
+</pre>
+</details></section>
+<section id="runs">
+<h3>runs<a class="headerlink" href="#runs" title="Link to this heading">#</a></h3>
+<p>List the names of APS runs defined.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>usage:<span class="w"> </span>apsbss<span class="w"> </span>runs<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span><span class="w"> </span><span class="o">[</span>-f<span class="o">]</span><span class="w"> </span><span class="o">[</span>-a<span class="o">]</span>
+
+options:
+<span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">       </span>show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+<span class="w">  </span>-f,<span class="w"> </span>--full<span class="w">       </span>full<span class="w"> </span>report<span class="w"> </span>including<span class="w"> </span>dates<span class="w"> </span><span class="o">(</span>default<span class="w"> </span>is<span class="w"> </span>compact<span class="o">)</span>
+<span class="w">  </span>-a,<span class="w"> </span>--ascending<span class="w">  </span>full<span class="w"> </span>report<span class="w"> </span>by<span class="w"> </span>ascending<span class="w"> </span>names<span class="w"> </span><span class="o">(</span>default<span class="w"> </span>is<span class="w"> </span>descending<span class="o">)</span>
 </pre></div>
 </div>
-<p>For either station at 9-ID, use <code class="docutils literal notranslate"><span class="pre">9-ID-B,C</span></code>.</p>
-</section>
-<section id="what-aps-run-cycle-to-use">
-<h3>What APS run cycle to use?<a class="headerlink" href="#what-aps-run-cycle-to-use" title="Permalink to this headline">¶</a></h3>
-<p>To learn the APS run cycle names accepted by the system, use this command
-(showing APS run cycle names as defined on 2020-07-10):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss cycles
-2008-3    2011-2    2014-1    2016-3    2019-2
-2009-1    2011-3    2014-2    2017-1    2019-3
-2009-2    2012-1    2014-3    2017-2    2020-1
-2009-3    2012-2    2015-1    2017-3    2020-2
-2010-1    2012-3    2015-2    2018-1
-2010-2    2013-1    2015-3    2018-2
-2010-3    2013-2    2016-1    2018-3
-2011-1    2013-3    2016-2    2019-1
+<p>That list, as of 2024-12:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>runs
+<span class="m">2008</span>-3<span class="w">    </span><span class="m">2011</span>-2<span class="w">    </span><span class="m">2014</span>-1<span class="w">    </span><span class="m">2016</span>-3<span class="w">    </span><span class="m">2019</span>-2
+<span class="m">2009</span>-1<span class="w">    </span><span class="m">2011</span>-3<span class="w">    </span><span class="m">2014</span>-2<span class="w">    </span><span class="m">2017</span>-1<span class="w">    </span><span class="m">2019</span>-3
+<span class="m">2009</span>-2<span class="w">    </span><span class="m">2012</span>-1<span class="w">    </span><span class="m">2014</span>-3<span class="w">    </span><span class="m">2017</span>-2<span class="w">    </span><span class="m">2020</span>-1
+<span class="m">2009</span>-3<span class="w">    </span><span class="m">2012</span>-2<span class="w">    </span><span class="m">2015</span>-1<span class="w">    </span><span class="m">2017</span>-3<span class="w">    </span><span class="m">2020</span>-2
+<span class="m">2010</span>-1<span class="w">    </span><span class="m">2012</span>-3<span class="w">    </span><span class="m">2015</span>-2<span class="w">    </span><span class="m">2018</span>-1
+<span class="m">2010</span>-2<span class="w">    </span><span class="m">2013</span>-1<span class="w">    </span><span class="m">2015</span>-3<span class="w">    </span><span class="m">2018</span>-2
+<span class="m">2010</span>-3<span class="w">    </span><span class="m">2013</span>-2<span class="w">    </span><span class="m">2016</span>-1<span class="w">    </span><span class="m">2018</span>-3
+<span class="m">2011</span>-1<span class="w">    </span><span class="m">2013</span>-3<span class="w">    </span><span class="m">2016</span>-2<span class="w">    </span><span class="m">2019</span>-1
 </pre></div>
 </div>
-<p>Pick the cycle of interest.  Here, we pick <code class="docutils literal notranslate"><span class="pre">2020-2</span></code>.</p>
-<p>To print the full report (including start and end of each cycle):</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss cycles --full
-====== =================== ===================
-cycle  start               end
-====== =================== ===================
-2020-2 2020-06-09 07:00:00 2020-10-01 07:00:00
-2020-1 2020-01-28 08:00:00 2020-06-09 07:00:00
-2019-3 2019-09-24 07:00:00 2020-01-28 08:00:00
-2019-2 2019-05-21 07:00:00 2019-09-24 07:00:00
-2019-1 2019-01-22 08:00:00 2019-05-21 07:00:00
-2018-3 2018-09-25 07:00:00 2019-01-22 08:00:00
-2018-2 2018-05-22 07:00:00 2018-09-25 07:00:00
-2018-1 2018-01-23 08:00:00 2018-05-22 07:00:00
-2017-3 2017-09-26 07:00:00 2018-01-23 08:00:00
-2017-2 2017-05-23 07:00:00 2017-09-26 07:00:00
-2017-1 2017-01-24 08:00:00 2017-05-23 07:00:00
-2016-3 2016-09-27 07:00:00 2017-01-24 08:00:00
-2016-2 2016-05-24 07:00:00 2016-09-27 07:00:00
-2016-1 2016-01-26 08:00:00 2016-05-24 07:00:00
-2015-3 2015-09-29 07:00:00 2016-01-26 08:00:00
-2015-2 2015-05-26 07:00:00 2015-09-29 07:00:00
-2015-1 2015-01-27 08:00:00 2015-05-26 07:00:00
-2014-3 2014-09-25 07:00:00 2015-01-27 08:00:00
-2014-2 2014-05-20 07:00:00 2014-09-25 07:00:00
-2014-1 2014-01-21 08:00:00 2014-05-20 07:00:00
-2013-3 2013-09-24 07:00:00 2014-01-21 08:00:00
-2013-2 2013-05-22 07:00:00 2013-09-24 07:00:00
-2013-1 2013-01-22 08:00:00 2013-05-22 07:00:00
-2012-3 2012-09-25 07:00:00 2013-01-22 08:00:00
-2012-2 2012-05-23 07:00:00 2012-09-25 07:00:00
-2012-1 2012-01-24 08:00:00 2012-05-23 07:00:00
-2011-3 2011-09-27 07:00:00 2012-01-24 08:00:00
-2011-2 2011-05-25 07:00:00 2011-09-27 07:00:00
-2011-1 2011-01-25 08:00:00 2011-05-25 07:00:00
-2010-3 2010-09-27 23:00:00 2011-01-25 08:00:00
-2010-2 2010-05-26 07:00:00 2010-09-28 07:00:00
-2010-1 2010-01-26 08:00:00 2010-05-26 07:00:00
-2009-3 2009-09-29 07:00:00 2010-01-26 08:00:00
-2009-2 2009-05-20 07:00:00 2009-09-29 07:00:00
-2009-1 2009-01-21 08:00:00 2009-05-20 07:00:00
-2008-3 2008-09-24 07:00:00 2009-01-21 08:00:00
-====== =================== ===================
+<p>Pick the run of interest.  Here, we pick <code class="docutils literal notranslate"><span class="pre">2020-2</span></code>.</p>
+<p>To print the full report (including start and end of each run):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>runs<span class="w"> </span>--full
+<span class="o">======</span><span class="w"> </span><span class="o">===================</span><span class="w"> </span><span class="o">===================</span>
+run<span class="w">    </span>start<span class="w">               </span><span class="nv">end</span>
+<span class="o">======</span><span class="w"> </span><span class="o">===================</span><span class="w"> </span><span class="o">===================</span>
+<span class="m">2020</span>-2<span class="w"> </span><span class="m">2020</span>-06-09<span class="w"> </span><span class="m">07</span>:00:00<span class="w"> </span><span class="m">2020</span>-10-01<span class="w"> </span><span class="m">07</span>:00:00
+<span class="m">2020</span>-1<span class="w"> </span><span class="m">2020</span>-01-28<span class="w"> </span><span class="m">08</span>:00:00<span class="w"> </span><span class="m">2020</span>-06-09<span class="w"> </span><span class="m">07</span>:00:00
+<span class="m">2019</span>-3<span class="w"> </span><span class="m">2019</span>-09-24<span class="w"> </span><span class="m">07</span>:00:00<span class="w"> </span><span class="m">2020</span>-01-28<span class="w"> </span><span class="m">08</span>:00:00
+<span class="m">2019</span>-2<span class="w"> </span><span class="m">2019</span>-05-21<span class="w"> </span><span class="m">07</span>:00:00<span class="w"> </span><span class="m">2019</span>-09-24<span class="w"> </span><span class="m">07</span>:00:00
+...<span class="w">    </span>...<span class="w">                 </span>...
+<span class="m">2009</span>-1<span class="w"> </span><span class="m">2009</span>-01-21<span class="w"> </span><span class="m">08</span>:00:00<span class="w"> </span><span class="m">2009</span>-05-20<span class="w"> </span><span class="m">07</span>:00:00
+<span class="m">2008</span>-3<span class="w"> </span><span class="m">2008</span>-09-24<span class="w"> </span><span class="m">07</span>:00:00<span class="w"> </span><span class="m">2009</span>-01-21<span class="w"> </span><span class="m">08</span>:00:00
+<span class="o">======</span><span class="w"> </span><span class="o">===================</span><span class="w"> </span><span class="o">===================</span>
 </pre></div>
 </div>
 </section>
-<section id="write-the-beam-line-name-and-cycle-to-the-pvs">
-<h3>Write the beam line name and cycle to the PVs<a class="headerlink" href="#write-the-beam-line-name-and-cycle-to-the-pvs" title="Permalink to this headline">¶</a></h3>
-<p>To configure <code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code> PVs for beam line
-<code class="docutils literal notranslate"><span class="pre">9-ID-B,C</span></code> and cycle <code class="docutils literal notranslate"><span class="pre">2020-2</span></code>,
-use this command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss setup 9id:bss: 9-ID-B,C 2020-2
-connected in 0.143s
-setup EPICS 9id:bss: 9-ID-B,C cycle=2020-2 sector=9
+<section id="list">
+<h3>list<a class="headerlink" href="#list" title="Link to this heading">#</a></h3>
+<p>List the proposals for a specific beamline and run.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>list<span class="w"> </span>-h
+usage:<span class="w"> </span>apsbss<span class="w"> </span>list<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span><span class="w"> </span><span class="o">[</span>-r<span class="w"> </span>RUN<span class="o">]</span><span class="w"> </span>beamlineName
+
+positional<span class="w"> </span>arguments:
+<span class="w">  </span>beamlineName<span class="w">       </span>Beamline<span class="w"> </span>name
+
+options:
+<span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">         </span>show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+<span class="w">  </span>-r<span class="w"> </span>RUN,<span class="w"> </span>--run<span class="w"> </span>RUN<span class="w">  </span>APS<span class="w"> </span>run<span class="w"> </span>name.<span class="w"> </span>One<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>names<span class="w"> </span>returned<span class="w"> </span>by<span class="w"> </span><span class="s1">&#39;apsbss runs&#39;</span><span class="w"> </span>or<span class="w"> </span>one<span class="w"> </span>of<span class="w"> </span>these<span class="w"> </span><span class="o">(</span><span class="s1">&#39;past&#39;</span>,<span class="w"> </span><span class="s1">&#39;prior&#39;</span>,<span class="w"> </span><span class="s1">&#39;previous&#39;</span><span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>previous<span class="w"> </span>run,
+<span class="w">                    </span><span class="o">(</span><span class="s1">&#39;current&#39;</span><span class="w"> </span>or<span class="w"> </span><span class="s1">&#39;now&#39;</span><span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>current<span class="w"> </span>run,<span class="w"> </span><span class="o">(</span><span class="s1">&#39;future&#39;</span><span class="w"> </span>or<span class="w"> </span><span class="s1">&#39;next&#39;</span><span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>next<span class="w"> </span>run,<span class="w"> </span>or<span class="w"> </span><span class="s1">&#39;recent&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>past<span class="w"> </span>two<span class="w"> </span>years.
+</pre></div>
+</div>
+<p>Such as:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>list<span class="w"> </span>-r<span class="w"> </span><span class="m">2024</span>-3<span class="w"> </span><span class="m">19</span>-ID-D
+Proposal<span class="o">(</span>s<span class="o">)</span>:<span class="w"> </span>beam<span class="w"> </span>line<span class="w"> </span><span class="m">19</span>-ID-D,<span class="w"> </span>run:<span class="w"> </span><span class="m">2024</span>-3
+<span class="o">==</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="o">=====</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="o">=======</span><span class="w"> </span><span class="o">=====</span>
+id<span class="w"> </span>run<span class="w"> </span>start<span class="w"> </span>end<span class="w"> </span>user<span class="o">(</span>s<span class="o">)</span><span class="w"> </span><span class="nv">title</span>
+<span class="o">==</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="o">=====</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="o">=======</span><span class="w"> </span><span class="o">=====</span>
+<span class="o">==</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="o">=====</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="o">=======</span><span class="w"> </span><span class="o">=====</span>
+
+ESAF<span class="o">(</span>s<span class="o">)</span>:<span class="w"> </span>sector<span class="w"> </span><span class="m">19</span>,<span class="w"> </span>run<span class="o">(</span>s<span class="o">)</span><span class="w"> </span><span class="m">2024</span>-3
+<span class="o">======</span><span class="w"> </span><span class="o">========</span><span class="w"> </span><span class="o">======</span><span class="w"> </span><span class="o">==========</span><span class="w"> </span><span class="o">==========</span><span class="w"> </span><span class="o">====================</span><span class="w"> </span><span class="o">========================================</span>
+id<span class="w">     </span>status<span class="w">   </span>run<span class="w">    </span>start<span class="w">      </span>end<span class="w">        </span>user<span class="o">(</span>s<span class="o">)</span><span class="w">              </span><span class="nv">title</span>
+<span class="o">======</span><span class="w"> </span><span class="o">========</span><span class="w"> </span><span class="o">======</span><span class="w"> </span><span class="o">==========</span><span class="w"> </span><span class="o">==========</span><span class="w"> </span><span class="o">====================</span><span class="w"> </span><span class="o">========================================</span>
+<span class="m">276922</span><span class="w"> </span>Approved<span class="w"> </span><span class="m">2024</span>-3<span class="w"> </span><span class="m">2024</span>-11-22<span class="w"> </span><span class="m">2024</span>-12-19<span class="w"> </span>Wieghold,Mercado<span class="w"> </span>...<span class="w"> </span><span class="m">19</span>-ID-A,C,D<span class="w"> </span>Technical<span class="w"> </span>Commissioning
+<span class="m">276575</span><span class="w"> </span>Approved<span class="w"> </span><span class="m">2024</span>-3<span class="w"> </span><span class="m">2024</span>-10-31<span class="w"> </span><span class="m">2024</span>-12-19<span class="w"> </span>Wieghold,Lai,Luo,...<span class="w"> </span><span class="m">19</span>-ID-C,D,E<span class="w"> </span>Operations<span class="w"> </span>Commissioning
+<span class="m">276558</span><span class="w"> </span>Approved<span class="w"> </span><span class="m">2024</span>-3<span class="w"> </span><span class="m">2024</span>-10-25<span class="w"> </span><span class="m">2024</span>-12-19<span class="w"> </span>Lai,Guerrero,Luo,...<span class="w"> </span><span class="m">19</span>-ID-A<span class="w"> </span>Temporary<span class="w"> </span>Technical<span class="w"> </span>Commissio...
+<span class="m">275933</span><span class="w"> </span>Approved<span class="w"> </span><span class="m">2024</span>-3<span class="w"> </span><span class="m">2024</span>-10-24<span class="w"> </span><span class="m">2024</span>-12-19<span class="w"> </span>Wieghold,Luo,Mase...<span class="w"> </span><span class="m">19</span>-ID-A<span class="w"> </span>Operations<span class="w"> </span><span class="nv">Commissioning</span>
+<span class="o">======</span><span class="w"> </span><span class="o">========</span><span class="w"> </span><span class="o">======</span><span class="w"> </span><span class="o">==========</span><span class="w"> </span><span class="o">==========</span><span class="w"> </span><span class="o">====================</span><span class="w"> </span><span class="o">========================================</span>
+</pre></div>
+</div>
+<p>Note: No proposals for this beamline in run 2024-3.  New beamline commissioning
+started during this run.</p>
+</section>
+<section id="now">
+<h3>now<a class="headerlink" href="#now" title="Link to this heading">#</a></h3>
+<p>List the proposals and ESAFS active now.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>now<span class="w"> </span>-h
+usage:<span class="w"> </span>apsbss<span class="w"> </span>now<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span><span class="w"> </span>beamlineName
+
+positional<span class="w"> </span>arguments:
+<span class="w">  </span>beamlineName<span class="w">  </span>Beamline<span class="w"> </span>name
+
+options:
+<span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">    </span>show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+</pre></div>
+</div>
+<p>Such as:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>now<span class="w"> </span><span class="m">19</span>-ID-D
+Proposal<span class="o">(</span>s<span class="o">)</span>:<span class="w"> </span>beam<span class="w"> </span>line<span class="w"> </span><span class="m">19</span>-ID-D,<span class="w"> </span><span class="m">2024</span>-12-17<span class="w"> </span><span class="m">12</span>:08:19.891573-06:00
+<span class="o">==</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="o">=====</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="o">=======</span><span class="w"> </span><span class="o">=====</span>
+id<span class="w"> </span>run<span class="w"> </span>start<span class="w"> </span>end<span class="w"> </span>user<span class="o">(</span>s<span class="o">)</span><span class="w"> </span><span class="nv">title</span>
+<span class="o">==</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="o">=====</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="o">=======</span><span class="w"> </span><span class="o">=====</span>
+<span class="o">==</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="o">=====</span><span class="w"> </span><span class="o">===</span><span class="w"> </span><span class="o">=======</span><span class="w"> </span><span class="o">=====</span>
+
+ESAF<span class="o">(</span>s<span class="o">)</span>:<span class="w"> </span>sector<span class="w"> </span><span class="m">19</span>,<span class="w"> </span><span class="m">2024</span>-12-17<span class="w"> </span><span class="m">12</span>:08:19.891573-06:00
+<span class="o">======</span><span class="w"> </span><span class="o">========</span><span class="w"> </span><span class="o">======</span><span class="w"> </span><span class="o">==========</span><span class="w"> </span><span class="o">==========</span><span class="w"> </span><span class="o">====================</span><span class="w"> </span><span class="o">========================================</span>
+id<span class="w">     </span>status<span class="w">   </span>run<span class="w">    </span>start<span class="w">      </span>end<span class="w">        </span>user<span class="o">(</span>s<span class="o">)</span><span class="w">              </span><span class="nv">title</span>
+<span class="o">======</span><span class="w"> </span><span class="o">========</span><span class="w"> </span><span class="o">======</span><span class="w"> </span><span class="o">==========</span><span class="w"> </span><span class="o">==========</span><span class="w"> </span><span class="o">====================</span><span class="w"> </span><span class="o">========================================</span>
+<span class="m">276922</span><span class="w"> </span>Approved<span class="w"> </span><span class="m">2024</span>-3<span class="w"> </span><span class="m">2024</span>-11-22<span class="w"> </span><span class="m">2024</span>-12-19<span class="w"> </span>Wieghold,Mercado<span class="w"> </span>...<span class="w"> </span><span class="m">19</span>-ID-A,C,D<span class="w"> </span>Technical<span class="w"> </span>Commissioning
+<span class="m">276575</span><span class="w"> </span>Approved<span class="w"> </span><span class="m">2024</span>-3<span class="w"> </span><span class="m">2024</span>-10-31<span class="w"> </span><span class="m">2024</span>-12-19<span class="w"> </span>Wieghold,Lai,Luo,...<span class="w"> </span><span class="m">19</span>-ID-C,D,E<span class="w"> </span>Operations<span class="w"> </span>Commissioning
+<span class="m">276558</span><span class="w"> </span>Approved<span class="w"> </span><span class="m">2024</span>-3<span class="w"> </span><span class="m">2024</span>-10-25<span class="w"> </span><span class="m">2024</span>-12-19<span class="w"> </span>Lai,Guerrero,Luo,...<span class="w"> </span><span class="m">19</span>-ID-A<span class="w"> </span>Temporary<span class="w"> </span>Technical<span class="w"> </span>Commissio...
+<span class="m">275933</span><span class="w"> </span>Approved<span class="w"> </span><span class="m">2024</span>-3<span class="w"> </span><span class="m">2024</span>-10-24<span class="w"> </span><span class="m">2024</span>-12-19<span class="w"> </span>Wieghold,Luo,Mase...<span class="w"> </span><span class="m">19</span>-ID-A<span class="w"> </span>Operations<span class="w"> </span><span class="nv">Commissioning</span>
+<span class="o">======</span><span class="w"> </span><span class="o">========</span><span class="w"> </span><span class="o">======</span><span class="w"> </span><span class="o">==========</span><span class="w"> </span><span class="o">==========</span><span class="w"> </span><span class="o">====================</span><span class="w"> </span><span class="o">========================================</span>
+</pre></div>
+</div>
+<p>To get details on a specific proposal or ESAF, see the subcommand for each.</p>
+</section>
+<section id="proposal">
+<h3>proposal<a class="headerlink" href="#proposal" title="Link to this heading">#</a></h3>
+<p>List the proposal details for a specific beamline and run.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>proposal<span class="w"> </span>-h
+usage:<span class="w"> </span>apsbss<span class="w"> </span>proposal<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span><span class="w"> </span>proposalId<span class="w"> </span>run<span class="w"> </span>beamlineName
+
+positional<span class="w"> </span>arguments:
+<span class="w">  </span>proposalId<span class="w">    </span>proposal<span class="w"> </span>ID<span class="w"> </span>number
+<span class="w">  </span>run<span class="w">           </span>APS<span class="w"> </span>run<span class="w"> </span>name
+<span class="w">  </span>beamlineName<span class="w">  </span>Beamline<span class="w"> </span>name
+
+options:
+<span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">    </span>show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+</pre></div>
+</div>
+<p>Note the run name here is required (not an option).  Such as:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>proposal<span class="w"> </span><span class="m">78674</span><span class="w"> </span><span class="m">2022</span>-2<span class="w"> </span><span class="m">12</span>-ID-B
+activities:
+-<span class="w"> </span>duration:<span class="w"> </span><span class="m">108000</span>
+<span class="w">  </span>endTime:<span class="w"> </span><span class="s1">&#39;2022-07-20 14:00:00-05:00&#39;</span>
+<span class="w">  </span>startTime:<span class="w"> </span><span class="s1">&#39;2022-07-19 08:00:00-05:00&#39;</span>
+duration:<span class="w"> </span><span class="m">108000</span>
+endTime:<span class="w"> </span><span class="s1">&#39;2022-07-20 14:00:00-05:00&#39;</span>
+experimenters:
+-<span class="w"> </span>badge:<span class="w"> </span><span class="s1">&#39;87100&#39;</span>
+<span class="w">  </span>email:<span class="w"> </span>ychoi@anl.gov
+<span class="w">  </span>firstName:<span class="w"> </span>Yongseong
+<span class="w">  </span>id:<span class="w"> </span><span class="m">516580</span>
+<span class="w">  </span>instId:<span class="w"> </span><span class="m">3927</span>
+<span class="w">  </span>institution:<span class="w"> </span>Argonne<span class="w"> </span>National<span class="w"> </span>Laboratory
+<span class="w">  </span>lastName:<span class="w"> </span>Choi
+id:<span class="w"> </span><span class="m">78674</span>
+mailInFlag:<span class="w"> </span>N
+proprietaryFlag:<span class="w"> </span>N
+startTime:<span class="w"> </span><span class="s1">&#39;2022-07-19 08:00:00-05:00&#39;</span>
+submittedDate:<span class="w"> </span><span class="s1">&#39;2022-03-01 10:16:27-06:00&#39;</span>
+title:<span class="w"> </span>National<span class="w"> </span>School<span class="w"> </span>on<span class="w"> </span>Neutron<span class="w"> </span>and<span class="w"> </span>X-ray<span class="w"> </span>Scattering,<span class="w"> </span>experimental<span class="w"> </span>tutorials,<span class="w"> </span><span class="m">12</span>-ID-B
+totalShiftsRequested:<span class="w"> </span><span class="m">12</span>
+</pre></div>
+</div>
+</section>
+<section id="esaf">
+<h3>esaf<a class="headerlink" href="#esaf" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>esaf<span class="w"> </span><span class="m">258638</span>
+description:<span class="w"> </span>In<span class="w"> </span>the<span class="w"> </span>practical<span class="w"> </span>sessions<span class="w"> </span><span class="k">for</span><span class="w"> </span>X-ray<span class="w"> </span>summer<span class="w"> </span>school<span class="w"> </span>student,<span class="w"> </span>we<span class="w"> </span>will<span class="w"> </span>demonstrate
+<span class="w">  </span>and<span class="w"> </span>practice<span class="w"> </span>on<span class="w"> </span>surface<span class="w"> </span>X-ray<span class="w"> </span>diffraction<span class="w"> </span>and<span class="w"> </span>coherent<span class="w"> </span>Bragg<span class="w"> </span>rod<span class="w"> </span>measurements<span class="w"> </span>and
+<span class="w">  </span>data<span class="w"> </span>processing.<span class="w"> </span>We<span class="w"> </span>will<span class="w"> </span>only<span class="w"> </span>ex-situ<span class="w"> </span>measure<span class="w"> </span>a<span class="w"> </span>few<span class="w"> </span>representative<span class="w"> </span>oxide<span class="w"> </span>or<span class="w"> </span>2D<span class="w"> </span>materials
+<span class="w">  </span>thin<span class="w"> </span>films<span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>practical<span class="w"> </span>session.<span class="w"> </span>No<span class="w"> </span>other<span class="w"> </span>chemicals<span class="w"> </span>are<span class="w"> </span>included.<span class="w"> </span>No<span class="w"> </span>need<span class="w"> </span>to
+<span class="w">  </span>use<span class="w"> </span>the<span class="w"> </span>chemical<span class="w"> </span>room<span class="w"> </span>at<span class="w"> </span><span class="m">433</span><span class="w"> </span>E030.
+esafId:<span class="w"> </span><span class="m">258638</span>
+esafStatus:<span class="w"> </span>Approved
+esafTitle:<span class="w"> </span>National<span class="w"> </span>School<span class="w"> </span>on<span class="w"> </span>Neutron<span class="w"> </span>and<span class="w"> </span>X-ray<span class="w"> </span>Scattering,<span class="w"> </span>experimental<span class="w"> </span>tutorials,
+<span class="w">  </span><span class="m">12</span>-ID-D
+experimentEndDate:<span class="w"> </span><span class="s1">&#39;2022-07-22 16:00:00&#39;</span>
+experimentStartDate:<span class="w"> </span><span class="s1">&#39;2022-07-21 08:00:00&#39;</span>
+experimentUsers:
+-<span class="w"> </span>badge:<span class="w"> </span><span class="s1">&#39;87100&#39;</span>
+<span class="w">  </span>badgeNumber:<span class="w"> </span><span class="s1">&#39;87100&#39;</span>
+<span class="w">  </span>email:<span class="w"> </span>ychoi@anl.gov
+<span class="w">  </span>firstName:<span class="w"> </span>Yongseong
+<span class="w">  </span>lastName:<span class="w"> </span>Choi
+<span class="w">  </span>piFlag:<span class="w"> </span><span class="s1">&#39;Yes&#39;</span>
+-<span class="w"> </span>badge:<span class="w"> </span><span class="s1">&#39;1234567890&#39;</span>
+<span class="w">  </span>badgeNumber:<span class="w"> </span><span class="s1">&#39;1234567890&#39;</span>
+<span class="w">  </span>email:<span class="w"> </span>r.e.searcher@example.org
+<span class="w">  </span>firstName:<span class="w"> </span>R.E.
+<span class="w">  </span>lastName:<span class="w"> </span>Searcher
+<span class="w">  </span>piFlag:<span class="w"> </span><span class="s1">&#39;No&#39;</span>
+-<span class="w"> </span>other<span class="w"> </span>experimentUsers<span class="w"> </span>omitted<span class="w"> </span>here
+sector:<span class="w"> </span><span class="s1">&#39;12&#39;</span>
+</pre></div>
+</div>
+</section>
+<section id="search">
+<span id="subcommand-search"></span><h3>search<a class="headerlink" href="#search" title="Link to this heading">#</a></h3>
+<p>Search for ESAFs and Proposals.  See
+<a class="reference internal" href="api/_server_interface.html#apsbss.server_interface.Server.search" title="apsbss.server_interface.Server.search"><code class="xref py py-meth docutils literal notranslate"><span class="pre">search()</span></code></a> for more hints about how to
+search.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>usage:<span class="w"> </span>apsbss<span class="w"> </span>search<span class="w"> </span><span class="o">[</span>-h<span class="o">]</span><span class="w"> </span><span class="o">[</span>-r<span class="w"> </span>RUN<span class="o">]</span><span class="w"> </span>beamlineName<span class="w"> </span>query
+
+positional<span class="w"> </span>arguments:
+<span class="w">  </span>beamlineName<span class="w">       </span>Beamline<span class="w"> </span>name
+<span class="w">  </span>query<span class="w">              </span>query
+
+options:
+<span class="w">  </span>-h,<span class="w"> </span>--help<span class="w">         </span>show<span class="w"> </span>this<span class="w"> </span><span class="nb">help</span><span class="w"> </span>message<span class="w"> </span>and<span class="w"> </span><span class="nb">exit</span>
+<span class="w">  </span>-r<span class="w"> </span>RUN,<span class="w"> </span>--run<span class="w"> </span>RUN<span class="w">  </span>APS<span class="w"> </span>run<span class="w"> </span>name.<span class="w"> </span>One<span class="w"> </span>of<span class="w"> </span>the<span class="w"> </span>names<span class="w"> </span>returned<span class="w"> </span>by<span class="w"> </span><span class="s1">&#39;apsbss runs&#39;</span><span class="w"> </span>or<span class="w"> </span>one<span class="w"> </span>of<span class="w"> </span>these<span class="w"> </span><span class="o">(</span><span class="s1">&#39;past&#39;</span>,<span class="w"> </span><span class="s1">&#39;prior&#39;</span>,<span class="w"> </span><span class="s1">&#39;previous&#39;</span><span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>previous<span class="w"> </span>run,
+<span class="w">                    </span><span class="o">(</span><span class="s1">&#39;current&#39;</span><span class="w"> </span>or<span class="w"> </span><span class="s1">&#39;now&#39;</span><span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>current<span class="w"> </span>run,<span class="w"> </span><span class="o">(</span><span class="s1">&#39;future&#39;</span><span class="w"> </span>or<span class="w"> </span><span class="s1">&#39;next&#39;</span><span class="o">)</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>next<span class="w"> </span>run,<span class="w"> </span>or<span class="w"> </span><span class="s1">&#39;recent&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span>the<span class="w"> </span>past<span class="w"> </span>two<span class="w"> </span>years.
+</pre></div>
+</div>
+<p>Example (2024-12-18):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>search<span class="w"> </span><span class="m">12</span>-ID-B<span class="w"> </span><span class="s2">&quot;title:School AND pi:Choi&quot;</span>
+Search:<span class="w"> </span><span class="nv">beamline</span><span class="o">=</span><span class="s1">&#39;12-ID-B&#39;</span><span class="w"> </span><span class="nv">runs</span><span class="o">=</span><span class="s1">&#39;recent&#39;</span><span class="w"> </span><span class="nv">query</span><span class="o">=</span><span class="s1">&#39;title:School AND pi:Choi&#39;</span>
+<span class="o">======</span><span class="w"> </span><span class="o">==============================</span><span class="w"> </span><span class="o">======</span><span class="w"> </span><span class="o">========================================</span><span class="w"> </span><span class="o">========</span>
+id<span class="w">     </span>pi<span class="w">                             </span>run<span class="w">    </span>title<span class="w">                                    </span><span class="nb">type</span>
+<span class="o">======</span><span class="w"> </span><span class="o">==============================</span><span class="w"> </span><span class="o">======</span><span class="w"> </span><span class="o">========================================</span><span class="w"> </span><span class="o">========</span>
+<span class="m">78674</span><span class="w">  </span>Yongseong<span class="w"> </span>Choi<span class="w"> </span>&lt;ychoi@anl.gov&gt;<span class="w"> </span><span class="m">2022</span>-2<span class="w"> </span>National<span class="w"> </span>School<span class="w"> </span>on<span class="w"> </span>Neutron<span class="w"> </span>and<span class="w"> </span>X-ray<span class="w"> </span>...<span class="w"> </span>proposal
+<span class="m">258606</span><span class="w"> </span>Yongseong<span class="w"> </span>Choi<span class="w"> </span>&lt;ychoi@anl.gov&gt;<span class="w"> </span><span class="m">2022</span>-2<span class="w"> </span>National<span class="w"> </span>School<span class="w"> </span>on<span class="w"> </span>Neutron<span class="w"> </span>and<span class="w"> </span>X-ray<span class="w"> </span>...<span class="w"> </span>ESAF
+<span class="m">258638</span><span class="w"> </span>Yongseong<span class="w"> </span>Choi<span class="w"> </span>&lt;ychoi@anl.gov&gt;<span class="w"> </span><span class="m">2022</span>-2<span class="w"> </span>National<span class="w"> </span>School<span class="w"> </span>on<span class="w"> </span>Neutron<span class="w"> </span>and<span class="w"> </span>X-ray<span class="w"> </span>...<span class="w"> </span><span class="nv">ESAF</span>
+<span class="o">======</span><span class="w"> </span><span class="o">==============================</span><span class="w"> </span><span class="o">======</span><span class="w"> </span><span class="o">========================================</span><span class="w"> </span><span class="o">========</span>
+</pre></div>
+</div>
+</section>
+<section id="epics-related-subcommands">
+<h3>EPICS-related subcommands<a class="headerlink" href="#epics-related-subcommands" title="Link to this heading">#</a></h3>
+<p>These commands are for use of a local EPICS database to cache details locally at
+the beamline.</p>
+<section id="clear">
+<h4>clear<a class="headerlink" href="#clear" title="Link to this heading">#</a></h4>
+<p>To clear the information from the EPICS PVs, use this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>clear<span class="w"> </span>9id:bss:
+clear<span class="w"> </span>EPICS<span class="w"> </span>9id:bss:
+connected<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.104s
+cleared<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.011s
+</pre></div>
+</div>
+</section>
+<section id="setup">
+<h4>setup<a class="headerlink" href="#setup" title="Link to this heading">#</a></h4>
+<p>To configure <code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code> PVs for beam line <code class="docutils literal notranslate"><span class="pre">9-ID-B,C</span></code> and run <code class="docutils literal notranslate"><span class="pre">2020-2</span></code>, use
+this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>setup<span class="w"> </span>9id:bss:<span class="w"> </span><span class="m">9</span>-ID-B,C<span class="w"> </span><span class="m">2020</span>-2
+connected<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.143s
+setup<span class="w"> </span>EPICS<span class="w"> </span>9id:bss:<span class="w"> </span><span class="m">9</span>-ID-B,C<span class="w"> </span><span class="nv">run</span><span class="o">=</span><span class="m">2020</span>-2<span class="w"> </span><span class="nv">sector</span><span class="o">=</span><span class="m">9</span>
 </pre></div>
 </div>
 <p>Or you could enter them into the appropriate boxes on the GUI.</p>
 </section>
+<section id="update">
+<h4>update<a class="headerlink" href="#update" title="Link to this heading">#</a></h4>
+<p>To update the EPICS PVs with Proposal and Information from the APS database,
+first enter the proposal and ESAF ID numbers into the GUI (or set
+<code class="docutils literal notranslate"><span class="pre">9id:bss:proposal:id</span></code> and <code class="docutils literal notranslate"><span class="pre">9id:bss:esaf:id</span></code>, respectively). Note that for
+this ESAF ID, we had to change the run to <cite>2019-2</cite>.</p>
+<p>Then, use this command to retrieve the information and update the PVs:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>update<span class="w"> </span>9id:bss:
+update<span class="w"> </span>EPICS<span class="w"> </span>9id:bss:
+connected<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.105s
+</pre></div>
+</div>
+<p>If there is a problem with the update process, it should be
+reported in the <cite>status</cite> PV (such as <cite>9id:bss:status</cite>).</p>
+<figure class="align-default" id="id8">
+<a class="reference internal image-reference" href="_images/ui_error_status.png"><img alt="_images/ui_error_status.png" src="_images/ui_error_status.png" style="width: 95%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Image of <code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code> screen GUI in caQtDM showing
+<cite>update</cite> command error due to missing beam line name.</span><a class="headerlink" href="#id8" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
 </section>
+<section id="report">
+<h4>report<a class="headerlink" href="#report" title="Link to this heading">#</a></h4>
+<p>To view all the information in the EPICS PVs, use this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>report<span class="w"> </span>9id:bss:
+clear<span class="w"> </span>EPICS<span class="w"> </span>9id:bss:
+</pre></div>
+</div>
+<p>Since this content is rather large, it is available
+for download: <a class="reference download internal" download="" href="_downloads/468f3778f39e56d262f4b42c224eaf9b/apsbss_report.txt"><code class="xref download docutils literal notranslate"><span class="pre">apsbss</span> <span class="pre">report</span></code></a></p>
+</section>
+</section>
+</section>
+<section id="demonstration">
+<h2>Demonstration<a class="headerlink" href="#demonstration" title="Link to this heading">#</a></h2>
+<p>We’ll demonstrate <code class="docutils literal notranslate"><span class="pre">apsbss</span></code> with information for APS beam
+line 9-ID, using PV prefix <code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code>.</p>
+<ol class="arabic simple">
+<li><p>Create the PVs in an EPICS IOC (see section <a class="reference internal" href="ioc.html#apsbss-ioc"><span class="std std-ref">EPICS IOC</span></a>)</p></li>
+<li><p>Initialize PVs with beam line name and APS run number</p></li>
+<li><p>Set PVs with the Proposal and ESAF ID numbers</p></li>
+<li><p>Retrieve (&amp; update PVs) information from APS databases</p></li>
+</ol>
+<p><strong>Enter beam line and APS run info</strong></p>
+<figure class="align-default" id="id9">
+<a class="reference internal image-reference" href="_images/ui_initialized.png"><img alt="_images/ui_initialized.png" src="_images/ui_initialized.png" style="width: 95%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Image of <code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code> screen GUI in caQtDM showing PV prefix
+(<code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code>), APS run <code class="docutils literal notranslate"><span class="pre">2019-2</span></code> and beam line <code class="docutils literal notranslate"><span class="pre">9-ID-B,C</span></code>.</span><a class="headerlink" href="#id9" title="Link to this image">#</a></p>
+<div class="legend">
+<ul class="simple">
+<li><p>beam line name PV: <code class="docutils literal notranslate"><span class="pre">9id:bss:proposal:beamline</span></code></p></li>
+<li><p>APS run PV: <code class="docutils literal notranslate"><span class="pre">9id:bss:esaf:run</span></code></p></li>
+</ul>
+</div>
+</figcaption>
+</figure>
+<p><strong>Enter Proposal and ESAF ID numbers</strong></p>
+<p>Note we had to use the APS run of <cite>2019-2</cite>
+to match what is in the proposal’s information.</p>
+<figure class="align-default" id="id10">
+<a class="reference internal image-reference" href="_images/ui_id_entered.png"><img alt="_images/ui_id_entered.png" src="_images/ui_id_entered.png" style="width: 95%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Image of <code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code> screen GUI in caQtDM with Proposal
+and ESAF ID numbers added.</span><a class="headerlink" href="#id10" title="Link to this image">#</a></p>
+<div class="legend">
+<ul class="simple">
+<li><p>proposal ID number PV: <code class="docutils literal notranslate"><span class="pre">9id:bss:proposal:id</span></code></p></li>
+<li><p>ESAF ID number PV: <code class="docutils literal notranslate"><span class="pre">9id:bss:esaf:id</span></code></p></li>
+</ul>
+</div>
+</figcaption>
+</figure>
+<p><strong>Update PVs from APS databases</strong></p>
+<p>In the GUI, press the button labeled <code class="docutils literal notranslate"><span class="pre">get</span> <span class="pre">Proposal</span> <span class="pre">and</span> <span class="pre">ESAF</span> <span class="pre">info</span></code>.
+This button executes the command line: <code class="docutils literal notranslate"><span class="pre">apsbss</span> <span class="pre">update</span> <span class="pre">9id:bss:</span></code></p>
+<p>Here’s a view of the GUI after running the update.  The
+information shown in the GUI is only part of the PVs,
+presented in a compact format. A full report of the
+information received, including PV names, is available for
+<a class="reference download internal" download="" href="_downloads/468f3778f39e56d262f4b42c224eaf9b/apsbss_report.txt"><code class="xref download docutils literal notranslate"><span class="pre">download</span></code></a>.</p>
+<figure class="align-default" id="id11">
+<a class="reference internal image-reference" href="_images/ui_updated.png"><img alt="_images/ui_updated.png" src="_images/ui_updated.png" style="width: 95%;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Image of <code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code> screen GUI in caQtDM showing Proposal
+and ESAF information.</span><a class="headerlink" href="#id11" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>To clear the PVs, in the GUI, press the button labeled <code class="docutils literal notranslate"><span class="pre">clear</span> <span class="pre">PVs</span></code>.
+This button executes the command line: <code class="docutils literal notranslate"><span class="pre">apsbss</span> <span class="pre">clear</span> <span class="pre">9id:bss:</span></code></p>
+<section id="initialize-pvs-for-beam-line-and-apc-run">
+<h3>Initialize PVs for beam line and APC run<a class="headerlink" href="#initialize-pvs-for-beam-line-and-apc-run" title="Link to this heading">#</a></h3>
+<p>After creating the PVs in an IOC, the next step is to
+initialize them with the beam line name and the APS
+run name.  Both of these must match exactly
+with values known in the data management (<code class="docutils literal notranslate"><span class="pre">dm</span></code>) system.</p>
+<p>For any of these commands, you must know the EPICS
+PV prefix to be used.  The examples above are for
+beam line 9-ID.  The PV prefix in these examples
+is <code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code>.</p>
+<p id="id7">Run <code class="docutils literal notranslate"><span class="pre">apsbss</span> <span class="pre">beamlines</span></code> to pick a beamline name:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>beamlines
+<span class="m">1</span>-BM-B,C<span class="w">       </span><span class="m">10</span>-ID-B<span class="w">        </span><span class="m">17</span>-ID-B<span class="w">        </span><span class="m">28</span>-ID-B,C
+<span class="m">1</span>-ID-B,C,E<span class="w">     </span><span class="m">11</span>-BM-B<span class="w">        </span><span class="m">18</span>-ID-D<span class="w">        </span><span class="m">28</span>-ID-D,E
+<span class="m">2</span>-BM-A,B<span class="w">       </span><span class="m">11</span>-ID-B<span class="w">        </span><span class="m">19</span>-BM-D<span class="w">        </span><span class="m">28</span>-ID-F
+<span class="m">2</span>-ID-D<span class="w">         </span><span class="m">11</span>-ID-C<span class="w">        </span><span class="m">19</span>-ID-E<span class="w">        </span><span class="m">28</span>-ID-G
+<span class="m">2</span>-ID-E<span class="w">         </span><span class="m">11</span>-ID-D<span class="w">        </span><span class="m">20</span>-BM-B<span class="w">        </span><span class="m">29</span>-ID-C,D
+<span class="m">3</span>-ID-B,C,D<span class="w">     </span><span class="m">12</span>-BM-B<span class="w">        </span><span class="m">20</span>-ID-D,E<span class="w">      </span><span class="m">30</span>-ID-B,C
+<span class="m">4</span>-ID-B,G,H<span class="w">     </span><span class="m">12</span>-ID-B<span class="w">        </span><span class="m">21</span>-ID-D<span class="w">        </span><span class="m">31</span>-ID-D
+<span class="m">5</span>-BM-B<span class="w">         </span><span class="m">12</span>-ID-E<span class="w">        </span><span class="m">21</span>-ID-F<span class="w">        </span><span class="m">31</span>-ID-E
+<span class="m">5</span>-ID-B,C,D<span class="w">     </span><span class="m">13</span>-BM-C<span class="w">        </span><span class="m">21</span>-ID-G<span class="w">        </span><span class="m">32</span>-ID-B,C
+<span class="m">6</span>-BM-A,B<span class="w">       </span><span class="m">13</span>-BM-D<span class="w">        </span><span class="m">22</span>-ID-D<span class="w">        </span><span class="m">33</span>-BM-C
+<span class="m">6</span>-ID-B,C<span class="w">       </span><span class="m">13</span>-ID-C,D<span class="w">      </span><span class="m">22</span>-ID-E<span class="w">        </span><span class="m">33</span>-ID-C
+<span class="m">6</span>-ID-D<span class="w">         </span><span class="m">13</span>-ID-E<span class="w">        </span><span class="m">23</span>-ID-B<span class="w">        </span><span class="m">34</span>-ID-E
+<span class="m">7</span>-BM-B<span class="w">         </span><span class="m">14</span>-ID-B<span class="w">        </span><span class="m">23</span>-ID-D<span class="w">        </span><span class="m">34</span>-ID-F
+<span class="m">7</span>-ID-B,C,D<span class="w">     </span><span class="m">15</span>-ID-B,E<span class="w">      </span><span class="m">24</span>-ID-C<span class="w">        </span><span class="m">35</span>-BM-C
+<span class="m">8</span>-BM-B<span class="w">         </span><span class="m">15</span>-ID-C,D<span class="w">      </span><span class="m">24</span>-ID-E<span class="w">        </span><span class="m">35</span>-ID-B,C,D,E
+<span class="m">8</span>-ID-E,I<span class="w">       </span><span class="m">16</span>-BM-B,D<span class="w">      </span><span class="m">25</span>-ID-C<span class="w">        </span><span class="m">38</span>-AM-A
+<span class="m">9</span>-BM-B,C<span class="w">       </span><span class="m">16</span>-ID-B<span class="w">        </span><span class="m">25</span>-ID-D,E
+<span class="m">9</span>-ID-D<span class="w">         </span><span class="m">16</span>-ID-D,E<span class="w">      </span><span class="m">26</span>-ID-C
+<span class="m">10</span>-BM-B<span class="w">        </span><span class="m">17</span>-BM-B<span class="w">        </span><span class="m">27</span>-ID-B
+</pre></div>
+</div>
+<p>Run <code class="docutils literal notranslate"><span class="pre">apsbss</span> <span class="pre">runs</span></code> to pick an APS run name:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>runs
+<span class="m">2008</span>-3<span class="w">    </span><span class="m">2012</span>-1<span class="w">    </span><span class="m">2015</span>-2<span class="w">    </span><span class="m">2018</span>-3<span class="w">    </span><span class="m">2022</span>-1
+<span class="m">2009</span>-1<span class="w">    </span><span class="m">2012</span>-2<span class="w">    </span><span class="m">2015</span>-3<span class="w">    </span><span class="m">2019</span>-1<span class="w">    </span><span class="m">2022</span>-2
+<span class="m">2009</span>-2<span class="w">    </span><span class="m">2012</span>-3<span class="w">    </span><span class="m">2016</span>-1<span class="w">    </span><span class="m">2019</span>-2<span class="w">    </span><span class="m">2022</span>-3
+<span class="m">2009</span>-3<span class="w">    </span><span class="m">2013</span>-1<span class="w">    </span><span class="m">2016</span>-2<span class="w">    </span><span class="m">2019</span>-3<span class="w">    </span><span class="m">2023</span>-1
+<span class="m">2010</span>-1<span class="w">    </span><span class="m">2013</span>-2<span class="w">    </span><span class="m">2016</span>-3<span class="w">    </span><span class="m">2020</span>-1<span class="w">    </span><span class="m">2024</span>-2
+<span class="m">2010</span>-2<span class="w">    </span><span class="m">2013</span>-3<span class="w">    </span><span class="m">2017</span>-1<span class="w">    </span><span class="m">2020</span>-2<span class="w">    </span><span class="m">2024</span>-3
+<span class="m">2010</span>-3<span class="w">    </span><span class="m">2014</span>-1<span class="w">    </span><span class="m">2017</span>-2<span class="w">    </span><span class="m">2020</span>-3<span class="w">    </span><span class="m">2025</span>-1
+<span class="m">2011</span>-1<span class="w">    </span><span class="m">2014</span>-2<span class="w">    </span><span class="m">2017</span>-3<span class="w">    </span><span class="m">2021</span>-1<span class="w">    </span><span class="m">2025</span>-2
+<span class="m">2011</span>-2<span class="w">    </span><span class="m">2014</span>-3<span class="w">    </span><span class="m">2018</span>-1<span class="w">    </span><span class="m">2021</span>-2
+<span class="m">2011</span>-3<span class="w">    </span><span class="m">2015</span>-1<span class="w">    </span><span class="m">2018</span>-2<span class="w">    </span><span class="m">2021</span>-3
+</pre></div>
+</div>
+<p>For this example, we pick <code class="docutils literal notranslate"><span class="pre">2020-2</span></code> and beamline <code class="docutils literal notranslate"><span class="pre">9-ID-B,C</span></code>.
+(Note: this beamline name is no longer in use.)</p>
+<p>Write the beam line name and run to the EPICS PVs. To configure <code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code> PVs
+for beam line <code class="docutils literal notranslate"><span class="pre">9-ID-B,C</span></code> and run <code class="docutils literal notranslate"><span class="pre">2020-2</span></code>, use this command:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$<span class="w"> </span>apsbss<span class="w"> </span>setup<span class="w"> </span>9id:bss:<span class="w"> </span><span class="m">9</span>-ID-B,C<span class="w"> </span><span class="m">2020</span>-2
+connected<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="m">0</span>.143s
+setup<span class="w"> </span>EPICS<span class="w"> </span>9id:bss:<span class="w"> </span><span class="m">9</span>-ID-B,C<span class="w"> </span><span class="nv">run</span><span class="o">=</span><span class="m">2020</span>-2<span class="w"> </span><span class="nv">sector</span><span class="o">=</span><span class="m">9</span>
+</pre></div>
+</div>
+<p>Or you could enter them into the appropriate boxes on the GUI.</p>
 <section id="what-proposal-and-esaf-id-numbers-to-use">
-<h2>What Proposal and ESAF ID numbers to use?<a class="headerlink" href="#what-proposal-and-esaf-id-numbers-to-use" title="Permalink to this headline">¶</a></h2>
+<h4>What Proposal and ESAF ID numbers to use?<a class="headerlink" href="#what-proposal-and-esaf-id-numbers-to-use" title="Link to this heading">#</a></h4>
 <p>Proposals are usually valid for two years.  To learn what
 proposals are valid for your beam line, use this command
 with your own beam line’s name.  The report will provide
 two tables, one for Proposals and the other for ESAFs,
-both with entries in the current APS run cycle:</p>
+both with entries in the current APS run:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss list 9-ID-B,C
-Proposal(s):  beam line 9-ID-B,C,  cycle(s) now
+Proposal(s):  beam line 9-ID-B,C,  run(s) now
 
 ===== ====== =================== =================== ==================== ========================================
-id    cycle  start               end                 user(s)              title
+id    run    start               end                 user(s)              title
 ===== ====== =================== =================== ==================== ========================================
 70118 2020-3 2020-12-05 08:00:00 2020-12-05 16:00:00 Beaucage,Gogia,Ku... In situ structural modification and d...
 63765 2020-3 2020-11-19 08:00:00 2020-11-23 08:00:00 Swantek,Powell,Ka... USAXS Measurements of Fuel Injection ...
@@ -286,7 +977,7 @@ id    cycle  start               end                 user(s)              title
 71891 2020-3 2020-10-05 07:00:00 2020-10-09 07:00:00 Ralle,Chen           Copper Distribution in Cyrptococcus N...
 ===== ====== =================== =================== ==================== ========================================
 
-ESAF(s):  sector 9,  cycle(s) now
+ESAF(s):  sector 9,  run(s) now
 
 ====== ======== ========== ========== ==================== ========================================
 id     status   start      end        user(s)              title
@@ -322,10 +1013,10 @@ id     status   start      end        user(s)              title
 </div>
 </section>
 <section id="view-proposal-information">
-<h2>View Proposal Information<a class="headerlink" href="#view-proposal-information" title="Permalink to this headline">¶</a></h2>
+<h4>View Proposal Information<a class="headerlink" href="#view-proposal-information" title="Link to this heading">#</a></h4>
 <p>To view information about a specific proposal, you
 must be able to provide the proposal’s ID number and
-the APS run cycle name.</p>
+the APS run name.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss proposal 64629 2019-2 9-ID-B,C
 duration: 36000
 endTime: &#39;2019-06-25 17:00:00&#39;
@@ -360,7 +1051,7 @@ data structure using <code class="docutils literal notranslate"><span class="pre
 See section <a class="reference internal" href="#reading-yaml"><span class="std std-ref">Reading YAML in Python</span></a>.</p>
 </section>
 <section id="get-esaf-information">
-<h2>Get ESAF Information<a class="headerlink" href="#get-esaf-information" title="Permalink to this headline">¶</a></h2>
+<h4>Get ESAF Information<a class="headerlink" href="#get-esaf-information" title="Link to this heading">#</a></h4>
 <p>To view information about a specific ESAF, you
 must be able to provide the ESAF ID number.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss esaf 226319
@@ -398,82 +1089,14 @@ data structure using <code class="docutils literal notranslate"><span class="pre
 See section <a class="reference internal" href="#reading-yaml"><span class="std std-ref">Reading YAML in Python</span></a>.</p>
 </section>
 <section id="update-epics-pvs-with-proposal-and-esaf">
-<h2>Update EPICS PVs with Proposal and ESAF<a class="headerlink" href="#update-epics-pvs-with-proposal-and-esaf" title="Permalink to this headline">¶</a></h2>
-<p>To update the PVs with Proposal and Information from the APS
-database, first enter the proposal and ESAF ID numbers into
-the GUI (or set the <code class="docutils literal notranslate"><span class="pre">9id:bss:proposal:id</span></code>, and respectively).
-Note that for this ESAF ID, we had to change the cycle to <cite>2019-2</cite>.</p>
-<p>Then, use this command to retrieve the information and update
-the PVs:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss update 9id:bss:
-update EPICS 9id:bss:
-connected in 0.105s
-</pre></div>
-</div>
-<p>If there is a problem with the update process, it should be
-reported in the <cite>status</cite> PV (such as <cite>9id:bss:status</cite>).</p>
-<figure class="align-default" id="id6">
-<a class="reference internal image-reference" href="_images/ui_error_status.png"><img alt="_images/ui_error_status.png" src="_images/ui_error_status.png" style="width: 95%;" /></a>
-<figcaption>
-<p><span class="caption-text">Image of <code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code> screen GUI in caQtDM showing
-<cite>update</cite> command error due to missing beam line name.</span><a class="headerlink" href="#id6" title="Permalink to this image">¶</a></p>
-</figcaption>
-</figure>
+<h4>Update EPICS PVs with Proposal and ESAF<a class="headerlink" href="#update-epics-pvs-with-proposal-and-esaf" title="Link to this heading">#</a></h4>
 </section>
-<section id="clear-the-epics-pvs">
-<h2>Clear the EPICS PVs<a class="headerlink" href="#clear-the-epics-pvs" title="Permalink to this headline">¶</a></h2>
-<p>To clear the information from the PVs, use this command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss clear 9id:bss:
-clear EPICS 9id:bss:
-connected in 0.104s
-cleared in 0.011s
-</pre></div>
-</div>
 </section>
-<section id="report-information-in-the-epics-pvs">
-<h2>Report information in the EPICS PVs<a class="headerlink" href="#report-information-in-the-epics-pvs" title="Permalink to this headline">¶</a></h2>
-<p>To view all the information in the PVs, use this command:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss report 9id:bss:
-clear EPICS 9id:bss:
-</pre></div>
-</div>
-<p>Since this content is rather large, it is available
-for download: <a class="reference download internal" download="" href="_downloads/468f3778f39e56d262f4b42c224eaf9b/apsbss_report.txt"><code class="xref download docutils literal notranslate"><span class="pre">apsbss</span> <span class="pre">report</span></code></a></p>
 </section>
-<section id="example-apsbss-command-line">
-<h2>Example - <code class="docutils literal notranslate"><span class="pre">apsbss</span></code> command line<a class="headerlink" href="#example-apsbss-command-line" title="Permalink to this headline">¶</a></h2>
-<p>Before using the command-line interface, find out what
-the <em>apsbss</em> application expects:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss  -h
-usage: apsbss [-h] [-v]
-              {beamlines,current,cycles,esaf,list,proposal,clear,setup,update,report}
-              ...
-
-Retrieve specific records from the APS Proposal and ESAF databases.
-
-optional arguments:
-  -h, --help            show this help message and exit
-  -v, --version         print version number and exit
-
-subcommand:
-  {beamlines,current,cycles,esaf,proposal,clear,setup,update,report}
-    beamlines           print list of beamlines
-    current             print current ESAF(s) and proposal(s), DEPRECATED: use &#39;list&#39; instead
-    cycles              print APS run cycle names
-    esaf                print specific ESAF
-    list                list by cycle
-    proposal            print specific proposal
-    clear               EPICS PVs: clear
-    setup               EPICS PVs: setup
-    update              EPICS PVs: update from BSS
-    report              EPICS PVs: report what is in the PVs
-</pre></div>
-</div>
-<p>See <a class="reference internal" href="source/index.html#beamtime-source-docs"><span class="std std-ref">APS Proposal and ESAF Support</span></a> for the source code documentation
-of each of these subcommands.</p>
-</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">#</a></h2>
 <section id="displays-for-medm-caqtdm">
-<span id="apsbss-epics-gui-screens"></span><h2>Displays for MEDM &amp; caQtDM<a class="headerlink" href="#displays-for-medm-caqtdm" title="Permalink to this headline">¶</a></h2>
+<span id="apsbss-epics-gui-screens"></span><h3>Displays for MEDM &amp; caQtDM<a class="headerlink" href="#displays-for-medm-caqtdm" title="Link to this heading">#</a></h3>
 <p>Display screen files are provided for viewing some of the EPICS PVs
 using either MEDM (<code class="docutils literal notranslate"><span class="pre">apsbss.adl</span></code>) or caQtDM (<code class="docutils literal notranslate"><span class="pre">apsbss.ui</span></code>).</p>
 <ul class="simple">
@@ -490,13 +1113,13 @@ using either MEDM (<code class="docutils literal notranslate"><span class="pre">
 <span class="nv">GUI_SCREEN</span><span class="o">=</span><span class="si">${</span><span class="nv">APSBSS_PKG</span><span class="si">}</span>/apsbss.ui
 <span class="nv">CAQTDM</span><span class="o">=</span>/APSshare/bin/caQtDM
 
-<span class="nb">source</span> <span class="si">${</span><span class="nv">BLUESKY_ROOT</span><span class="si">}</span>/bin/activate
-<span class="si">${</span><span class="nv">CAQTDM</span><span class="si">}</span> -macro <span class="nv">P</span><span class="o">=</span>9idc:bss: <span class="si">${</span><span class="nv">GUI_SCREEN</span><span class="si">}</span> <span class="p">&amp;</span>
+<span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">BLUESKY_ROOT</span><span class="si">}</span>/bin/activate
+<span class="si">${</span><span class="nv">CAQTDM</span><span class="si">}</span><span class="w"> </span>-macro<span class="w"> </span><span class="nv">P</span><span class="o">=</span>9idc:bss:<span class="w"> </span><span class="si">${</span><span class="nv">GUI_SCREEN</span><span class="si">}</span><span class="w"> </span><span class="p">&amp;</span>
 </pre></div>
 </div>
 </section>
 <section id="ioc-management">
-<h2>IOC Management<a class="headerlink" href="#ioc-management" title="Permalink to this headline">¶</a></h2>
+<h3>IOC Management<a class="headerlink" href="#ioc-management" title="Link to this heading">#</a></h3>
 <p>The EPICS PVs are provided by running an instance of <code class="docutils literal notranslate"><span class="pre">apsbss.db</span></code>
 either in an existing EPICS IOC or using the <code class="docutils literal notranslate"><span class="pre">softIoc</span></code> application
 from EPICS base.  A shell script (<code class="docutils literal notranslate"><span class="pre">apsbss_ioc.sh</span></code>) is included
@@ -505,11 +1128,11 @@ APS databases into the IOC.</p>
 <ul class="simple">
 <li><p><a class="reference download internal" download="" href="_downloads/46c2c44d7f66c7e2364ade0357376d16/apsbss.db"><code class="xref download docutils literal notranslate"><span class="pre">apsbss.db</span></code></a></p></li>
 </ul>
-<p>See the section titled “<a class="reference internal" href="apsbss_ioc.html#apsbss-ioc"><span class="std std-ref">apsbss: IOC Startup and Management</span></a>”
+<p>See the section titled “<a class="reference internal" href="ioc.html#apsbss-ioc"><span class="std std-ref">EPICS IOC</span></a>”
 for the management of the EPICS IOC.</p>
 </section>
 <section id="reading-yaml-in-python">
-<span id="reading-yaml"></span><h2>Reading YAML in Python<a class="headerlink" href="#reading-yaml-in-python" title="Permalink to this headline">¶</a></h2>
+<span id="reading-yaml"></span><h3>Reading YAML in Python<a class="headerlink" href="#reading-yaml-in-python" title="Link to this heading">#</a></h3>
 <p>It’s easy to read a YAML string and convert it into a
 Python structure.  Take the example ESAF information shown
 above.  It is available in EPICS PV <code class="docutils literal notranslate"><span class="pre">9id:bss:esaf:raw</span></code> which
@@ -518,7 +1141,7 @@ session uses PyEpics and YAML to show how to read the text
 from EPICS and convert it back into a Python structure.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">import</span> <span class="nn">epics</span><span class="o">,</span> <span class="nn">yaml</span>
 
-<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">epics</span><span class="o">.</span><span class="n">caget</span><span class="p">(</span><span class="s2">&quot;9id:bss:esaf:raw&quot;</span><span class="p">,</span> <span class="n">as_string</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">msg</span> <span class="o">=</span> <span class="n">epics</span><span class="o">.</span><span class="n">caget</span><span class="p">(</span><span class="s2">&quot;9id:bss:esaf:raw&quot;</span><span class="p">,</span> <span class="n">as_string</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">msg</span>
 <span class="n">Out</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="s2">&quot;description: We will commission beamline and  USAXS instrument. We will perform experiments</span><span class="se">\n</span><span class="s2">  with safe beamline standards and test samples (all located at beamline and used</span><span class="se">\n</span><span class="s2">  for this purpose routinely) to evaluate performance of beamline and instrument.</span><span class="se">\n</span><span class="s2">  We will perform hardware and software development as needed.</span><span class="se">\n</span><span class="s2">esafId: 226319</span><span class="se">\n</span><span class="s2">esafStatus: Approved</span><span class="se">\n</span><span class="s2">esafTitle: Commission 9ID and USAXS</span><span class="se">\n</span><span class="s2">experimentEndDate: &#39;2020-09-28 08:00:00&#39;</span><span class="se">\n</span><span class="s2">experimentStartDate: &#39;2020-05-26 08:00:00&#39;</span><span class="se">\n</span><span class="s2">experimentUsers:</span><span class="se">\n</span><span class="s2">- badge: &#39;86312&#39;</span><span class="se">\n</span><span class="s2">  badgeNumber: &#39;86312&#39;</span><span class="se">\n</span><span class="s2">  email: ilavsky@aps.anl.gov</span><span class="se">\n</span><span class="s2">  firstName: Jan</span><span class="se">\n</span><span class="s2">  lastName: Ilavsky</span><span class="se">\n</span><span class="s2">- badge: &#39;53748&#39;</span><span class="se">\n</span><span class="s2">  badgeNumber: &#39;53748&#39;</span><span class="se">\n</span><span class="s2">  email: emaxey@aps.anl.gov</span><span class="se">\n</span><span class="s2">  firstName: Evan</span><span class="se">\n</span><span class="s2">  lastName: Maxey</span><span class="se">\n</span><span class="s2">- badge: &#39;64065&#39;</span><span class="se">\n</span><span class="s2">  badgeNumber: &#39;64065&#39;</span><span class="se">\n</span><span class="s2">  email: kuzmenko@aps.anl.gov</span><span class="se">\n</span><span class="s2">  firstName: Ivan</span><span class="se">\n</span><span class="s2">  lastName: Kuzmenko</span><span class="se">\n</span><span class="s2">sector: 09&quot;</span>
@@ -557,7 +1180,7 @@ from EPICS and convert it back into a Python structure.</p>
 </div>
 </section>
 <section id="downloads">
-<h2>Downloads<a class="headerlink" href="#downloads" title="Permalink to this headline">¶</a></h2>
+<h3>Downloads<a class="headerlink" href="#downloads" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>EPICS database: <a class="reference download internal" download="" href="_downloads/46c2c44d7f66c7e2364ade0357376d16/apsbss.db"><code class="xref download docutils literal notranslate"><span class="pre">apsbss.db</span></code></a></p></li>
 <li><p>EPICS IOC shell script <a class="reference download internal" download="" href="_downloads/f93f174d713b0aa51f2edc567a19a2fb/apsbss_ioc.sh"><code class="xref download docutils literal notranslate"><span class="pre">apsbss_ioc.sh</span></code></a></p></li>
@@ -566,99 +1189,162 @@ from EPICS and convert it back into a Python structure.</p>
 </ul>
 </section>
 <section id="source-code-documentation">
-<h2>Source code documentation<a class="headerlink" href="#source-code-documentation" title="Permalink to this headline">¶</a></h2>
-<p>See <a class="reference internal" href="source/index.html#beamtime-source-docs"><span class="std std-ref">APS Proposal and ESAF Support</span></a> for the source code documentation.</p>
+<h3>Source code documentation<a class="headerlink" href="#source-code-documentation" title="Link to this heading">#</a></h3>
+<p>See <a class="reference internal" href="api/index.html#api"><span class="std std-ref">API</span></a> for the source code documentation.</p>
+</section>
 </section>
 </section>
 
 
-            <div class="clearer"></div>
-          </div>
-        </div>
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="install.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Install</p>
       </div>
-      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper">
-  <div>
-    <h3><a href="index.html">Table of Contents</a></h3>
-    <ul>
-<li><a class="reference internal" href="#">apsbss</a><ul>
-<li><a class="reference internal" href="#overview">Overview</a></li>
-<li><a class="reference internal" href="#initialize-pvs-for-beam-line-and-apc-run-cycle">Initialize PVs for beam line and APC run cycle</a><ul>
-<li><a class="reference internal" href="#what-beam-line-name-to-use">What beam line name to use?</a></li>
-<li><a class="reference internal" href="#what-aps-run-cycle-to-use">What APS run cycle to use?</a></li>
-<li><a class="reference internal" href="#write-the-beam-line-name-and-cycle-to-the-pvs">Write the beam line name and cycle to the PVs</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#what-proposal-and-esaf-id-numbers-to-use">What Proposal and ESAF ID numbers to use?</a></li>
-<li><a class="reference internal" href="#view-proposal-information">View Proposal Information</a></li>
-<li><a class="reference internal" href="#get-esaf-information">Get ESAF Information</a></li>
-<li><a class="reference internal" href="#update-epics-pvs-with-proposal-and-esaf">Update EPICS PVs with Proposal and ESAF</a></li>
-<li><a class="reference internal" href="#clear-the-epics-pvs">Clear the EPICS PVs</a></li>
-<li><a class="reference internal" href="#report-information-in-the-epics-pvs">Report information in the EPICS PVs</a></li>
-<li><a class="reference internal" href="#example-apsbss-command-line">Example - <code class="docutils literal notranslate"><span class="pre">apsbss</span></code> command line</a></li>
-<li><a class="reference internal" href="#displays-for-medm-caqtdm">Displays for MEDM &amp; caQtDM</a></li>
-<li><a class="reference internal" href="#ioc-management">IOC Management</a></li>
-<li><a class="reference internal" href="#reading-yaml-in-python">Reading YAML in Python</a></li>
-<li><a class="reference internal" href="#downloads">Downloads</a></li>
-<li><a class="reference internal" href="#source-code-documentation">Source code documentation</a></li>
-</ul>
-</li>
-</ul>
+    </a>
+    <a class="right-next"
+       href="ioc.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">EPICS IOC</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
   </div>
-  <div>
-    <h4>Previous topic</h4>
-    <p class="topless"><a href="install.html"
-                          title="previous chapter">Installation</a></p>
-  </div>
-  <div>
-    <h4>Next topic</h4>
-    <p class="topless"><a href="apsbss_ioc.html"
-                          title="next chapter">apsbss: IOC Startup and Management</a></p>
-  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subcommands">Subcommands</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#beamlines">beamlines</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#runs">runs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#list">list</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#now">now</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#proposal">proposal</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#esaf">esaf</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#search">search</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#epics-related-subcommands">EPICS-related subcommands</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#clear">clear</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#setup">setup</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#update">update</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#report">report</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#demonstration">Demonstration</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#initialize-pvs-for-beam-line-and-apc-run">Initialize PVs for beam line and APC run</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#what-proposal-and-esaf-id-numbers-to-use">What Proposal and ESAF ID numbers to use?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#view-proposal-information">View Proposal Information</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#get-esaf-information">Get ESAF Information</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#update-epics-pvs-with-proposal-and-esaf">Update EPICS PVs with Proposal and ESAF</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#reference">Reference</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#displays-for-medm-caqtdm">Displays for MEDM &amp; caQtDM</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ioc-management">IOC Management</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#reading-yaml-in-python">Reading YAML in Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#downloads">Downloads</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#source-code-documentation">Source code documentation</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
       <li><a href="_sources/apsbss.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
-   </div>
-<div id="searchbox" style="display: none" role="search">
-  <h3 id="searchlabel">Quick search</h3>
-    <div class="searchformwrapper">
-    <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
-      <input type="submit" value="Go" />
-    </form>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
     </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2025, UChicago Argonne, LLC.
+      <br/>
+    
+  </p>
 </div>
-<script>$('#searchbox').show(0);</script>
-        </div>
-      </div>
-      <div class="clearer"></div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
     </div>
-    <div class="related" role="navigation" aria-label="related navigation">
-      <h3>Navigation</h3>
-      <ul>
-        <li class="right" style="margin-right: 10px">
-          <a href="genindex.html" title="General Index"
-             >index</a></li>
-        <li class="right" >
-          <a href="py-modindex.html" title="Python Module Index"
-             >modules</a> |</li>
-        <li class="right" >
-          <a href="apsbss_ioc.html" title="apsbss: IOC Startup and Management"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="install.html" title="Installation"
-             >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="index.html">apsbss 1.5.6 documentation</a> &#187;</li>
-        <li class="nav-item nav-item-this"><a href="">apsbss</a></li> 
-      </ul>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
     </div>
-    <div class="footer" role="contentinfo">
-        &#169; Copyright .
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.4.0.
-    </div>
+  
+</div>
+
+  </footer>
   </body>
 </html>

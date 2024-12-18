@@ -13,7 +13,7 @@
 # -----------------------------------------------------------------------------
 # :author:    Pete R. Jemian
 # :email:     jemian@anl.gov
-# :copyright: (c) 2017-2021, UChicago Argonne, LLC
+# :copyright: (c) 2017-2025, UChicago Argonne, LLC
 #
 # Distributed under the terms of the Creative Commons Attribution 4.0 International Public License.
 #
@@ -27,7 +27,7 @@ record(stringout, "$(P)ioc_host")
 
 record(stringout, "$(P)ioc_user")
 
-record(stringout, "$(P)esaf:cycle")
+record(stringout, "$(P)esaf:run")
 
 record(waveform, "$(P)esaf:description") {
     field(FTVL, "CHAR")
@@ -35,8 +35,9 @@ record(waveform, "$(P)esaf:description") {
 }
 
 record(stringout, "$(P)esaf:endDate")
+record(longout, "$(P)esaf:endDate:timestamp")
 
-record(stringout, "$(P)esaf:id")
+record(longout, "$(P)esaf:id")
 
 record(waveform, "$(P)esaf:raw") {
     field(FTVL, "CHAR")
@@ -48,6 +49,7 @@ record(stringout, "$(P)esaf:status")
 record(stringout, "$(P)esaf:sector")
 
 record(stringout, "$(P)esaf:startDate")
+record(longout, "$(P)esaf:startDate:timestamp")
 
 record(waveform, "$(P)esaf:title") {
     field(FTVL, "CHAR")
@@ -143,6 +145,7 @@ record(stringout, "$(P)esaf:user9:lastName")
 record(stringout, "$(P)proposal:beamline")
 
 record(stringout, "$(P)proposal:endDate")
+record(longout, "$(P)proposal:endDate:timestamp")
 
 record(bo, "$(P)proposal:mailInFlag") {
     field(ZNAM, "OFF")
@@ -150,7 +153,7 @@ record(bo, "$(P)proposal:mailInFlag") {
     field(VAL, 0)
 }
 
-record(stringout, "$(P)proposal:id")
+record(longout, "$(P)proposal:id")
 
 record(bo, "$(P)proposal:proprietaryFlag") {
     field(ZNAM, "OFF")
@@ -164,8 +167,10 @@ record(waveform, "$(P)proposal:raw") {
 }
 
 record(stringout, "$(P)proposal:startDate")
+record(longout, "$(P)proposal:startDate:timestamp")
 
 record(stringout, "$(P)proposal:submittedDate")
+record(longout, "$(P)proposal:submittedDate:timestamp")
 
 record(waveform, "$(P)proposal:title") {
     field(FTVL, "CHAR")
@@ -197,7 +202,7 @@ record(waveform, "$(P)proposal:user1:institution") {
     field(NELM, 1024)
 }
 
-record(stringout, "$(P)proposal:user1:instId")
+record(longout, "$(P)proposal:user1:instId")
 
 record(stringout, "$(P)proposal:user1:lastName")
 
@@ -207,7 +212,7 @@ record(bo, "$(P)proposal:user1:piFlag") {
     field(VAL, 0)
 }
 
-record(stringout, "$(P)proposal:user1:userId")
+record(longout, "$(P)proposal:user1:userId")
 
 record(stringout, "$(P)proposal:user2:badgeNumber")
 
@@ -220,7 +225,7 @@ record(waveform, "$(P)proposal:user2:institution") {
     field(NELM, 1024)
 }
 
-record(stringout, "$(P)proposal:user2:instId")
+record(longout, "$(P)proposal:user2:instId")
 
 record(stringout, "$(P)proposal:user2:lastName")
 
@@ -230,7 +235,7 @@ record(bo, "$(P)proposal:user2:piFlag") {
     field(VAL, 0)
 }
 
-record(stringout, "$(P)proposal:user2:userId")
+record(longout, "$(P)proposal:user2:userId")
 
 record(stringout, "$(P)proposal:user3:badgeNumber")
 
@@ -243,7 +248,7 @@ record(waveform, "$(P)proposal:user3:institution") {
     field(NELM, 1024)
 }
 
-record(stringout, "$(P)proposal:user3:instId")
+record(longout, "$(P)proposal:user3:instId")
 
 record(stringout, "$(P)proposal:user3:lastName")
 
@@ -253,7 +258,7 @@ record(bo, "$(P)proposal:user3:piFlag") {
     field(VAL, 0)
 }
 
-record(stringout, "$(P)proposal:user3:userId")
+record(longout, "$(P)proposal:user3:userId")
 
 record(stringout, "$(P)proposal:user4:badgeNumber")
 
@@ -266,7 +271,7 @@ record(waveform, "$(P)proposal:user4:institution") {
     field(NELM, 1024)
 }
 
-record(stringout, "$(P)proposal:user4:instId")
+record(longout, "$(P)proposal:user4:instId")
 
 record(stringout, "$(P)proposal:user4:lastName")
 
@@ -276,7 +281,7 @@ record(bo, "$(P)proposal:user4:piFlag") {
     field(VAL, 0)
 }
 
-record(stringout, "$(P)proposal:user4:userId")
+record(longout, "$(P)proposal:user4:userId")
 
 record(stringout, "$(P)proposal:user5:badgeNumber")
 
@@ -289,7 +294,7 @@ record(waveform, "$(P)proposal:user5:institution") {
     field(NELM, 1024)
 }
 
-record(stringout, "$(P)proposal:user5:instId")
+record(longout, "$(P)proposal:user5:instId")
 
 record(stringout, "$(P)proposal:user5:lastName")
 
@@ -299,7 +304,7 @@ record(bo, "$(P)proposal:user5:piFlag") {
     field(VAL, 0)
 }
 
-record(stringout, "$(P)proposal:user5:userId")
+record(longout, "$(P)proposal:user5:userId")
 
 record(stringout, "$(P)proposal:user6:badgeNumber")
 
@@ -312,7 +317,7 @@ record(waveform, "$(P)proposal:user6:institution") {
     field(NELM, 1024)
 }
 
-record(stringout, "$(P)proposal:user6:instId")
+record(longout, "$(P)proposal:user6:instId")
 
 record(stringout, "$(P)proposal:user6:lastName")
 
@@ -322,7 +327,7 @@ record(bo, "$(P)proposal:user6:piFlag") {
     field(VAL, 0)
 }
 
-record(stringout, "$(P)proposal:user6:userId")
+record(longout, "$(P)proposal:user6:userId")
 
 record(stringout, "$(P)proposal:user7:badgeNumber")
 
@@ -335,7 +340,7 @@ record(waveform, "$(P)proposal:user7:institution") {
     field(NELM, 1024)
 }
 
-record(stringout, "$(P)proposal:user7:instId")
+record(longout, "$(P)proposal:user7:instId")
 
 record(stringout, "$(P)proposal:user7:lastName")
 
@@ -345,7 +350,7 @@ record(bo, "$(P)proposal:user7:piFlag") {
     field(VAL, 0)
 }
 
-record(stringout, "$(P)proposal:user7:userId")
+record(longout, "$(P)proposal:user7:userId")
 
 record(stringout, "$(P)proposal:user8:badgeNumber")
 
@@ -358,7 +363,7 @@ record(waveform, "$(P)proposal:user8:institution") {
     field(NELM, 1024)
 }
 
-record(stringout, "$(P)proposal:user8:instId")
+record(longout, "$(P)proposal:user8:instId")
 
 record(stringout, "$(P)proposal:user8:lastName")
 
@@ -368,7 +373,7 @@ record(bo, "$(P)proposal:user8:piFlag") {
     field(VAL, 0)
 }
 
-record(stringout, "$(P)proposal:user8:userId")
+record(longout, "$(P)proposal:user8:userId")
 
 record(stringout, "$(P)proposal:user9:badgeNumber")
 
@@ -381,7 +386,7 @@ record(waveform, "$(P)proposal:user9:institution") {
     field(NELM, 1024)
 }
 
-record(stringout, "$(P)proposal:user9:instId")
+record(longout, "$(P)proposal:user9:instId")
 
 record(stringout, "$(P)proposal:user9:lastName")
 
@@ -391,4 +396,4 @@ record(bo, "$(P)proposal:user9:piFlag") {
     field(VAL, 0)
 }
 
-record(stringout, "$(P)proposal:user9:userId")
+record(longout, "$(P)proposal:user9:userId")
