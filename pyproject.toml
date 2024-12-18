@@ -10,7 +10,7 @@ maintainers = [{ name = "Pete Jemian", email = "prjemian@gmail.com" }]
 dynamic = ["version"]
 readme = "README.md"
 requires-python = ">=3.9"
-keywords = ["APS", "BSS", "bluesky", "ophyd"]
+keywords = ["APS", "BSS", "ESAF", "Proposal"]
 # https://packaging.python.org/en/latest/specifications/declaring-project-metadata/?highlight=license
 license = { file = "LICENSE.txt" }
 # https://pypi.org/classifiers/
@@ -22,9 +22,9 @@ classifiers = [
   "License :: Public Domain",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3.9",
-  "Programming Language :: Python :: 3.10",
-  "Programming Language :: Python :: 3.11",
+  # "Programming Language :: Python :: 3.9",
+  # "Programming Language :: Python :: 3.10",
+  # "Programming Language :: Python :: 3.11",
   # https://anaconda.org/aps-anl-tag/aps-dm-api/files
   # "Programming Language :: Python :: 3.12", # dm does not support yet.
   "Topic :: Scientific/Engineering",
