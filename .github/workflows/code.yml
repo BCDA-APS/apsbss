@@ -53,6 +53,7 @@ jobs:
             apsu::aps-dm-api
             caproto
             coveralls
+            pyepics
             pytest
             pytest-cov
             python=${{ matrix.python-version }}

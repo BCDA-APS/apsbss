@@ -71,6 +71,7 @@ dev = [
   "isort",
   "mypy",
   "pre-commit",
+  "pyepics",
   "pytest",
   "ruff",
 ]
