@@ -1,0 +1,1115 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>apsbss.apsbss &#8212; apsbss 1.5</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=c1e90d98"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/apsbss/apsbss';</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.5" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">apsbss 1.5</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../install.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../apsbss.html">
+    apsbss
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../ioc.html">
+    EPICS IOC
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changes.html">
+    History
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../../license.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BCDA-APS/apsbss" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../install.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../apsbss.html">
+    apsbss
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../ioc.html">
+    EPICS IOC
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../changes.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../license.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BCDA-APS/apsbss" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">apsbss.apsbss</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for apsbss.apsbss</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Retrieve specific records from the APS Proposal and ESAF databases.</span>
+
+<span class="sd">This code provides the command-line application: ``apsbss``</span>
+
+<span class="sd">.. note:: BSS: APS Beamline Scheduling System</span>
+
+<span class="sd">EXAMPLES::</span>
+
+<span class="sd">    apsbss now 19-ID-D</span>
+<span class="sd">    apsbss esaf 276575</span>
+<span class="sd">    apsbss proposal 1010753 2024-3 12-ID-B</span>
+
+<span class="sd">.. rubric:: Application</span>
+<span class="sd">.. autosummary::</span>
+
+<span class="sd">    ~cmd_esaf</span>
+<span class="sd">    ~cmd_list</span>
+<span class="sd">    ~cmd_now</span>
+<span class="sd">    ~cmd_proposal</span>
+<span class="sd">    ~cmd_runs</span>
+<span class="sd">    ~cmd_search</span>
+<span class="sd">    ~get_options</span>
+<span class="sd">    ~main</span>
+
+
+<span class="sd">.. rubric:: EPICS Support</span>
+<span class="sd">.. autosummary::</span>
+
+<span class="sd">    ~connect_epics</span>
+<span class="sd">    ~epicsClear</span>
+<span class="sd">    ~epicsReport</span>
+<span class="sd">    ~epicsSetup</span>
+<span class="sd">    ~epicsUpdate</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">import</span> <span class="nn">pyRestTable</span>
+<span class="kn">import</span> <span class="nn">yaml</span>
+
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">iso2dt</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">printColumns</span>
+<span class="kn">from</span> <span class="nn">.core</span> <span class="kn">import</span> <span class="n">table_list</span>
+<span class="kn">from</span> <span class="nn">.server_interface</span> <span class="kn">import</span> <span class="n">Server</span>
+
+<span class="n">CONNECT_TIMEOUT</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">parser</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">server</span> <span class="o">=</span> <span class="n">Server</span><span class="p">(</span><span class="n">creds_file</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;APSBSS_CREDS_FILE&quot;</span><span class="p">))</span>
+
+
+<div class="viewcode-block" id="EpicsNotConnected">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.EpicsNotConnected">[docs]</a>
+<span class="k">class</span> <span class="nc">EpicsNotConnected</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;No connection to EPICS PV.&quot;&quot;&quot;</span></div>
+
+
+
+<div class="viewcode-block" id="connect_epics">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.connect_epics">[docs]</a>
+<span class="k">def</span> <span class="nf">connect_epics</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Connect with the EPICS database instance.</span>
+
+<span class="sd">    PARAMETERS</span>
+
+<span class="sd">    prefix : str</span>
+<span class="sd">        EPICS PV prefix</span>
+<span class="sd">    n : int</span>
+<span class="sd">        Number of connection events to attempt before raising EpicsNotConnected.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="kn">from</span> <span class="nn">.apsbss_ophyd</span> <span class="kn">import</span> <span class="n">EpicsBssDevice</span>
+
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">while</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">bss</span> <span class="o">=</span> <span class="n">EpicsBssDevice</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;bss&quot;</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">bss</span><span class="o">.</span><span class="n">wait_for_connection</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="n">CONNECT_TIMEOUT</span><span class="p">)</span>
+            <span class="k">break</span>
+        <span class="k">except</span> <span class="ne">TimeoutError</span> <span class="k">as</span> <span class="n">reason</span><span class="p">:</span>
+            <span class="n">n</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">bss</span><span class="o">.</span><span class="n">connected</span><span class="p">:</span>
+                <span class="n">msg</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Did not connect with EPICS </span><span class="si">{</span><span class="n">prefix</span><span class="si">}</span><span class="s2"> in </span><span class="si">{</span><span class="n">CONNECT_TIMEOUT</span><span class="si">}</span><span class="s2">s&quot;</span>
+                <span class="k">raise</span> <span class="n">EpicsNotConnected</span><span class="p">(</span><span class="n">msg</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">reason</span>
+    <span class="n">t_connect</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;connected in </span><span class="si">%.03f</span><span class="s2">s&quot;</span><span class="p">,</span> <span class="n">t_connect</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">bss</span></div>
+
+
+
+<div class="viewcode-block" id="epicsClear">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.epicsClear">[docs]</a>
+<span class="k">def</span> <span class="nf">epicsClear</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Clear the EPICS database.</span>
+<span class="sd">    Connect with the EPICS database instance.</span>
+
+<span class="sd">    PARAMETERS</span>
+
+<span class="sd">    prefix</span>
+<span class="sd">        *str* :</span>
+<span class="sd">        EPICS PV prefix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;clear EPICS </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span>
+    <span class="n">bss</span> <span class="o">=</span> <span class="n">connect_epics</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+
+    <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;clear PVs ...&quot;</span><span class="p">)</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">bss</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+    <span class="n">t_clear</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span> <span class="o">-</span> <span class="n">t0</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;cleared in </span><span class="si">%.03f</span><span class="s2">s&quot;</span><span class="p">,</span> <span class="n">t_clear</span><span class="p">)</span>
+    <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;Done&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="epicsReport">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.epicsReport">[docs]</a>
+<span class="k">def</span> <span class="nf">epicsReport</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subcommand ``report``: EPICS PVs: report the PV values.</span>
+
+<span class="sd">    PARAMETERS</span>
+
+<span class="sd">    args</span>
+<span class="sd">        *obj* :</span>
+<span class="sd">        Object returned by ``argparse``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bss</span> <span class="o">=</span> <span class="n">connect_epics</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">bss</span><span class="o">.</span><span class="n">_table</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">30</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="epicsSetup">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.epicsSetup">[docs]</a>
+<span class="k">def</span> <span class="nf">epicsSetup</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">beamline</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Define the beamline name and APS run in the EPICS database.</span>
+<span class="sd">    Connect with the EPICS database instance.</span>
+
+<span class="sd">    PARAMETERS</span>
+
+<span class="sd">    prefix</span>
+<span class="sd">        *str* :</span>
+<span class="sd">        EPICS PV prefix</span>
+<span class="sd">    beamline</span>
+<span class="sd">        *str* :</span>
+<span class="sd">        Name of beam line (as defined by the BSS)</span>
+<span class="sd">    run</span>
+<span class="sd">        *str* :</span>
+<span class="sd">        Name of APS run (as defined by the BSS).</span>
+<span class="sd">        optional: default is current APS run name.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">bss</span> <span class="o">=</span> <span class="n">connect_epics</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+
+    <span class="n">run</span> <span class="o">=</span> <span class="n">run</span> <span class="ow">or</span> <span class="n">server</span><span class="o">.</span><span class="n">current_run</span>
+    <span class="n">sector</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">beamline</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+        <span class="s2">&quot;setup EPICS </span><span class="si">%s</span><span class="s2"> </span><span class="si">%s</span><span class="s2"> run=</span><span class="si">%s</span><span class="s2"> sector=</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span>
+        <span class="n">prefix</span><span class="p">,</span>
+        <span class="n">beamline</span><span class="p">,</span>
+        <span class="n">run</span><span class="p">,</span>
+        <span class="n">sector</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">wait_for_connection</span><span class="p">()</span>
+    <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;clear PVs ...&quot;</span><span class="p">)</span>
+
+    <span class="n">bss</span><span class="o">.</span><span class="n">wait_for_connection</span><span class="p">()</span>
+    <span class="n">bss</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;write PVs ...&quot;</span><span class="p">)</span>
+    <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">aps_run</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">run</span><span class="p">)</span>
+    <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">beamline_name</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">beamline</span><span class="p">)</span>
+    <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">sector</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">sector</span><span class="p">))</span>
+    <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;Done&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">bss</span></div>
+
+
+
+<div class="viewcode-block" id="epicsUpdate">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.epicsUpdate">[docs]</a>
+<span class="k">def</span> <span class="nf">epicsUpdate</span><span class="p">(</span><span class="n">prefix</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Update EPICS database instance with current ESAF &amp; proposal info.</span>
+<span class="sd">    Connect with the EPICS database instance.</span>
+
+<span class="sd">    PARAMETERS</span>
+
+<span class="sd">    prefix</span>
+<span class="sd">        *str* :</span>
+<span class="sd">        EPICS PV prefix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;update EPICS </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">prefix</span><span class="p">)</span>
+    <span class="n">bss</span> <span class="o">=</span> <span class="n">connect_epics</span><span class="p">(</span><span class="n">prefix</span><span class="p">)</span>
+
+    <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;clearing PVs ...&quot;</span><span class="p">)</span>
+    <span class="n">bss</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+    <span class="n">run</span> <span class="o">=</span> <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">aps_run</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+
+    <span class="n">beamline</span> <span class="o">=</span> <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">beamline_name</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+    <span class="c1"># sector = bss.esaf.sector.get()</span>
+    <span class="n">esaf_id</span> <span class="o">=</span> <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">esaf_id</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+    <span class="n">proposal_id</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">proposal_id</span><span class="o">.</span><span class="n">get</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">beamline</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;undefined: </span><span class="si">{</span><span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">beamline_name</span><span class="o">.</span><span class="n">pvname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;must set beamline name in &quot;</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">beamline_name</span><span class="o">.</span><span class="n">pvname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">beamline</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">server</span><span class="o">.</span><span class="n">beamlines</span><span class="p">:</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unrecognized: </span><span class="si">{</span><span class="n">beamline</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">beamline</span><span class="si">}</span><span class="s2"> is not recognized&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">run</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;undefined: </span><span class="si">{</span><span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">aps_run</span><span class="o">.</span><span class="n">pvname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;must set APS run name in </span><span class="si">{</span><span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">aps_run</span><span class="o">.</span><span class="n">pvname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">run</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">server</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;unrecognized: </span><span class="si">{</span><span class="n">run</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">run</span><span class="si">}</span><span class="s2"> is not recognized&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">esaf_id</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;get ESAF </span><span class="si">{</span><span class="n">esaf_id</span><span class="si">}</span><span class="s2"> from APS ...&quot;</span><span class="p">)</span>
+        <span class="n">esaf</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">esaf</span><span class="p">(</span><span class="n">esaf_id</span><span class="p">)</span>
+
+        <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;set ESAF PVs ...&quot;</span><span class="p">)</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">description</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">esaf</span><span class="p">[</span><span class="s2">&quot;description&quot;</span><span class="p">])</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">iso2dt</span><span class="p">(</span><span class="n">esaf</span><span class="p">[</span><span class="s2">&quot;experimentEndDate&quot;</span><span class="p">])</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">end_date</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dt</span><span class="p">))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">end_date_timestamp</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">esaf_status</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">esaf</span><span class="p">[</span><span class="s2">&quot;esafStatus&quot;</span><span class="p">])</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">esaf</span><span class="p">))</span>
+        <span class="n">dt</span> <span class="o">=</span> <span class="n">iso2dt</span><span class="p">(</span><span class="n">esaf</span><span class="p">[</span><span class="s2">&quot;experimentStartDate&quot;</span><span class="p">])</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">dt</span><span class="p">))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">start_date_timestamp</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">dt</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">esaf</span><span class="p">[</span><span class="s2">&quot;esafTitle&quot;</span><span class="p">])</span>
+
+        <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">user_last_names</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;lastName&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">esaf</span><span class="p">[</span><span class="s2">&quot;experimentUsers&quot;</span><span class="p">]]))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">user_badges</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;badge&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">esaf</span><span class="p">[</span><span class="s2">&quot;experimentUsers&quot;</span><span class="p">]]))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">number_users_in_pvs</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">user</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">esaf</span><span class="p">[</span><span class="s2">&quot;experimentUsers&quot;</span><span class="p">]):</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;user</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">badge_number</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;badge&quot;</span><span class="p">])</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">email</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;email&quot;</span><span class="p">])</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">first_name</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;firstName&quot;</span><span class="p">])</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">last_name</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">user</span><span class="p">[</span><span class="s2">&quot;lastName&quot;</span><span class="p">])</span>
+            <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">number_users_in_pvs</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">esaf</span><span class="o">.</span><span class="n">number_users_total</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">esaf</span><span class="p">[</span><span class="s2">&quot;experimentUsers&quot;</span><span class="p">]))</span>
+
+    <span class="k">if</span> <span class="n">proposal_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;get Proposal </span><span class="si">{</span><span class="n">proposal_id</span><span class="si">}</span><span class="s2"> from APS ...&quot;</span><span class="p">)</span>
+        <span class="n">proposal</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">proposal</span><span class="p">(</span><span class="n">proposal_id</span><span class="p">,</span> <span class="n">beamline</span><span class="p">,</span> <span class="n">run</span><span class="p">)</span>
+
+        <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;set Proposal PVs ...&quot;</span><span class="p">)</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">end_date</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">endDate</span><span class="p">))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">end_date_timestamp</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">endDate</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">mail_in_flag</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">mail_in</span><span class="p">)</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">proprietary_flag</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">proprietary</span><span class="p">)</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">raw</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">proposal</span><span class="p">))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">start_date</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">startDate</span><span class="p">))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">start_date_timestamp</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">startDate</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">submitted_date</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">submittedDate</span><span class="p">))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">submitted_date_timestamp</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">submittedDate</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">title</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">user_last_names</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">lastNames</span><span class="p">))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">user_badges</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">badges</span><span class="p">))</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">number_users_in_pvs</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">user</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">_users</span><span class="p">):</span>
+            <span class="n">obj</span> <span class="o">=</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;user</span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">badge_number</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">badge</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">email</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">first_name</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">firstName</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">last_name</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">lastName</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">institution</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">institution</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">institution_id</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">institution_id</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">user_id</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">user_id</span><span class="p">)</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">pi_flag</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">is_pi</span><span class="p">)</span>
+            <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">number_users_in_pvs</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">8</span><span class="p">:</span>
+                <span class="k">break</span>
+        <span class="n">bss</span><span class="o">.</span><span class="n">proposal</span><span class="o">.</span><span class="n">number_users_total</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">users</span><span class="p">))</span>
+
+    <span class="n">bss</span><span class="o">.</span><span class="n">status_msg</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;Done&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="get_options">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.get_options">[docs]</a>
+<span class="k">def</span> <span class="nf">get_options</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Handle command line arguments.&quot;&quot;&quot;</span>
+    <span class="k">global</span> <span class="n">parser</span>
+    <span class="kn">import</span> <span class="nn">argparse</span>
+
+    <span class="kn">from</span> <span class="nn">.__init__</span> <span class="kn">import</span> <span class="n">__version__</span>
+
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">prog</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">])[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span>
+        <span class="n">description</span><span class="o">=</span><span class="vm">__doc__</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-v&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--version&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;version&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;print version number and exit&quot;</span><span class="p">,</span>
+        <span class="n">version</span><span class="o">=</span><span class="n">__version__</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">subcommand</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">add_subparsers</span><span class="p">(</span><span class="n">dest</span><span class="o">=</span><span class="s2">&quot;subcommand&quot;</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;subcommand&quot;</span><span class="p">)</span>
+
+    <span class="n">subcommand</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s2">&quot;beamlines&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;print list of beamlines&quot;</span><span class="p">)</span>
+
+    <span class="n">p_sub</span> <span class="o">=</span> <span class="n">subcommand</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s2">&quot;runs&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;print APS run names&quot;</span><span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-f&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--full&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;full report including dates (default is compact)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-a&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--ascending&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_false&quot;</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;full report by ascending names (default is descending)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">p_sub</span> <span class="o">=</span> <span class="n">subcommand</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;list&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;print proposals and ESAFs for beamline and run&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;APS run name.&quot;</span>
+        <span class="s2">&quot;  One of the names returned by &#39;apsbss runs&#39;&quot;</span>
+        <span class="s2">&quot; or one of these (&#39;past&#39;,  &#39;prior&#39;, &#39;previous&#39;)&quot;</span>
+        <span class="s2">&quot; for the previous run, (&#39;current&#39; or &#39;now&#39;)&quot;</span>
+        <span class="s2">&quot; for the current run, (&#39;future&#39; or &#39;next&#39;)&quot;</span>
+        <span class="s2">&quot; for the next run, or &#39;recent&#39; for the past two years.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-r&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--run&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;now&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">msg</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;beamlineName&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Beamline name&quot;</span><span class="p">)</span>
+
+    <span class="n">p_sub</span> <span class="o">=</span> <span class="n">subcommand</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;now&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;print information of proposals &amp; ESAFs running now&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;beamlineName&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Beamline name&quot;</span><span class="p">)</span>
+
+    <span class="n">p_sub</span> <span class="o">=</span> <span class="n">subcommand</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;proposal&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;print specific proposal for beamline and run&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;proposalId&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;proposal ID number&quot;</span><span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;APS run name&quot;</span><span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;beamlineName&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Beamline name&quot;</span><span class="p">)</span>
+
+    <span class="n">p_sub</span> <span class="o">=</span> <span class="n">subcommand</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s2">&quot;esaf&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;print specific ESAF&quot;</span><span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;esafId&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;ESAF ID number&quot;</span><span class="p">)</span>
+
+    <span class="n">p_sub</span> <span class="o">=</span> <span class="n">subcommand</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span>
+        <span class="s2">&quot;search&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;print proposals and ESAFs for beamline and run matching the query&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s2">&quot;APS run name.&quot;</span>
+        <span class="s2">&quot;  One of the names returned by &#39;apsbss runs&#39;&quot;</span>
+        <span class="s2">&quot; or one of these (&#39;past&#39;,  &#39;prior&#39;, &#39;previous&#39;)&quot;</span>
+        <span class="s2">&quot; for the previous run, (&#39;current&#39; or &#39;now&#39;)&quot;</span>
+        <span class="s2">&quot; for the current run, (&#39;future&#39; or &#39;next&#39;)&quot;</span>
+        <span class="s2">&quot; for the next run, or &#39;recent&#39; for the past two years.&quot;</span>
+    <span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;-r&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;--run&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;recent&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="n">msg</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;beamlineName&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Beamline name&quot;</span><span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;query&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;query&quot;</span><span class="p">)</span>
+
+    <span class="n">p_sub</span> <span class="o">=</span> <span class="n">subcommand</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s2">&quot;clear&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;EPICS PVs: clear&quot;</span><span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;prefix&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;EPICS PV prefix&quot;</span><span class="p">)</span>
+
+    <span class="n">p_sub</span> <span class="o">=</span> <span class="n">subcommand</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s2">&quot;setup&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;EPICS PVs: setup&quot;</span><span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;prefix&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;EPICS PV prefix&quot;</span><span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;beamlineName&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Beamline name&quot;</span><span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;run&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;APS run name&quot;</span><span class="p">)</span>
+
+    <span class="n">p_sub</span> <span class="o">=</span> <span class="n">subcommand</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s2">&quot;update&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;EPICS PVs: update from BSS&quot;</span><span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;prefix&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;EPICS PV prefix&quot;</span><span class="p">)</span>
+
+    <span class="n">p_sub</span> <span class="o">=</span> <span class="n">subcommand</span><span class="o">.</span><span class="n">add_parser</span><span class="p">(</span><span class="s2">&quot;report&quot;</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;EPICS PVs: report what is in the PVs&quot;</span><span class="p">)</span>
+    <span class="n">p_sub</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span><span class="s2">&quot;prefix&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;EPICS PV prefix&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_esaf">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.cmd_esaf">[docs]</a>
+<span class="k">def</span> <span class="nf">cmd_esaf</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subcommand ``esaf``: print list of beamlines.</span>
+
+<span class="sd">    PARAMETERS</span>
+
+<span class="sd">    args</span>
+<span class="sd">        *obj* :</span>
+<span class="sd">        Object returned by ``argparse``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">esaf</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">esaf</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">esafId</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">esaf</span><span class="p">))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">reason</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exception: </span><span class="si">{</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_list">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.cmd_list">[docs]</a>
+<span class="k">def</span> <span class="nf">cmd_list</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subcommand ``list``: print proposals and ESAFs for beamline and run</span>
+
+<span class="sd">    PARAMETERS</span>
+
+<span class="sd">    args</span>
+<span class="sd">        *obj* :</span>
+<span class="sd">        Object returned by ``argparse``</span>
+
+<span class="sd">    New in release 1.3.9</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">beamline</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">beamlineName</span>
+    <span class="n">runs</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">parse_runs_arg</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">run</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span>
+    <span class="n">sector</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">beamline</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;run(s): </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">runs</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">runs</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="n">esafs</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">esafs</span><span class="p">(</span><span class="n">sector</span><span class="p">,</span> <span class="n">run</span><span class="p">)</span>
+        <span class="n">proposals</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">proposals</span><span class="p">(</span><span class="n">beamline</span><span class="p">,</span> <span class="n">run</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Proposal(s): beam line </span><span class="si">{</span><span class="n">beamline</span><span class="si">}</span><span class="s2">, run(s): </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">runs</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">proposal_table</span><span class="p">(</span><span class="n">proposals</span><span class="p">))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESAF(s): sector </span><span class="si">{</span><span class="n">sector</span><span class="si">}</span><span class="s2">, run(s): </span><span class="si">{</span><span class="s1">&#39;, &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">runs</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">esaf_table</span><span class="p">(</span><span class="n">esafs</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_now">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.cmd_now">[docs]</a>
+<span class="k">def</span> <span class="nf">cmd_now</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subcommand ``now``: print information of proposals &amp; ESAFs running now.</span>
+
+<span class="sd">    PARAMETERS</span>
+
+<span class="sd">    args</span>
+<span class="sd">        *obj* :</span>
+<span class="sd">        Object returned by ``argparse``</span>
+
+<span class="sd">    New in release 2.0.0</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">beamline</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">beamlineName</span>
+    <span class="n">targetDate</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">astimezone</span><span class="p">()</span>
+    <span class="n">run</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">find_run</span><span class="p">(</span><span class="n">targetDate</span><span class="p">)</span>
+    <span class="n">sector</span> <span class="o">=</span> <span class="n">beamline</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">esafs</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">esaf</span>
+        <span class="k">for</span> <span class="n">esaf</span> <span class="ow">in</span> <span class="n">server</span><span class="o">.</span><span class="n">esafs</span><span class="p">(</span><span class="n">sector</span><span class="p">,</span> <span class="n">run</span><span class="p">)</span>
+        <span class="c1"># formatting comment</span>
+        <span class="k">if</span> <span class="n">esaf</span><span class="o">.</span><span class="n">startDate</span> <span class="o">&lt;=</span> <span class="n">targetDate</span> <span class="o">&lt;=</span> <span class="n">esaf</span><span class="o">.</span><span class="n">endDate</span>
+    <span class="p">]</span>
+    <span class="n">props</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="n">prop</span><span class="o">.</span><span class="n">proposal_id</span><span class="p">:</span> <span class="n">prop</span>
+        <span class="k">for</span> <span class="n">prop</span> <span class="ow">in</span> <span class="n">server</span><span class="o">.</span><span class="n">proposals</span><span class="p">(</span><span class="n">beamline</span><span class="p">,</span> <span class="n">run</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">prop</span><span class="o">.</span><span class="n">startDate</span> <span class="o">&lt;=</span> <span class="n">targetDate</span> <span class="o">&lt;=</span> <span class="n">prop</span><span class="o">.</span><span class="n">endDate</span>
+    <span class="p">}</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Proposal(s): beam line </span><span class="si">{</span><span class="n">beamline</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">targetDate</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">proposal_table</span><span class="p">(</span><span class="n">props</span><span class="p">))</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ESAF(s): sector </span><span class="si">{</span><span class="n">sector</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">targetDate</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">esaf_table</span><span class="p">(</span><span class="n">esafs</span><span class="p">))</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_proposal">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.cmd_proposal">[docs]</a>
+<span class="k">def</span> <span class="nf">cmd_proposal</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subcommand ``proposal``: print specific proposal for beamline and run.</span>
+
+<span class="sd">    PARAMETERS</span>
+
+<span class="sd">    args</span>
+<span class="sd">        *obj* :</span>
+<span class="sd">        Object returned by ``argparse``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">proposal</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">proposal</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">proposalId</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">beamlineName</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">proposal</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()))</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">reason</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exception: </span><span class="si">{</span><span class="n">reason</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_runs">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.cmd_runs">[docs]</a>
+<span class="k">def</span> <span class="nf">cmd_runs</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subcommand ``runs``: print APS run names.</span>
+
+<span class="sd">    PARAMETERS</span>
+
+<span class="sd">    args</span>
+<span class="sd">        *obj* :</span>
+<span class="sd">        Object returned by ``argparse``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">full</span><span class="p">:</span>
+        <span class="n">table</span> <span class="o">=</span> <span class="n">pyRestTable</span><span class="o">.</span><span class="n">Table</span><span class="p">()</span>
+        <span class="n">table</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="s2">&quot;run start end&quot;</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">sorter</span><span class="p">(</span><span class="n">run</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">run</span><span class="o">.</span><span class="n">startDate</span>
+
+        <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">_runs</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">sorter</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">ascending</span><span class="p">):</span>
+            <span class="n">table</span><span class="o">.</span><span class="n">addRow</span><span class="p">((</span><span class="nb">str</span><span class="p">(</span><span class="n">run</span><span class="p">),</span> <span class="n">run</span><span class="o">.</span><span class="n">startDate</span><span class="p">,</span> <span class="n">run</span><span class="o">.</span><span class="n">endDate</span><span class="p">))</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">table</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">printColumns</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">runs</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="cmd_search">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.cmd_search">[docs]</a>
+<span class="k">def</span> <span class="nf">cmd_search</span><span class="p">(</span><span class="n">args</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Subcommand ``search``: Print proposals and ESAFs for beamline and run matching the query.</span>
+
+<span class="sd">    PARAMETERS</span>
+
+<span class="sd">    args</span>
+<span class="sd">        *obj* :</span>
+<span class="sd">        Object returned by ``argparse``</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">beamline</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">beamlineName</span>
+    <span class="n">query</span> <span class="o">=</span> <span class="n">args</span><span class="o">.</span><span class="n">query</span>
+    <span class="n">runs</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">run</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Search: </span><span class="si">{</span><span class="n">beamline</span><span class="si">=!r}</span><span class="s2"> </span><span class="si">{</span><span class="n">runs</span><span class="si">=!r}</span><span class="s2"> </span><span class="si">{</span><span class="n">query</span><span class="si">=!r}</span><span class="s2">&quot;</span>
+
+    <span class="n">runs</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">parse_runs_arg</span><span class="p">(</span><span class="n">runs</span><span class="p">)</span>
+    <span class="n">sector</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">beamline</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;-&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># Index the ESAFs &amp; Proposals for the beamline &amp; runs.</span>
+    <span class="n">esafs</span><span class="p">,</span> <span class="n">props</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">server</span><span class="o">.</span><span class="n">parse_runs_arg</span><span class="p">(</span><span class="n">runs</span><span class="p">):</span>
+        <span class="n">esafs</span> <span class="o">+=</span> <span class="n">server</span><span class="o">.</span><span class="n">esafs</span><span class="p">(</span><span class="n">sector</span><span class="p">,</span> <span class="n">run</span><span class="p">)</span>
+        <span class="n">props</span> <span class="o">+=</span> <span class="nb">list</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">proposals</span><span class="p">(</span><span class="n">beamline</span><span class="p">,</span> <span class="n">run</span><span class="p">)</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>  <span class="c1"># bare API</span>
+    <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">&quot;search: </span><span class="si">%s</span><span class="s2">, results=</span><span class="si">%r</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">title</span><span class="p">,</span> <span class="n">results</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2"> -- no matches&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">title</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">table_list</span><span class="p">(</span><span class="n">results</span><span class="p">))</span>  <span class="c1"># CLI output</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../api/_apsbss.html#apsbss.apsbss.main">[docs]</a>
+<span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Command-line interface for ``apsbss`` program.&quot;&quot;&quot;</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">get_options</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s2">&quot;beamlines&quot;</span><span class="p">:</span>
+        <span class="n">printColumns</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">beamlines</span><span class="p">,</span> <span class="n">numColumns</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">width</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s2">&quot;clear&quot;</span><span class="p">:</span>
+        <span class="n">epicsClear</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s2">&quot;runs&quot;</span><span class="p">:</span>
+        <span class="n">cmd_runs</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s2">&quot;esaf&quot;</span><span class="p">:</span>
+        <span class="n">cmd_esaf</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s2">&quot;list&quot;</span><span class="p">:</span>
+        <span class="n">cmd_list</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s2">&quot;now&quot;</span><span class="p">:</span>
+        <span class="n">cmd_now</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s2">&quot;proposal&quot;</span><span class="p">:</span>
+        <span class="n">cmd_proposal</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s2">&quot;search&quot;</span><span class="p">:</span>
+        <span class="n">cmd_search</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s2">&quot;setup&quot;</span><span class="p">:</span>
+        <span class="n">epicsSetup</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">prefix</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">beamlineName</span><span class="p">,</span> <span class="n">args</span><span class="o">.</span><span class="n">run</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s2">&quot;update&quot;</span><span class="p">:</span>
+        <span class="n">epicsUpdate</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">prefix</span><span class="p">)</span>
+
+    <span class="k">elif</span> <span class="n">args</span><span class="o">.</span><span class="n">subcommand</span> <span class="o">==</span> <span class="s2">&quot;report&quot;</span><span class="p">:</span>
+        <span class="n">epicsReport</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">parser</span><span class="o">.</span><span class="n">print_usage</span><span class="p">()</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+
+<span class="c1"># -----------------------------------------------------------------------------</span>
+<span class="c1"># :author:    Pete R. Jemian</span>
+<span class="c1"># :email:     jemian@anl.gov</span>
+<span class="c1"># :copyright: (c) 2017-2025, UChicago Argonne, LLC</span>
+<span class="c1">#</span>
+<span class="c1"># Distributed under the terms of the Creative Commons Attribution 4.0 International Public License.</span>
+<span class="c1">#</span>
+<span class="c1"># The full license is in the file LICENSE.txt, distributed with this software.</span>
+<span class="c1"># -----------------------------------------------------------------------------</span>
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2025, UChicago Argonne, LLC.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

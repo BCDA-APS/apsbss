@@ -1,0 +1,726 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>EPICS IOC &#8212; apsbss 1.5</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="_static/documentation_options.js?v=c1e90d98"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'ioc';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API" href="api/index.html" />
+    <link rel="prev" title="apsbss" href="apsbss.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.5" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">apsbss 1.5</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="install.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="apsbss.html">
+    apsbss
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    EPICS IOC
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changes.html">
+    History
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="license.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BCDA-APS/apsbss" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="install.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="apsbss.html">
+    apsbss
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="#">
+    EPICS IOC
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="api/index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="changes.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="license.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BCDA-APS/apsbss" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"></div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">EPICS IOC</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="epics-ioc">
+<span id="apsbss-ioc"></span><h1>EPICS IOC<a class="headerlink" href="#epics-ioc" title="Link to this heading">#</a></h1>
+<p>The <a class="reference internal" href="apsbss.html#apsbss-application"><span class="std std-ref">apsbss</span></a> software
+provides information from the APS Proposal
+and ESAF (experiment safety approval
+form) databases as PVs to the local controls network.
+The <code class="docutils literal notranslate"><span class="pre">aps-dm-api</span></code> (<code class="docutils literal notranslate"><span class="pre">dm</span></code> for short) package <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>
+is used to access the APS databases as read-only.
+The information in the PVs can be used as metadata
+for inclusion in data files produced</p>
+<p><em>No information is written back to the APS
+databases from this software.</em></p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p><code class="docutils literal notranslate"><span class="pre">dm</span></code>: <a class="reference external" href="https://anaconda.org/search?q=aps-dm-api">https://anaconda.org/search?q=aps-dm-api</a></p>
+</aside>
+</aside>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p>Create the PVs in an EPICS IOC</p></li>
+<li><p>Initialize PVs with beam line name and APS run number</p></li>
+<li><p>Set PV with the Proposal ID number</p></li>
+<li><p>Set PV with the ESAF ID number</p></li>
+<li><p>Retrieve (&amp; update PVs) information from APS databases</p></li>
+</ol>
+</section>
+<section id="start-epics-ioc">
+<span id="apsbss-ioc-management"></span><h2>Start EPICS IOC<a class="headerlink" href="#start-epics-ioc" title="Link to this heading">#</a></h2>
+<p>The EPICS Process Variables (PVs) that support this software
+are provided by an EPICS PV server (IOC).  The PVs are defined
+by including the <code class="docutils literal notranslate"><span class="pre">apsbss.db</span></code> database file in the startup
+of the IOC.  The database can be add to an existing IOC
+or run as a stand-alone IOC using the <code class="docutils literal notranslate"><span class="pre">softIoc</span></code> application
+from EPICS base.</p>
+<p>To ensure that we create PVs with unique names, decide what
+prefix to use with the EPICS database.  Such as, for APS beam
+line 9-ID, you might pick: <code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code> (making sure to end
+the prefix with the customary <code class="docutils literal notranslate"><span class="pre">:</span></code>).</p>
+<section id="add-epics-database-to-existing-ioc">
+<h3>Add EPICS database to existing IOC<a class="headerlink" href="#add-epics-database-to-existing-ioc" title="Link to this heading">#</a></h3>
+<p>To include <code class="docutils literal notranslate"><span class="pre">apsbss.db</span></code> in an existing IOC, copy the file
+(see Downloads below) into the IOC’s startup directory
+(typically the directory with <code class="docutils literal notranslate"><span class="pre">st.cmd</span></code>).  Edit the <code class="docutils literal notranslate"><span class="pre">st.cmd</span></code>
+file and a line like this just before the call to <code class="docutils literal notranslate"><span class="pre">iocInit</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">dbLoadRecords</span><span class="p">(</span><span class="s2">&quot;apsbss.db&quot;</span><span class="p">,</span> <span class="s2">&quot;P=9id:bss:&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Once the IOC is started, these PVs should be available to any
+EPICS client on the local network.</p>
+</section>
+<section id="run-epics-database-in-softioc-from-epics-base">
+<h3>Run EPICS database in softIoc from EPICS Base<a class="headerlink" href="#run-epics-database-in-softioc-from-epics-base" title="Link to this heading">#</a></h3>
+<p>For this example, we pick a unique name for this process,
+(<code class="docutils literal notranslate"><span class="pre">ioc9idbss</span></code>) based on the PV prefix (<code class="docutils literal notranslate"><span class="pre">9id:bss:</span></code>).</p>
+<aside class="sidebar">
+<p class="sidebar-title">TIP</p>
+<p>If you customize your copy of <code class="docutils literal notranslate"><span class="pre">apsbss_ioc.sh</span></code>
+and pre-define the two lines:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># change the program defaults here</span>
+<span class="n">DEFAULT_SESSION_NAME</span><span class="o">=</span><span class="n">apsbss</span>
+<span class="n">DEFAULT_IOC_PREFIX</span><span class="o">=</span><span class="n">ioc</span><span class="p">:</span><span class="n">bss</span><span class="p">:</span>
+</pre></div>
+</div>
+<p>then you do not need to supply these terms as
+command-line arguments.  The usage command
+will show these the default names you provided.</p>
+</aside>
+<p><strong>Start</strong> the IOC using the <code class="docutils literal notranslate"><span class="pre">apsbss_ioc.sh</span></code> tool
+(as described below), with this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss_ioc.sh start ioc9idbss 9id:bss:
+Starting ioc9idbss with IOC prefix 9id:bss:
+</pre></div>
+</div>
+<p><strong>Stop</strong> the IOC with this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss_ioc.sh stop ioc9idbss 9id:bss:
+ioc9idbss is not running
+</pre></div>
+</div>
+<p>The IOC <strong>restart</strong> command, will first stop the IOC (if
+it is running), then start it.</p>
+<p>Report whether or not the IOC is running with this command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss_ioc.sh status ioc9idbss 9id:bss:
+ioc9idbss is not running
+</pre></div>
+</div>
+<p>To interact with the <strong>console</strong> of an IOC running in
+a <code class="docutils literal notranslate"><span class="pre">screen</span></code> session:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss_ioc.sh console ioc9idbss 9id:bss:
+</pre></div>
+</div>
+<p>To end this interaction, type <code class="docutils literal notranslate"><span class="pre">^A</span></code> then <code class="docutils literal notranslate"><span class="pre">D</span></code> which will
+leave the IOC running.  Type <code class="docutils literal notranslate"><span class="pre">exit</span></code> to stop the IOC from
+the console.</p>
+<p>For diagnostic (or other) purposes, you can also run the IOC
+without using a screen session.  This is the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss_ioc.sh run ioc9idbss 9id:bss:
+dbLoadDatabase(&quot;/home/beams1/JEMIAN/.conda/envs/bluesky_2020_5/epics/bin/linux-x86_64/../../dbd/softIoc.dbd&quot;)
+softIoc_registerRecordDeviceDriver(pdbbase)
+dbLoadRecords(&quot;apsbss.db&quot;, &quot;P=9id:bss:&quot;)
+iocInit()
+Starting iocInit
+############################################################################
+## EPICS R7.0.4
+## Rev. 2020-05-29T13:39+0000
+############################################################################
+cas warning: Configured TCP port was unavailable.
+cas warning: Using dynamically assigned TCP port 39809,
+cas warning: but now two or more servers share the same UDP port.
+cas warning: Depending on your IP kernel this server may not be
+cas warning: reachable with UDP unicast (a host&#39;s IP in EPICS_CA_ADDR_LIST)
+iocRun: All initialization complete
+epics&gt;
+</pre></div>
+</div>
+<p>You should see the IOC shell prompt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>``epics&gt; ``
+</pre></div>
+</div>
+<p>If you type <code class="docutils literal notranslate"><span class="pre">exit</span></code> or otherwise close the session, the IOC will exit.</p>
+<section id="shell-script-to-manage-softioc">
+<h4>Shell Script to manage softIoc<a class="headerlink" href="#shell-script-to-manage-softioc" title="Link to this heading">#</a></h4>
+<p>To run a stand-alone IOC using the <code class="docutils literal notranslate"><span class="pre">softIoc</span></code> application
+from EPICS base, use the supplied IOC management shell script
+<code class="docutils literal notranslate"><span class="pre">apsbss_ioc.sh</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ apsbss_ioc.sh
+Usage: apsbss_ioc.sh {start|stop|restart|status|checkup|console|run} [NAME [PREFIX]]
+
+        COMMANDS
+                console   attach to IOC console if IOC is running in screen
+                checkup   check that IOC is running, restart if not
+                restart   restart IOC
+                run       run IOC in console (not screen)
+                start     start IOC
+                status    report if IOC is running
+                stop      stop IOC
+
+        OPTIONAL TERMS
+                NAME      name of IOC session (default: apsbss)
+                PREFIX    IOC prefix (default: ioc:bss:)
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><a class="reference download internal" download="" href="_downloads/46c2c44d7f66c7e2364ade0357376d16/apsbss.db"><code class="xref download docutils literal notranslate"><span class="pre">apsbss.db</span></code></a></p></li>
+<li><p><a class="reference download internal" download="" href="_downloads/f93f174d713b0aa51f2edc567a19a2fb/apsbss_ioc.sh"><code class="xref download docutils literal notranslate"><span class="pre">apsbss_ioc.sh</span></code></a></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The shell script assumes that a working <code class="docutils literal notranslate"><span class="pre">softIoc</span></code> application
+(from EPICS base) is in your executable <code class="docutils literal notranslate"><span class="pre">$PATH</span></code>.  You should confirm
+this first before trying to start the IOC.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">softIoc</span></code> application is run within a <code class="docutils literal notranslate"><span class="pre">screen</span></code>
+session so that it remains running even if you close the
+console session.  Confirm that you have the <code class="docutils literal notranslate"><span class="pre">screen</span></code> application
+first before trying to start the IOC.</p>
+</div>
+<p>Here’s an example starter script for the IOC from APS 9-ID-C (USAXS).
+This shell script is stored as file <cite>~/bin/ioc9idcbss.sh</cite> with
+executable permissions:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+
+<span class="nv">PROCESS_NAME</span><span class="o">=</span>ioc9idcbss
+<span class="nv">IOC_PREFIX</span><span class="o">=</span>9idc:bss:
+
+<span class="c1"># activate the bluesky environment</span>
+<span class="nv">BLUESKY</span><span class="o">=</span>/APSshare/anaconda3/Bluesky
+<span class="nb">source</span><span class="w"> </span><span class="si">${</span><span class="nv">BLUESKY</span><span class="si">}</span>/bin/activate<span class="w"> </span>base
+
+<span class="c1"># need shell script and EPICS database file</span>
+<span class="nv">APSBSS</span><span class="o">=</span><span class="k">$(</span>dirname<span class="w"> </span><span class="k">$(</span>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;import apsbss; print(apsbss.__file__)&quot;</span><span class="k">))</span>
+
+<span class="c1"># need EPICS base/bin/softIoc from this path</span>
+<span class="nb">export</span><span class="w"> </span><span class="nv">PATH</span><span class="o">=</span><span class="si">${</span><span class="nv">PATH</span><span class="si">}</span>:/APSshare/epics/base-7.0.3/bin/<span class="si">${</span><span class="nv">EPICS_HOST_ARCH</span><span class="si">}</span>
+
+<span class="nb">cd</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">APSBSS</span><span class="si">}</span><span class="s2">&quot;</span>
+./apsbss_ioc.sh<span class="w">  </span><span class="s2">&quot;</span><span class="si">${</span><span class="p">@</span><span class="si">}</span><span class="s2">&quot;</span><span class="w">  </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">PROCESS_NAME</span><span class="si">}</span><span class="s2">&quot;</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">IOC_PREFIX</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>Here’s an example cron task for the IOC from APS 9-ID-C (USAXS)
+to keep the softIoc running (and start the IOC after system reboot):</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>*/2 * * * * /home/beams/USAXS/bin/ioc9idcbss.sh checkup 2&gt;&amp;1 &gt; /dev/null
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="apsbss.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">apsbss</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="api/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">API</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#start-epics-ioc">Start EPICS IOC</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#add-epics-database-to-existing-ioc">Add EPICS database to existing IOC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#run-epics-database-in-softioc-from-epics-base">Run EPICS database in softIoc from EPICS Base</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#shell-script-to-manage-softioc">Shell Script to manage softIoc</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/ioc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2025, UChicago Argonne, LLC.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

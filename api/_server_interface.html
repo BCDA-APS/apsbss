@@ -1,0 +1,1009 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Server Interface &#8212; apsbss 1.5</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../_static/documentation_options.js?v=c1e90d98"></script>
+    <script src="../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'api/_server_interface';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Searching" href="_text_search.html" />
+    <link rel="prev" title="Common Support" href="_core.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="1.5" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">apsbss 1.5</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../install.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../apsbss.html">
+    apsbss
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../ioc.html">
+    EPICS IOC
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changes.html">
+    History
+  </a>
+</li>
+
+            <li class="nav-item dropdown">
+                <button class="btn dropdown-toggle nav-item" type="button"
+                data-bs-toggle="dropdown" aria-expanded="false"
+                aria-controls="pst-nav-more-links">
+                    More
+                </button>
+                <ul id="pst-nav-more-links" class="dropdown-menu">
+                    
+<li class=" ">
+  <a class="nav-link dropdown-item nav-internal" href="../license.html">
+    License
+  </a>
+</li>
+
+                </ul>
+            </li>
+            
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BCDA-APS/apsbss" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../install.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../apsbss.html">
+    apsbss
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../ioc.html">
+    EPICS IOC
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    API
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../changes.html">
+    History
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../license.html">
+    License
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BCDA-APS/apsbss" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="_apsbss.html">apsbss: Command line application</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_apsbss%20makedb.html">apsbss: Create EPICS database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_apsbss_ophyd.html">apsbss: Ophyd Device</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_bss_dm.html">APS DM interface to APS IS Scheduling System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_bss_is.html">APS IS Scheduling System</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_core.html">Common Support</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Server Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_text_search.html">Searching</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">API</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">Server Interface</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="server-interface">
+<span id="id1"></span><h1>Server Interface<a class="headerlink" href="#server-interface" title="Link to this heading">#</a></h1>
+<p>Common interface to the ESAF and Proposal information servers.</p>
+<p id="module-apsbss.server_interface">Interface to the servers.</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#apsbss.server_interface.Server" title="apsbss.server_interface.Server"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Server</span></code></a>([creds_file])</p></td>
+<td><p>Common connection to information servers.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Exceptions</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#apsbss.server_interface.EsafNotFound" title="apsbss.server_interface.EsafNotFound"><code class="xref py py-obj docutils literal notranslate"><span class="pre">EsafNotFound</span></code></a></p></td>
+<td><p>ESAF ID not found by server.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#apsbss.server_interface.ProposalNotFound" title="apsbss.server_interface.ProposalNotFound"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ProposalNotFound</span></code></a></p></td>
+<td><p>Proposal ID not found by server.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#apsbss.server_interface.RunNotFound" title="apsbss.server_interface.RunNotFound"><code class="xref py py-obj docutils literal notranslate"><span class="pre">RunNotFound</span></code></a></p></td>
+<td><p>Run name not found by server.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#apsbss.server_interface.ServerException" title="apsbss.server_interface.ServerException"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ServerException</span></code></a></p></td>
+<td><p>Base exception for this module.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py exception">
+<dt class="sig sig-object py" id="apsbss.server_interface.EsafNotFound">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apsbss.server_interface.</span></span><span class="sig-name descname"><span class="pre">EsafNotFound</span></span><a class="reference internal" href="../_modules/apsbss/server_interface.html#EsafNotFound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.EsafNotFound" title="Link to this definition">#</a></dt>
+<dd><p>ESAF ID not found by server.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="apsbss.server_interface.ProposalNotFound">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apsbss.server_interface.</span></span><span class="sig-name descname"><span class="pre">ProposalNotFound</span></span><a class="reference internal" href="../_modules/apsbss/server_interface.html#ProposalNotFound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.ProposalNotFound" title="Link to this definition">#</a></dt>
+<dd><p>Proposal ID not found by server.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="apsbss.server_interface.RunNotFound">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apsbss.server_interface.</span></span><span class="sig-name descname"><span class="pre">RunNotFound</span></span><a class="reference internal" href="../_modules/apsbss/server_interface.html#RunNotFound"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.RunNotFound" title="Link to this definition">#</a></dt>
+<dd><p>Run name not found by server.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apsbss.server_interface.</span></span><span class="sig-name descname"><span class="pre">Server</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">creds_file</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server" title="Link to this definition">#</a></dt>
+<dd><p>Common connection to information servers.</p>
+<div class="pst-scrollable-table-container"><table class="autosummary longtable table autosummary">
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">_runs</span></code></p></td>
+<td><p>Return dictionary of run details.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.beamlines" title="apsbss.server_interface.Server.beamlines"><code class="xref py py-obj docutils literal notranslate"><span class="pre">beamlines</span></code></a></p></td>
+<td><p>Return list of known beam line names.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.current_esafs" title="apsbss.server_interface.Server.current_esafs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">current_esafs</span></code></a>(sector)</p></td>
+<td><p>Return list of ESAFs for 'sector' for the current run.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.current_esafs_and_proposals" title="apsbss.server_interface.Server.current_esafs_and_proposals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">current_esafs_and_proposals</span></code></a>(beamline[, nruns])</p></td>
+<td><p>Proposals &amp; ESAFs and proposals with same people for 'nruns' recent runs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.current_proposals" title="apsbss.server_interface.Server.current_proposals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">current_proposals</span></code></a>(beamline)</p></td>
+<td><p>Return list of proposals for 'beamline' for the current run.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.current_run" title="apsbss.server_interface.Server.current_run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">current_run</span></code></a></p></td>
+<td><p>Return the name of the current APS run.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.esaf" title="apsbss.server_interface.Server.esaf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">esaf</span></code></a>(esaf_id)</p></td>
+<td><p>Return ESAF as a dictionary.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.esaf_table" title="apsbss.server_interface.Server.esaf_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">esaf_table</span></code></a>(esafs)</p></td>
+<td><p>Print the list of ESAFS as a table.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.esafs" title="apsbss.server_interface.Server.esafs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">esafs</span></code></a>(sector[, run])</p></td>
+<td><p>Return list of ESAFs for the given sector &amp; run.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.find_run" title="apsbss.server_interface.Server.find_run"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_run</span></code></a>(target_date)</p></td>
+<td><p>Find the run that contains the target date.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.parse_runs_arg" title="apsbss.server_interface.Server.parse_runs_arg"><code class="xref py py-obj docutils literal notranslate"><span class="pre">parse_runs_arg</span></code></a>(runs)</p></td>
+<td><p>Parse a 'runs' argument into a list of run names.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.proposal" title="apsbss.server_interface.Server.proposal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">proposal</span></code></a>(proposal_id, beamline[, run])</p></td>
+<td><p>Return proposal as a dictionary.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.proposal_table" title="apsbss.server_interface.Server.proposal_table"><code class="xref py py-obj docutils literal notranslate"><span class="pre">proposal_table</span></code></a>(proposals)</p></td>
+<td><p>Print the list of proposals as a table.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.proposals" title="apsbss.server_interface.Server.proposals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">proposals</span></code></a>(beamline[, run])</p></td>
+<td><p>List of all proposals on 'beamline' in 'run'.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.recent_runs" title="apsbss.server_interface.Server.recent_runs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">recent_runs</span></code></a>([nruns])</p></td>
+<td><p>Return a list of the 'quantity' most recent 'nruns'.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.runs" title="apsbss.server_interface.Server.runs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">runs</span></code></a></p></td>
+<td><p>Return list of known beam line names.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#apsbss.server_interface.Server.search" title="apsbss.server_interface.Server.search"><code class="xref py py-obj docutils literal notranslate"><span class="pre">search</span></code></a>(query)</p></td>
+<td><p>Return a list of ESAFs &amp; proposals that match the query.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="py property">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.beamlines">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">beamlines</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#apsbss.server_interface.Server.beamlines" title="Link to this definition">#</a></dt>
+<dd><p>Return list of known beam line names.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.current_esafs">
+<span class="sig-name descname"><span class="pre">current_esafs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sector</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.current_esafs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.current_esafs" title="Link to this definition">#</a></dt>
+<dd><p>Return list of ESAFs for ‘sector’ for the current run.</p>
+<p>PARAMETERS</p>
+<dl class="simple">
+<dt>sector<span class="classifier">str | int</span></dt><dd><p>Name of sector.  If <code class="docutils literal notranslate"><span class="pre">str</span></code>, must be in <code class="docutils literal notranslate"><span class="pre">%02d</span></code> format (<code class="docutils literal notranslate"><span class="pre">02</span></code>, not
+<code class="docutils literal notranslate"><span class="pre">2</span></code>).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.current_esafs_and_proposals">
+<span class="sig-name descname"><span class="pre">current_esafs_and_proposals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beamline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nruns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.current_esafs_and_proposals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.current_esafs_and_proposals" title="Link to this definition">#</a></dt>
+<dd><p>Proposals &amp; ESAFs and proposals with same people for ‘nruns’ recent runs.</p>
+<p>PARAMETERS</p>
+<dl class="simple">
+<dt>beamline<span class="classifier">str</span></dt><dd><p>Canonical name of beam line.</p>
+</dd>
+<dt>nruns<span class="classifier">int</span></dt><dd><p>Number of APS runs to include, optional (default: 3, a one year
+period)</p>
+</dd>
+</dl>
+<p>RETURNS</p>
+<p>Dictionary of proposal and ESAF identification numbers.  Proposals IDs
+are the dictionary keys, list of ESAFs with same people as proposal are
+the dictionary values.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.current_proposals">
+<span class="sig-name descname"><span class="pre">current_proposals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beamline</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.current_proposals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.current_proposals" title="Link to this definition">#</a></dt>
+<dd><p>Return list of proposals for ‘beamline’ for the current run.</p>
+<p>PARAMETERS</p>
+<dl class="simple">
+<dt>beamline<span class="classifier">str</span></dt><dd><p>Canonical name of beam line.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.current_run">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">current_run</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#apsbss.server_interface.Server.current_run" title="Link to this definition">#</a></dt>
+<dd><p>Return the name of the current APS run.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.esaf">
+<span class="sig-name descname"><span class="pre">esaf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">esaf_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.esaf"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.esaf" title="Link to this definition">#</a></dt>
+<dd><p>Return ESAF as a dictionary.</p>
+<p>PARAMETERS</p>
+<dl class="simple">
+<dt>esaf_id<span class="classifier">int</span></dt><dd><p>ESAF number</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.esaf_table">
+<span class="sig-name descname"><span class="pre">esaf_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">esafs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pyRestTable.Table</span></span></span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.esaf_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.esaf_table" title="Link to this definition">#</a></dt>
+<dd><p>Print the list of ESAFS as a table.</p>
+<p>PARAMETERS</p>
+<dl class="simple">
+<dt>esafs<span class="classifier">[Esaf]</span></dt><dd><p>List of Esaf objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.esafs">
+<span class="sig-name descname"><span class="pre">esafs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sector</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.esafs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.esafs" title="Link to this definition">#</a></dt>
+<dd><p>Return list of ESAFs for the given sector &amp; run.</p>
+<p>PARAMETERS</p>
+<dl class="simple">
+<dt>sector<span class="classifier">str | int</span></dt><dd><p>Name of sector.  If <code class="docutils literal notranslate"><span class="pre">str</span></code>, must be in <code class="docutils literal notranslate"><span class="pre">%02d</span></code> format (<code class="docutils literal notranslate"><span class="pre">02</span></code>, not
+<code class="docutils literal notranslate"><span class="pre">2</span></code>).</p>
+</dd>
+<dt>run<span class="classifier">str</span></dt><dd><p>List of APS run.  Default to current run.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.find_run">
+<span class="sig-name descname"><span class="pre">find_run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target_date</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.find_run"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.find_run" title="Link to this definition">#</a></dt>
+<dd><p>Find the run that contains the target date.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.parse_runs_arg">
+<span class="sig-name descname"><span class="pre">parse_runs_arg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">runs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.parse_runs_arg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.parse_runs_arg" title="Link to this definition">#</a></dt>
+<dd><p>Parse a ‘runs’ argument into a list of run names.</p>
+<p>Parameters</p>
+<dl>
+<dt>runs<span class="classifier">str | [str] | None</span></dt><dd><p>Name(s) of APS runs.</p>
+<ul>
+<li><p>If ‘None’, then use the current run.</p></li>
+<li><p>If a list, then all strings in the list must be
+valid names of APS runs.</p></li>
+<li><p>If a string, refer to the following table:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>value</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>“”</p></td>
+<td><p>Use the current run.</p></td>
+</tr>
+<tr class="row-odd"><td><p>“all”</p></td>
+<td><p>Use all runs.</p></td>
+</tr>
+<tr class="row-even"><td><p>“current”</p></td>
+<td><p>Use the current run.</p></td>
+</tr>
+<tr class="row-odd"><td><p>“future”</p></td>
+<td><p>Use the next run.</p></td>
+</tr>
+<tr class="row-even"><td><p>“next”</p></td>
+<td><p>Use the next run.</p></td>
+</tr>
+<tr class="row-odd"><td><p>“now”</p></td>
+<td><p>Use the current run.</p></td>
+</tr>
+<tr class="row-even"><td><p>“past”</p></td>
+<td><p>Use the previous run.</p></td>
+</tr>
+<tr class="row-odd"><td><p>“previous”</p></td>
+<td><p>Use the previous run.</p></td>
+</tr>
+<tr class="row-even"><td><p>“prior”</p></td>
+<td><p>Use the previous run.</p></td>
+</tr>
+<tr class="row-odd"><td><p>“recent”</p></td>
+<td><p>Use the past six (6) runs.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p></td>
+<td><p>Use the current run.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.proposal">
+<span class="sig-name descname"><span class="pre">proposal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proposal_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">beamline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.proposal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.proposal" title="Link to this definition">#</a></dt>
+<dd><p>Return proposal as a dictionary.</p>
+<p>PARAMETERS</p>
+<dl class="simple">
+<dt>proposalId<span class="classifier">int</span></dt><dd><p>Proposal identification number.</p>
+</dd>
+<dt>beamline<span class="classifier">str</span></dt><dd><p>Canonical name of beam line.</p>
+</dd>
+<dt>run<span class="classifier">str</span></dt><dd><p>Canonical name of APS run.  Default: the current run.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.proposal_table">
+<span class="sig-name descname"><span class="pre">proposal_table</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">proposals</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">pyRestTable.Table</span></span></span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.proposal_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.proposal_table" title="Link to this definition">#</a></dt>
+<dd><p>Print the list of proposals as a table.</p>
+<p>PARAMETERS</p>
+<dl class="simple">
+<dt>proposals<span class="classifier">[ProposalBase]</span></dt><dd><p>Dictionary of ProposalBase objects.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.proposals">
+<span class="sig-name descname"><span class="pre">proposals</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">beamline</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">run</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.proposals"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.proposals" title="Link to this definition">#</a></dt>
+<dd><p>List of all proposals on ‘beamline’ in ‘run’.</p>
+<p>PARAMETERS</p>
+<dl class="simple">
+<dt>beamline<span class="classifier">str</span></dt><dd><p>Canonical name of beam line.</p>
+</dd>
+<dt>run<span class="classifier">str</span></dt><dd><p>Canonical name of APS run.  Default: the current run.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.recent_runs">
+<span class="sig-name descname"><span class="pre">recent_runs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nruns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">6</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.recent_runs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.recent_runs" title="Link to this definition">#</a></dt>
+<dd><p>Return a list of the ‘quantity’ most recent ‘nruns’.</p>
+<p>Sorted in reverse chronological order.</p>
+<p>PARAMETERS</p>
+<dl class="simple">
+<dt>nruns<span class="classifier">int</span></dt><dd><p>Number of APS run to include, optional (default: 6, a two year period)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.runs">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">runs</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span></em><a class="headerlink" href="#apsbss.server_interface.Server.runs" title="Link to this definition">#</a></dt>
+<dd><p>Return list of known beam line names.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="apsbss.server_interface.Server.search">
+<span class="sig-name descname"><span class="pre">search</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/apsbss/server_interface.html#Server.search"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.Server.search" title="Link to this definition">#</a></dt>
+<dd><p>Return a list of ESAFs &amp; proposals that match the query.</p>
+<p>The ESAFs and Proposals have already been indexed for search in
+the <a class="reference internal" href="#apsbss.server_interface.Server.esafs" title="apsbss.server_interface.Server.esafs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">esafs()</span></code></a> and <a class="reference internal" href="#apsbss.server_interface.Server.proposals" title="apsbss.server_interface.Server.proposals"><code class="xref py py-meth docutils literal notranslate"><span class="pre">proposals()</span></code></a> methods, respectively.</p>
+<p>Parameters</p>
+<dl class="simple">
+<dt>query<span class="classifier">str</span></dt><dd><p>Search expression.</p>
+</dd>
+</dl>
+<p>Here are the keys available for queries:</p>
+<p class="rubric">Query Keys</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>key</p></th>
+<th class="head"><p>stored</p></th>
+<th class="head"><p>type</p></th>
+<th class="head"><p>meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>type</p></td>
+<td><p>True</p></td>
+<td><p>str</p></td>
+<td><p>Either “ESAF” or “proposal”</p></td>
+</tr>
+<tr class="row-odd"><td><p>id</p></td>
+<td><p>True</p></td>
+<td><p>int</p></td>
+<td><p>ID number of ESAF or Proposal</p></td>
+</tr>
+<tr class="row-even"><td><p>pi</p></td>
+<td><p>True</p></td>
+<td><p>str</p></td>
+<td><p>Full name &amp; email of principal investigator</p></td>
+</tr>
+<tr class="row-odd"><td><p>run</p></td>
+<td><p>True</p></td>
+<td><p>str</p></td>
+<td><p>APS run name</p></td>
+</tr>
+<tr class="row-even"><td><p>title</p></td>
+<td><p>True</p></td>
+<td><p>str</p></td>
+<td><p>Title of ESAF or Proposal</p></td>
+</tr>
+<tr class="row-odd"><td><p>full</p></td>
+<td><p>False</p></td>
+<td><p>str</p></td>
+<td><p>(default key) Full text of ESAF or Proposal</p></td>
+</tr>
+<tr class="row-even"><td><p>startDate</p></td>
+<td><p>False</p></td>
+<td><p>DATETIME</p></td>
+<td><p>Starting date and time</p></td>
+</tr>
+<tr class="row-odd"><td><p>endDate</p></td>
+<td><p>False</p></td>
+<td><p>DATETIME</p></td>
+<td><p>Ending date and time</p></td>
+</tr>
+<tr class="row-even"><td><p>users</p></td>
+<td><p>False</p></td>
+<td><p>text</p></td>
+<td><p>List of all users (including email) on ESAF or Proposal</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="rubric">Example query strings</p>
+<p>Whoosh query strings <a class="footnote-reference brackets" href="#id3" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> will search the <strong>full</strong> text of each ESAF and
+Proposal by default.  Queries may specify a key (such as ‘pi’).</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>query</p></th>
+<th class="head"><p>intent</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>“condensate”</p></td>
+<td><p>Any ESAF or Proposal with “condensate” anywhere in the full text.</p></td>
+</tr>
+<tr class="row-odd"><td><p>“‘WA-XPCS’”</p></td>
+<td><p>Any ESAF or Proposal with “WA-XPCS” anywhere.</p></td>
+</tr>
+<tr class="row-even"><td><p>“cerium OR users:Smith”</p></td>
+<td><p>Any ESAF or Proposal with “cerium” anywhere or “Smith” as a user.</p></td>
+</tr>
+<tr class="row-odd"><td><p>“title:School pi:Choi”</p></td>
+<td><p>Any ESAF or Proposal with “school” in the title <em>and</em> “Choi” as a PI.</p></td>
+</tr>
+<tr class="row-even"><td><p>“type:proposal AND <em>oxid</em>”</p></td>
+<td><p>Any Proposal with a word containing “oxid” anywhere.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Each item in the list of results is a dictionary.  The keys are items in
+the Whoosh schema marked as ‘stored=True’.  This dict is a subset of a
+ESAF or Proposal.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>The ‘id’ and ‘type’ keys in the search results,
+together with the ‘beamline’ and ‘run’, can be used to
+obtain the full ESAF or Proposal record.</p>
+</div>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id3" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
+<p>The Whoosh query language provides for many types of searches.
+See <a class="reference external" href="https://whoosh.readthedocs.io/en/latest/querylang.html">https://whoosh.readthedocs.io/en/latest/querylang.html</a> for more
+details.</p>
+</aside>
+</aside>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="apsbss.server_interface.ServerException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">apsbss.server_interface.</span></span><span class="sig-name descname"><span class="pre">ServerException</span></span><a class="reference internal" href="../_modules/apsbss/server_interface.html#ServerException"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#apsbss.server_interface.ServerException" title="Link to this definition">#</a></dt>
+<dd><p>Base exception for this module.</p>
+</dd></dl>
+
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="_core.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Common Support</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="_text_search.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Searching</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.EsafNotFound"><code class="docutils literal notranslate"><span class="pre">EsafNotFound</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.ProposalNotFound"><code class="docutils literal notranslate"><span class="pre">ProposalNotFound</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.RunNotFound"><code class="docutils literal notranslate"><span class="pre">RunNotFound</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server"><code class="docutils literal notranslate"><span class="pre">Server</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.beamlines"><code class="docutils literal notranslate"><span class="pre">Server.beamlines</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.current_esafs"><code class="docutils literal notranslate"><span class="pre">Server.current_esafs()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.current_esafs_and_proposals"><code class="docutils literal notranslate"><span class="pre">Server.current_esafs_and_proposals()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.current_proposals"><code class="docutils literal notranslate"><span class="pre">Server.current_proposals()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.current_run"><code class="docutils literal notranslate"><span class="pre">Server.current_run</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.esaf"><code class="docutils literal notranslate"><span class="pre">Server.esaf()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.esaf_table"><code class="docutils literal notranslate"><span class="pre">Server.esaf_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.esafs"><code class="docutils literal notranslate"><span class="pre">Server.esafs()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.find_run"><code class="docutils literal notranslate"><span class="pre">Server.find_run()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.parse_runs_arg"><code class="docutils literal notranslate"><span class="pre">Server.parse_runs_arg()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.proposal"><code class="docutils literal notranslate"><span class="pre">Server.proposal()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.proposal_table"><code class="docutils literal notranslate"><span class="pre">Server.proposal_table()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.proposals"><code class="docutils literal notranslate"><span class="pre">Server.proposals()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.recent_runs"><code class="docutils literal notranslate"><span class="pre">Server.recent_runs()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.runs"><code class="docutils literal notranslate"><span class="pre">Server.runs</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.Server.search"><code class="docutils literal notranslate"><span class="pre">Server.search()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#apsbss.server_interface.ServerException"><code class="docutils literal notranslate"><span class="pre">ServerException</span></code></a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/api/_server_interface.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2017-2025, UChicago Argonne, LLC.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.1.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
