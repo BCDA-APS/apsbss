@@ -557,7 +557,7 @@ is ``9id:bss:``.
 
 .. _beamlines:
 
-Pick a beamline name from this list:
+Run ``apsbss beamlines`` to pick a beamline name:
 
 .. code-block:: bash
 
@@ -582,7 +582,7 @@ Pick a beamline name from this list:
     9-ID-D         16-ID-D,E      26-ID-C
     10-BM-B        17-BM-B        27-ID-B
 
-Pick an APS run name from this list:
+Run ``apsbss runs`` to pick an APS run name:
 
 .. code-block:: bash
 
@@ -598,7 +598,7 @@ Pick an APS run name from this list:
     2011-2    2014-3    2018-1    2021-2
     2011-3    2015-1    2018-2    2021-3
 
-Pick the run of interest.  Here, we pick ``2020-2`` and beamline ``9-ID-B,C``.
+For this example, we pick ``2020-2`` and beamline ``9-ID-B,C``.
 (Note: this beamline name is no longer in use.)
 
 Write the beam line name and run to the EPICS PVs. To configure ``9id:bss:`` PVs
