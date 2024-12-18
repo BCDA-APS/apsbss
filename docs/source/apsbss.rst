@@ -96,8 +96,7 @@ The ``-v`` option prints the program version.  The ``-h`` option prints the help
 Subcommands
 ===========
 
-See :ref:`beamtime_source_docs` for the source code documentation of each of these
-  subcommands.
+See :ref:`api` for the source code documentation of each of these subcommands.
 
 .. _subcommand.beamlines:
 
@@ -874,4 +873,4 @@ Downloads
 Source code documentation
 ---------------------------
 
-See :ref:`beamtime_source_docs` for the source code documentation.
+See :ref:`api` for the source code documentation.

@@ -42,6 +42,7 @@ extensions = """
     sphinx.ext.mathjax
     sphinx.ext.todo
     sphinx.ext.viewcode
+    sphinx_design
 """.split()
 
 templates_path = ["_templates"]
