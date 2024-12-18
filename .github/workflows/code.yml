@@ -47,15 +47,22 @@ jobs:
           cache-environment-key: env-key-${{ matrix.python-version }}
           condarc: |
             channel-priority: flexible
-          environment-file: environment.yml
+          # environment-file: environment.yml
           environment-name: anaconda-test-env-py-${{ matrix.python-version }}
           create-args: >-
+            apsu::aps-dm-api
             caproto
             coveralls
             pytest
             pytest-cov
             python=${{ matrix.python-version }}
             setuptools-scm
+
+      - name: Local pip install
+        shell: bash -l {0}
+        run: |
+          set -vxeuo pipefail
+          python -m pip install -e .[all]
 
       - name: Run tests with pytest & coverage
         shell: bash -l {0}
