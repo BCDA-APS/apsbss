@@ -23,6 +23,7 @@ from .core import DM_APS_DB_WEB_SERVICE_URL
 from .core import Esaf
 from .core import iso2dt
 from .core import trim
+from .text_search import SearchEngine
 
 logger = logging.getLogger(__name__)
 
@@ -64,6 +65,7 @@ class Server:
         ~proposals
         ~recent_runs
         ~runs
+        ~search
     """
 
     def __init__(self, creds_file=None):
@@ -75,7 +77,8 @@ class Server:
             logger.info("Did not connect to IS server: %s", reason)
             self.bss_api = DM_ScheduleInterface()
 
-    # TODO: refactor to accept a list of ESAFs
+        self.search_engine = SearchEngine()
+
     def esaf_table(self, esafs: list) -> pyRestTable.Table:
         """
         Print the list of ESAFS as a table.
@@ -323,6 +326,8 @@ class Server:
             if run_info.startDate <= esaf.startDate <= run_info.endDate:
                 results.append(esaf)
 
+        if len(results) > 0:
+            self.search_engine.index_esafs(results)
         return results
 
     def find_run(self, target_date):
@@ -379,7 +384,10 @@ class Server:
         if not isinstance(run, str):
             raise TypeError(f"Not a string: {run=!r}")
 
-        return self.bss_api.proposals(beamline, run)
+        props = self.bss_api.proposals(beamline, run)
+        if len(props) > 0:
+            self.search_engine.index_proposals(props.values())
+        return props
 
     def recent_runs(self, nruns=6) -> list:
         """
@@ -404,3 +412,62 @@ class Server:
     def runs(self) -> list:
         """Return list of known beam line names."""
         return self.bss_api.runs
+
+    def search(self, query):
+        """
+        Return a list of ESAFs & proposals that match the query.
+
+        The ESAFs and Proposals have already been indexed for search in
+        the :meth:`esafs` and :meth:`proposals` methods, respectively.
+
+        Parameters
+
+        query : str
+            Search expression.
+
+        Here are the keys available for queries:
+
+        .. rubric:: Query Keys
+
+        ==========  ======  ========  =========================
+        key         stored  type      meaning
+        ==========  ======  ========  =========================
+        type        True    str       Either "ESAF" or "proposal"
+        id          True    int       ID number of ESAF or Proposal
+        pi          True    str       Full name & email of principal investigator
+        run         True    str       APS run name
+        title       True    str       Title of ESAF or Proposal
+        full        False   str       (default key) Full text of ESAF or Proposal
+        startDate   False   DATETIME  Starting date and time
+        endDate     False   DATETIME  Ending date and time
+        users       False   text      List of all users (including email) on ESAF or Proposal
+        ==========  ======  ========  =========================
+
+        .. rubric:: Example query strings
+
+        Whoosh query strings [#]_ will search the **full** text of each ESAF and
+        Proposal by default.  Queries may specify a key (such as 'pi').
+
+        ==========================  ==============================
+        query                       intent
+        ==========================  ==============================
+        "condensate"                Any ESAF or Proposal with "condensate" anywhere in the full text.
+        "'WA-XPCS'"                 Any ESAF or Proposal with "WA-XPCS" anywhere.
+        "cerium OR users:Smith"     Any ESAF or Proposal with "cerium" anywhere or "Smith" as a user.
+        "title:School pi:Choi"      Any ESAF or Proposal with "school" in the title *and* "Choi" as a PI.
+        "type:proposal AND *oxid*"  Any Proposal with a word containing "oxid" anywhere.
+        ==========================  ==============================
+
+        Each item in the list of results is a dictionary.  The keys are items in
+        the Whoosh schema marked as 'stored=True'.  This dict is a subset of a
+        ESAF or Proposal.
+
+        .. tip:: The 'id' and 'type' keys in the search results,
+           together with the 'beamline' and 'run', can be used to
+           obtain the full ESAF or Proposal record.
+
+        .. [#] The Whoosh query language provides for many types of searches.
+            See https://whoosh.readthedocs.io/en/latest/querylang.html for more
+            details.
+        """
+        return self.search_engine.search(query)

@@ -52,6 +52,7 @@ dependencies = [
   "pyyaml",
   "requests",
   "spec2nexus",
+  "whoosh",
 ]
 
 [project.optional-dependencies]

@@ -16,5 +16,6 @@ dependencies:
   - pyRestTable
   - pyyaml
   - spec2nexus
+  - whoosh
   # - pip:
   #   - prompt-toolkit==1.0.15
