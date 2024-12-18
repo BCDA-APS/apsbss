@@ -1,16 +1,23 @@
 [build-system]
-requires = ["setuptools>=64", "setuptools_scm[toml]>=8"]
 build-backend = "setuptools.build_meta"
+requires = [
+  "setuptools_scm[toml]>=8",
+  "setuptools>=64",
+]
 
 [project]
 name = "apsbss"
-description = "Get information from APS Beamline Scheduling System."
-authors = [{ name = "Pete Jemian", email = "prjemian@gmail.com" }]
-maintainers = [{ name = "Pete Jemian", email = "prjemian@gmail.com" }]
 dynamic = ["version"]
+description = "Get information from APS Beamline Scheduling System."
+authors = [
+  { name = "Pete Jemian", email = "prjemian+apsbss@gmail.com" }
+]
+maintainers = [
+  { name = "Pete Jemian", email = "prjemian+apsbss@gmail.com" }
+]
 readme = "README.md"
 requires-python = ">=3.9"
-keywords = ["APS", "BSS", "ESAF", "Proposal"]
+keywords = ["APS", "BSS", "ESAF", "Proposal", "EPICS"]
 # https://packaging.python.org/en/latest/specifications/declaring-project-metadata/?highlight=license
 license = { file = "LICENSE.txt" }
 # https://pypi.org/classifiers/
@@ -58,6 +65,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "build",
+  "caproto",
   "coverage",
   "ipython",
   "isort",
@@ -80,28 +88,42 @@ doc = [
 
 all = ["apsbss[dev,doc]"]
 
+[project.scripts]
+apsbss = "apsbss.apsbss:main"
+apsbss_makedb = "apsbss.apsbss_makedb:main"
+# TODO apsbss_ioc.sh
 
 [project.urls]
 "Homepage" = "https://BCDA-APS.github.io/apsbss"
 "Bug Tracker" = "https://github.com/BCDA-APS/apsbss/issues"
 
-[project.scripts]
-apsbss = "apsbss.apsbss:main"
-
 [tool.black]
 line-length = 115
+target-version = ['py311']
+include = '\.pyi?$'
 
 [tool.copyright]
 copyright = "2017-2025, UChicago Argonne, LLC"
 
 [tool.flake8]
 max-line-length = 115
-extend-ignore = ["E226", "E402", "E501", "E741", "F401", "F403", "W503", "W504"]
+extend-ignore = [
+  "E226",
+  "E402", # module level import not at top of file (for cansas.py)
+  "E501",
+  "E741",
+  "F401",  # imported but unused
+  "F403",
+  "W503",
+  "W504",
+]
 
 [tool.isort]
-force_single_line = true
-# multi_line_output = 1
-line_length = 115
+force_single_line  = "True"
+include_trailing_comma = true
+multi_line_output = "NOQA"
+profile = "black"
+src_paths = ["apsbss"]
 
 [tool.pytest.ini_options]
 addopts = ["--import-mode=importlib", "-x"]
@@ -136,6 +158,19 @@ indent-width = 4
 
 # Assume Python 3.11
 target-version = "py311"
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
 
 [tool.ruff.lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
@@ -195,23 +230,12 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 [tool.ruff.lint.isort]
 force-single-line = true # Enforces single-line imports
 
-[tool.ruff.format]
-# Like Black, use double quotes for strings.
-quote-style = "double"
-
-# Like Black, indent with spaces, rather than tabs.
-indent-style = "space"
-
-# Like Black, respect magic trailing commas.
-skip-magic-trailing-comma = false
-
-# Like Black, automatically detect the appropriate line ending.
-line-ending = "auto"
-
 [tool.setuptools]
-package-dir = { "apsbss" = "apsbss" }
+# package-dir = { "apsbss" = "apsbss" }
+py-modules = ["apsbss"]
 
 [tool.setuptools.package-data]
 "*" = ["*.yml"]
 
 [tool.setuptools_scm]
+write_to = "apsbss/_version.py"

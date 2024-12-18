@@ -14,7 +14,7 @@ import apsbss  # noqa
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-root_path = pathlib.Path(__file__).parent.parent.parent
+root_path = pathlib.Path(apsbss.__file__).parent.parent
 
 with open(root_path / "pyproject.toml", "rb") as fp:
     toml = tomllib.load(fp)
