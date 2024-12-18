@@ -21,6 +21,7 @@ EXAMPLES::
     ~cmd_now
     ~cmd_proposal
     ~cmd_runs
+    ~cmd_search
     ~get_options
     ~main
 
@@ -46,6 +47,7 @@ import yaml
 
 from .core import iso2dt
 from .core import printColumns
+from .core import table_list
 from .server_interface import Server
 
 CONNECT_TIMEOUT = 3
@@ -350,6 +352,28 @@ def get_options():
     p_sub = subcommand.add_parser("esaf", help="print specific ESAF")
     p_sub.add_argument("esafId", type=int, help="ESAF ID number")
 
+    p_sub = subcommand.add_parser(
+        "search",
+        help="print proposals and ESAFs for beamline and run matching the query",
+    )
+    msg = (
+        "APS run name."
+        "  One of the names returned by 'apsbss runs'"
+        " or one of these ('past',  'prior', 'previous')"
+        " for the previous run, ('current' or 'now')"
+        " for the current run, ('future' or 'next')"
+        " for the next run, or 'recent' for the past two years."
+    )
+    p_sub.add_argument(
+        "-r",
+        "--run",
+        type=str,
+        default="recent",
+        help=msg,
+    )
+    p_sub.add_argument("beamlineName", type=str, help="Beamline name")
+    p_sub.add_argument("query", type=str, help="query")
+
     p_sub = subcommand.add_parser("clear", help="EPICS PVs: clear")
     p_sub.add_argument("prefix", type=str, help="EPICS PV prefix")
 
@@ -489,6 +513,40 @@ def cmd_runs(args):
         printColumns(server.runs)
 
 
+def cmd_search(args):
+    """
+    Subcommand ``search``: Print proposals and ESAFs for beamline and run matching the query.
+
+    PARAMETERS
+
+    args
+        *obj* :
+        Object returned by ``argparse``
+    """
+    beamline = args.beamlineName
+    query = args.query
+    runs = str(args.run).strip().lower()
+    title = f"Search: {beamline=!r} {runs=!r} {query=!r}"
+
+    runs = server.parse_runs_arg(runs)
+    sector = int(beamline.split("-")[0])
+
+    # Index the ESAFs & Proposals for the beamline & runs.
+    esafs, props = [], []
+    for run in server.parse_runs_arg(runs):
+        esafs += server.esafs(sector, run)
+        props += list(server.proposals(beamline, run).values())
+
+    results = server.search(query)  # bare API
+    logger.debug("search: %s, results=%r", title, results)
+
+    if len(results) == 0:
+        print(f"{title} -- no matches")
+    else:
+        print(f"{title}")
+        print(table_list(results))  # CLI output
+
+
 def main():
     """Command-line interface for ``apsbss`` program."""
     args = get_options()
@@ -512,6 +570,9 @@ def main():
 
     elif args.subcommand == "proposal":
         cmd_proposal(args)
+
+    elif args.subcommand == "search":
+        cmd_search(args)
 
     elif args.subcommand == "setup":
         epicsSetup(args.prefix, args.beamlineName, args.run)

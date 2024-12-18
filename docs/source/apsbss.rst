@@ -84,6 +84,7 @@ The ``-v`` option prints the program version.  The ``-h`` option prints the help
         now                 print information of proposals & ESAFs running now
         proposal            print specific proposal for beamline and run
         esaf                print specific ESAF
+        search              print proposals and ESAFs for beamline and run matching the query
         clear               EPICS PVs: clear
         setup               EPICS PVs: setup
         update              EPICS PVs: update from BSS
@@ -376,6 +377,43 @@ esaf
     - other experimentUsers omitted here
     sector: '12'
 
+.. _subcommand.search:
+
+search
+------
+
+Search for ESAFs and Proposals.  See
+:meth:`~apsbss.server_interface.Server.search` for more hints about how to
+search.
+
+.. code-block:: bash
+
+    usage: apsbss search [-h] [-r RUN] beamlineName query
+
+    positional arguments:
+      beamlineName       Beamline name
+      query              query
+
+    options:
+      -h, --help         show this help message and exit
+      -r RUN, --run RUN  APS run name. One of the names returned by 'apsbss runs' or one of these ('past', 'prior', 'previous') for the previous run,
+                        ('current' or 'now') for the current run, ('future' or 'next') for the next run, or 'recent' for the past two years.
+
+Example (2024-12-18):
+
+.. code-block:: bash
+
+    $ apsbss search 12-ID-B "title:School AND pi:Choi"
+    Search: beamline='12-ID-B' runs='recent' query='title:School AND pi:Choi'
+    ====== ============================== ====== ======================================== ========
+    id     pi                             run    title                                    type
+    ====== ============================== ====== ======================================== ========
+    78674  Yongseong Choi <ychoi@anl.gov> 2022-2 National School on Neutron and X-ray ... proposal
+    258606 Yongseong Choi <ychoi@anl.gov> 2022-2 National School on Neutron and X-ray ... ESAF
+    258638 Yongseong Choi <ychoi@anl.gov> 2022-2 National School on Neutron and X-ray ... ESAF
+    ====== ============================== ====== ======================================== ========
+
+
 EPICS-related subcommands
 -------------------------
 
@@ -519,78 +557,52 @@ is ``9id:bss:``.
 
 .. _beamlines:
 
-What beam line name to use?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Pick a beamline name from this list:
 
-What APS run to use?
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+.. code-block:: bash
 
-To learn the APS run names accepted by the system, use this command
-(showing APS run names as defined on 2020-07-10)::
+    $ apsbss beamlines
+    1-BM-B,C       10-ID-B        17-ID-B        28-ID-B,C
+    1-ID-B,C,E     11-BM-B        18-ID-D        28-ID-D,E
+    2-BM-A,B       11-ID-B        19-BM-D        28-ID-F
+    2-ID-D         11-ID-C        19-ID-E        28-ID-G
+    2-ID-E         11-ID-D        20-BM-B        29-ID-C,D
+    3-ID-B,C,D     12-BM-B        20-ID-D,E      30-ID-B,C
+    4-ID-B,G,H     12-ID-B        21-ID-D        31-ID-D
+    5-BM-B         12-ID-E        21-ID-F        31-ID-E
+    5-ID-B,C,D     13-BM-C        21-ID-G        32-ID-B,C
+    6-BM-A,B       13-BM-D        22-ID-D        33-BM-C
+    6-ID-B,C       13-ID-C,D      22-ID-E        33-ID-C
+    6-ID-D         13-ID-E        23-ID-B        34-ID-E
+    7-BM-B         14-ID-B        23-ID-D        34-ID-F
+    7-ID-B,C,D     15-ID-B,E      24-ID-C        35-BM-C
+    8-BM-B         15-ID-C,D      24-ID-E        35-ID-B,C,D,E
+    8-ID-E,I       16-BM-B,D      25-ID-C        38-AM-A
+    9-BM-B,C       16-ID-B        25-ID-D,E
+    9-ID-D         16-ID-D,E      26-ID-C
+    10-BM-B        17-BM-B        27-ID-B
+
+Pick an APS run name from this list:
+
+.. code-block:: bash
 
     $ apsbss runs
-    2008-3    2011-2    2014-1    2016-3    2019-2
-    2009-1    2011-3    2014-2    2017-1    2019-3
-    2009-2    2012-1    2014-3    2017-2    2020-1
-    2009-3    2012-2    2015-1    2017-3    2020-2
-    2010-1    2012-3    2015-2    2018-1
-    2010-2    2013-1    2015-3    2018-2
-    2010-3    2013-2    2016-1    2018-3
-    2011-1    2013-3    2016-2    2019-1
+    2008-3    2012-1    2015-2    2018-3    2022-1
+    2009-1    2012-2    2015-3    2019-1    2022-2
+    2009-2    2012-3    2016-1    2019-2    2022-3
+    2009-3    2013-1    2016-2    2019-3    2023-1
+    2010-1    2013-2    2016-3    2020-1    2024-2
+    2010-2    2013-3    2017-1    2020-2    2024-3
+    2010-3    2014-1    2017-2    2020-3    2025-1
+    2011-1    2014-2    2017-3    2021-1    2025-2
+    2011-2    2014-3    2018-1    2021-2
+    2011-3    2015-1    2018-2    2021-3
 
-Pick the run of interest.  Here, we pick ``2020-2``.
+Pick the run of interest.  Here, we pick ``2020-2`` and beamline ``9-ID-B,C``.
+(Note: this beamline name is no longer in use.)
 
-To print the full report (including start and end of each run)::
-
-    $ apsbss runs --full
-    ====== =================== ===================
-    run    start               end
-    ====== =================== ===================
-    2020-2 2020-06-09 07:00:00 2020-10-01 07:00:00
-    2020-1 2020-01-28 08:00:00 2020-06-09 07:00:00
-    2019-3 2019-09-24 07:00:00 2020-01-28 08:00:00
-    2019-2 2019-05-21 07:00:00 2019-09-24 07:00:00
-    2019-1 2019-01-22 08:00:00 2019-05-21 07:00:00
-    2018-3 2018-09-25 07:00:00 2019-01-22 08:00:00
-    2018-2 2018-05-22 07:00:00 2018-09-25 07:00:00
-    2018-1 2018-01-23 08:00:00 2018-05-22 07:00:00
-    2017-3 2017-09-26 07:00:00 2018-01-23 08:00:00
-    2017-2 2017-05-23 07:00:00 2017-09-26 07:00:00
-    2017-1 2017-01-24 08:00:00 2017-05-23 07:00:00
-    2016-3 2016-09-27 07:00:00 2017-01-24 08:00:00
-    2016-2 2016-05-24 07:00:00 2016-09-27 07:00:00
-    2016-1 2016-01-26 08:00:00 2016-05-24 07:00:00
-    2015-3 2015-09-29 07:00:00 2016-01-26 08:00:00
-    2015-2 2015-05-26 07:00:00 2015-09-29 07:00:00
-    2015-1 2015-01-27 08:00:00 2015-05-26 07:00:00
-    2014-3 2014-09-25 07:00:00 2015-01-27 08:00:00
-    2014-2 2014-05-20 07:00:00 2014-09-25 07:00:00
-    2014-1 2014-01-21 08:00:00 2014-05-20 07:00:00
-    2013-3 2013-09-24 07:00:00 2014-01-21 08:00:00
-    2013-2 2013-05-22 07:00:00 2013-09-24 07:00:00
-    2013-1 2013-01-22 08:00:00 2013-05-22 07:00:00
-    2012-3 2012-09-25 07:00:00 2013-01-22 08:00:00
-    2012-2 2012-05-23 07:00:00 2012-09-25 07:00:00
-    2012-1 2012-01-24 08:00:00 2012-05-23 07:00:00
-    2011-3 2011-09-27 07:00:00 2012-01-24 08:00:00
-    2011-2 2011-05-25 07:00:00 2011-09-27 07:00:00
-    2011-1 2011-01-25 08:00:00 2011-05-25 07:00:00
-    2010-3 2010-09-27 23:00:00 2011-01-25 08:00:00
-    2010-2 2010-05-26 07:00:00 2010-09-28 07:00:00
-    2010-1 2010-01-26 08:00:00 2010-05-26 07:00:00
-    2009-3 2009-09-29 07:00:00 2010-01-26 08:00:00
-    2009-2 2009-05-20 07:00:00 2009-09-29 07:00:00
-    2009-1 2009-01-21 08:00:00 2009-05-20 07:00:00
-    2008-3 2008-09-24 07:00:00 2009-01-21 08:00:00
-    ====== =================== ===================
-
-
-Write the beam line name and run to the PVs
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To configure ``9id:bss:`` PVs for beam line
-``9-ID-B,C`` and run ``2020-2``,
-use this command:
+Write the beam line name and run to the EPICS PVs. To configure ``9id:bss:`` PVs
+for beam line ``9-ID-B,C`` and run ``2020-2``, use this command:
 
 .. code-block:: bash
 

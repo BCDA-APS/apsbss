@@ -26,6 +26,7 @@ time zone.
     ~iso2dt
     ~miner
     ~printColumns
+    ~table_list
     ~trim
 """
 
@@ -33,6 +34,8 @@ import abc
 import datetime
 import os
 import socket
+
+import pyRestTable
 
 
 def _get_web_service_url():
@@ -118,6 +121,29 @@ def printColumns(items, numColumns=5, width=10):
         ]
         # fmt: on
         print("".join([f"{s:{width}s}" for s in row]))
+
+
+def table_list(db, width=40, replace=" ..."):
+    """Render a list of dict (with identical keys) as a table."""
+
+    def truncate(text):
+        text = str(text)
+        if len(text) > width:
+            text = text[: width - len(replace)] + replace
+        return text
+
+    table = pyRestTable.Table()
+    table.labels = sorted(db[0])
+    table.rows = [
+        [
+            truncate(result[k])
+            for k in table.labels
+            # columns
+        ]
+        for result in db  # rows
+    ]
+
+    return table
 
 
 def trim(text, length=40):
