@@ -52,8 +52,14 @@ APS Data Management web service URL.
 .. index:: DM_APS_DB_WEB_SERVICE_URL
 
 .. tip::  APS CAT members may need to define the ``DM_APS_DB_WEB_SERVICE_URL``
-   environment variable to either ``https://catdtn01.xray.aps.anl.gov:11236``
-   or ``https://catdtn02.xray.aps.anl.gov:11236``, whichever responds.
+   environment variable based on their sector number.  Choose from this table:
+
+   ===========  ===========================================
+   sector       ``DM_APS_DB_WEB_SERVICE_URL``
+   ===========  ===========================================
+   odd number   ``https://catdtn01.xray.aps.anl.gov:11236``
+   even number  ``https://catdtn02.xray.aps.anl.gov:11236``
+   ===========  ===========================================
 """
 
 
