@@ -95,8 +95,10 @@ apsbss_makedb = "apsbss.apsbss_makedb:main"
 # TODO apsbss_ioc.sh
 
 [project.urls]
-"Homepage" = "https://BCDA-APS.github.io/apsbss"
 "Bug Tracker" = "https://github.com/BCDA-APS/apsbss/issues"
+"Homepage" = "https://BCDA-APS.github.io/apsbss"
+"Release Notes" = "https://github.com/BCDA-APS/apsbss/blob/main/CHANGES.rst"
+"Source Code" = "https://github.com/BCDA-APS/apsbss"
 
 [tool.black]
 line-length = 115
