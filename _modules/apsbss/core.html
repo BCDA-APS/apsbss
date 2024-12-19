@@ -38,7 +38,7 @@
   <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="../../_static/documentation_options.js?v=51b770b3"></script>
+    <script src="../../_static/documentation_options.js?v=341e122e"></script>
     <script src="../../_static/doctools.js?v=9bcbadda"></script>
     <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="../../_static/design-tabs.js?v=f930bc37"></script>
@@ -450,8 +450,14 @@
 <span class="sd">.. index:: DM_APS_DB_WEB_SERVICE_URL</span>
 
 <span class="sd">.. tip::  APS CAT members may need to define the ``DM_APS_DB_WEB_SERVICE_URL``</span>
-<span class="sd">   environment variable to either ``https://catdtn01.xray.aps.anl.gov:11236``</span>
-<span class="sd">   or ``https://catdtn02.xray.aps.anl.gov:11236``, whichever responds.</span>
+<span class="sd">   environment variable based on their sector number.  Choose from this table:</span>
+
+<span class="sd">   ===========  ===========================================</span>
+<span class="sd">   sector       ``DM_APS_DB_WEB_SERVICE_URL``</span>
+<span class="sd">   ===========  ===========================================</span>
+<span class="sd">   odd number   ``https://catdtn01.xray.aps.anl.gov:11236``</span>
+<span class="sd">   even number  ``https://catdtn02.xray.aps.anl.gov:11236``</span>
+<span class="sd">   ===========  ===========================================</span>
 <span class="sd">&quot;&quot;&quot;</span>
 
 
