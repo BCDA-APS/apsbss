@@ -14,7 +14,7 @@
 History
 #######
 
-The project `milestones <https://github.com/BCDA-APS/apstapsbssools/milestones>`_
+The project `milestones <https://github.com/BCDA-APS/apsbss/milestones>`_
 describe the future plans.
 
 ..
