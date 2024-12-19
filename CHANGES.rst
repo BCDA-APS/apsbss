@@ -24,7 +24,7 @@ describe the future plans.
 2.0.0
 *****
 
-* release expected by 2024-12-20
+* Released 2024-12-19
 
 Notice
 ------
