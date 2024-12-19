@@ -18,51 +18,54 @@ The project `milestones <https://github.com/BCDA-APS/apstapsbssools/milestones>`
 describe the future plans.
 
 ..
-   2.0.0
+   2.0.1
    *****
 
-   * next release expected by 2024-12-31
+2.0.0
+*****
 
-   Notice
-   ------
+* release expected by 2024-12-31
 
-   * Complete overhaul for APS-U era.
+Notice
+------
 
-   Breaking Changes
-   ----------------
+* Complete overhaul for APS-U era.
 
-   * Proposal ID is now an integer, was previously text.  (ESAF ID is integer,
-     as before.)
-   * Standardize on the name **run** instead of **cycle** as the reference used
-     for the name of an APS operations *run* period.
+Breaking Changes
+----------------
 
-     * Includes EPICS PV: ``record(stringout, "$(P)esaf:run")``
+* Proposal ID is now an integer, was previously text.  (ESAF ID is integer,
+  as before.)
+* Standardize on the name **run** instead of **cycle** as the reference used
+  for the name of an APS operations *run* period.
 
-   New Features
-   ------------
+* Includes EPICS PV: ``record(stringout, "$(P)esaf:run")``
 
-   * Add search for ESAFs & Proposals using Whoosh package.
-   * Add support for direct access to read IS database.
-   * Add Server class that chooses between DM or IS interface.
-   * Integer timestamp PVs for ESAF start & end and Proposal start, end, & submitted.
-   * User can override default DM URL by setting an environment variable.
+New Features
+------------
 
-   Maintenance
-   -----------
+* Add search for ESAFs & Proposals using Whoosh package.
+* Add support for direct access to read IS database.
+* Add Server class that chooses between DM or IS interface.
+* Integer timestamp PVs for ESAF start & end and Proposal start, end, & submitted.
+* User can override default DM URL by setting an environment variable.
 
-   * Add requests to project requirements.
-   * Code style enforced by pre-commit.
-   * Increased code coverage of unit testing.
-   * Moved report and table generation to new Server class.
-   * Refactored (and simplified) IOC report table.
-   * Relocated functions out of apsbss module.
-   * Switch documentation to use pydata sphinx theme.
-   * Update to install and run with Python versions 3.9, 3.10, 3.11.
+Maintenance
+-----------
 
-   Deprecations
-   -------------
+* Add requests to project requirements.
+* Code style enforced by pre-commit.
+* Increased code coverage of unit testing.
+* Moved report and table generation to new Server class.
+* Refactored (and simplified) IOC report table.
+* Relocated functions out of apsbss module.
+* Switch documentation to use pydata sphinx theme.
+* Update to install and run with Python versions 3.9, 3.10, 3.11.
 
-   * Removed all items marked for deprecation.
+Deprecations
+-------------
+
+* Removed all items marked for deprecation.
 
 -------------
 
