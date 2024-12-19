@@ -47,7 +47,9 @@ jobs:
           cache-environment-key: env-key-${{ matrix.python-version }}
           condarc: |
             channel-priority: flexible
-          # environment-file: environment.yml
+            channels:
+              - conda-forge
+              - nodefaults
           environment-name: anaconda-test-env-py-${{ matrix.python-version }}
           create-args: >-
             apsu::aps-dm-api
