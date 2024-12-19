@@ -39,7 +39,7 @@
   <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
 <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
 
-    <script src="_static/documentation_options.js?v=f2943afd"></script>
+    <script src="_static/documentation_options.js?v=51b770b3"></script>
     <script src="_static/doctools.js?v=9bcbadda"></script>
     <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/design-tabs.js?v=f930bc37"></script>
@@ -408,29 +408,74 @@
                   
   <span class="target" id="changes"></span><section id="history">
 <h1>History<a class="headerlink" href="#history" title="Link to this heading">#</a></h1>
-<p>The project <a class="reference external" href="https://github.com/BCDA-APS/apstools/milestones">milestones</a>
+<p>The project <a class="reference external" href="https://github.com/BCDA-APS/apsbss/milestones">milestones</a>
 describe the future plans.</p>
-<hr class="docutils" />
 <section id="id1">
-<h2>1.5.6<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<h2>2.0.0<a class="headerlink" href="#id1" title="Link to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Released 2024-12-19</p></li>
+</ul>
+<section id="notice">
+<h3>Notice<a class="headerlink" href="#notice" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Complete overhaul for APS-U era.</p></li>
+</ul>
+</section>
+<section id="breaking-changes">
+<h3>Breaking Changes<a class="headerlink" href="#breaking-changes" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Proposal ID is now an integer, was previously text.  (ESAF ID is integer,
+as before.)</p></li>
+<li><p>Standardize on the name <strong>run</strong> instead of <strong>cycle</strong> as the reference used
+for the name of an APS operations <em>run</em> period.</p></li>
+<li><p>Includes EPICS PV: <code class="docutils literal notranslate"><span class="pre">record(stringout,</span> <span class="pre">&quot;$(P)esaf:run&quot;)</span></code></p></li>
+</ul>
+</section>
+<section id="new-features">
+<h3>New Features<a class="headerlink" href="#new-features" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Add search for ESAFs &amp; Proposals using Whoosh package.</p></li>
+<li><p>Add support for direct access to read IS database.</p></li>
+<li><p>Add Server class that chooses between DM or IS interface.</p></li>
+<li><p>Integer timestamp PVs for ESAF start &amp; end and Proposal start, end, &amp; submitted.</p></li>
+<li><p>User can override default DM URL by setting an environment variable.</p></li>
+</ul>
+</section>
+<section id="maintenance">
+<h3>Maintenance<a class="headerlink" href="#maintenance" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Add requests to project requirements.</p></li>
+<li><p>Code style enforced by pre-commit.</p></li>
+<li><p>Increased code coverage of unit testing.</p></li>
+<li><p>Moved report and table generation to new Server class.</p></li>
+<li><p>Refactored (and simplified) IOC report table.</p></li>
+<li><p>Relocated functions out of apsbss module.</p></li>
+<li><p>Switch documentation to use pydata sphinx theme.</p></li>
+<li><p>Update to install and run with Python versions 3.9, 3.10, 3.11.</p></li>
+</ul>
+</section>
+<section id="deprecations">
+<h3>Deprecations<a class="headerlink" href="#deprecations" title="Link to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Removed all items marked for deprecation.</p></li>
+</ul>
+</section>
+</section>
+<hr class="docutils" />
+<section id="id2">
+<h2>1.5.6<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
 <p>released 2022-03-24</p>
-<section id="fixes">
-<h3>Fixes<a class="headerlink" href="#fixes" title="Link to this heading">#</a></h3>
 <ul class="simple">
 <li><p>add <code class="docutils literal notranslate"><span class="pre">pyyaml</span></code> to package requirements</p></li>
 </ul>
 </section>
-</section>
-<section id="id2">
-<h2>1.5.5<a class="headerlink" href="#id2" title="Link to this heading">#</a></h2>
-<p>released 2022-01-12</p>
 <section id="id3">
-<h3>Fixes<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<h2>1.5.5<a class="headerlink" href="#id3" title="Link to this heading">#</a></h2>
+<p>released 2022-01-12</p>
 <ul class="simple">
 <li><p>install with Python 3.7+</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">main()</span></code> now found for command-line use</p></li>
 </ul>
-</section>
 </section>
 <section id="id4">
 <h2>1.5.4<a class="headerlink" href="#id4" title="Link to this heading">#</a></h2>
@@ -488,14 +533,16 @@ changes to this code base.</p>
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">1.5.6</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fixes">Fixes</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">2.0.0</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#notice">Notice</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#breaking-changes">Breaking Changes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#new-features">New Features</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maintenance">Maintenance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deprecations">Deprecations</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.5.5</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Fixes</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">1.5.6</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">1.5.5</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">1.5.4</a></li>
 </ul>
   </nav></div>
