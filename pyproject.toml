@@ -234,8 +234,7 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 force-single-line = true # Enforces single-line imports
 
 [tool.setuptools]
-# package-dir = { "apsbss" = "apsbss" }
-py-modules = ["apsbss"]
+# leave this empty
 
 [tool.setuptools.package-data]
 "*" = ["*.yml"]
