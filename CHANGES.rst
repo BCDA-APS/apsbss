@@ -21,6 +21,11 @@ describe the future plans.
    2.0.1
    *****
 
+   Maintenance
+   ----------------
+
+   * DTN ports changed.
+
 2.0.0
 *****
 
