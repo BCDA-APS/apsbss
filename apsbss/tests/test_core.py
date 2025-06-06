@@ -27,7 +27,7 @@ minimal_proposal_dict = {
 
 
 def test_url():
-    url = "https://xraydtn01.xray.aps.anl.gov:11236"
+    url = "https://xraydtn01.xray.aps.anl.gov:11336"
     assert DM_APS_DB_WEB_SERVICE_URL == url
 
 

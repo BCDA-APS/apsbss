@@ -40,7 +40,7 @@ import pyRestTable
 
 def _get_web_service_url():
     """CATs get a different server than XSD."""
-    xsd_url = "https://xraydtn01.xray.aps.anl.gov:11236"
+    xsd_url = "https://xraydtn01.xray.aps.anl.gov:11336"
     url = os.environ.get("DM_APS_DB_WEB_SERVICE_URL", xsd_url)
     return url
 
@@ -57,8 +57,8 @@ APS Data Management web service URL.
    ===========  ===========================================
    sector       ``DM_APS_DB_WEB_SERVICE_URL``
    ===========  ===========================================
-   odd number   ``https://catdtn01.xray.aps.anl.gov:11236``
-   even number  ``https://catdtn02.xray.aps.anl.gov:11236``
+   odd number   ``https://catdtn01.xray.aps.anl.gov:11336``
+   even number  ``https://catdtn02.xray.aps.anl.gov:11336``
    ===========  ===========================================
 """
 
