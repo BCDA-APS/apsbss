@@ -113,7 +113,7 @@ def test_ScheduleInterfaceBase():
     with pytest.raises(TypeError) as reason:
         ScheduleInterfaceBase()
     assert "Can't instantiate abstract class" in str(reason)
-    assert "with abstract methods" in str(reason)
+    assert "abstract methods" in str(reason)
 
     class MinimalSubClass(ScheduleInterfaceBase):
         @property
