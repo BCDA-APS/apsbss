@@ -25,6 +25,7 @@ describe the future plans.
    ----------------
 
    * DTN ports changed.
+   * Pin caproto <1.2.0 (for testing only)
 
 2.0.0
 *****
