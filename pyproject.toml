@@ -65,7 +65,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
   "build",
-  "caproto",
+  "caproto <1.2.0",  # per https://github.com/bluesky/bluesky-adaptive/pull/50/files
   "coverage",
   "ipython",
   "isort",
