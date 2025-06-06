@@ -18,7 +18,7 @@ The project `milestones <https://github.com/BCDA-APS/apsbss/milestones>`_
 describe the future plans.
 
 ..
-   2.0.1
+   2.0.2
    *****
 
 2.0.1
