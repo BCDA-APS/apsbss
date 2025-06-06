@@ -21,11 +21,16 @@ describe the future plans.
    2.0.1
    *****
 
-   Maintenance
-   ----------------
+2.0.1
+*****
 
-   * DTN ports changed.
-   * Pin caproto <1.2.0 (for testing only)
+* Released 2025-06-06
+
+Maintenance
+----------------
+
+* DTN ports changed.
+* Pin caproto <1.2.0 (for testing only)
 
 2.0.0
 *****
