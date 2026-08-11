@@ -55,6 +55,7 @@ dependencies = [
   "bluesky",
   "databroker",
   "ophyd",
+  "ophyd-async",
   "pyRestTable",
   "pyyaml",
   "requests",
@@ -64,6 +65,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = [
+  "aioca",
   "build",
   "caproto <1.2.0",  # per https://github.com/bluesky/bluesky-adaptive/pull/50/files
   "coverage",
@@ -73,6 +75,7 @@ dev = [
   "pre-commit",
   "pyepics",
   "pytest",
+  "pytest-asyncio",
   "ruff",
 ]
 

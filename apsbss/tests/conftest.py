@@ -54,7 +54,7 @@ def ioc():
     yield cfg
 
     # tear down
-    if cfg.bss is not None:
+    if hasattr(cfg.bss, "destroy"):
         cfg.bss.destroy()
         cfg.bss = None
     if cfg.ioc_process is not None:
